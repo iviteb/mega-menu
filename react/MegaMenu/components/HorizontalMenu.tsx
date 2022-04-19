@@ -56,10 +56,10 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
   )
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true)
+    document.addEventListener('mouseover', handleClickOutside, true)
 
     return () => {
-      document.removeEventListener('click', handleClickOutside, true)
+      document.removeEventListener('mouseover', handleClickOutside, true)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
