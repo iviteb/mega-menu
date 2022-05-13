@@ -26,10 +26,14 @@
     "vtex.file-manager-graphql": "0.x",
     "vtex.file-manager": "0.x",
     "vtex.store-graphql": "2.x",
+<<<<<<< HEAD
     "vtex.store": "2.x",
     "vtex.render-runtime": "8.x",
     "vtex.order-manager": "0.x",
     "vtex.session-client": "1.x"
+=======
+    "vtex.store": "2.x"
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
   },
   "billingOptions": {
     "type": "free",

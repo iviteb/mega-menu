@@ -16,6 +16,7 @@ import {
   Spinner,
   Dropzone,
 } from 'vtex.styleguide'
+
 import { useRuntime } from 'vtex.render-runtime'
 import { useQuery, useMutation } from 'react-apollo'
 import type { InjectedIntlProps } from 'react-intl'
@@ -30,7 +31,11 @@ import EDIT from './graphql/mutations/edit.graphql'
 import UPLOAD_FILE from './graphql/mutations/uploadFile.graphql'
 import { IconSelector, messagesForm } from './shared'
 import type { DataMenu, MenuItem } from './shared'
+<<<<<<< HEAD
 import type { UploadMutationData } from './utils/interfaces'
+=======
+import { UploadMutationData } from './utils/interfaces'
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
 import UploadedBanner from './MegaMenu/components/UploadedBanner'
 
 const arrowLeft = <IconArrowLeft />
@@ -57,8 +62,11 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     display: false,
     enableSty: false,
     banner: '',
+<<<<<<< HEAD
     optionalText: '',
     uploadedIcon: '',
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
   }
 
   const { navigate } = useRuntime()
@@ -83,7 +91,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   const [levelInfo, setLevelInfo] = useState(Object)
   const [messageSlug, setMessageSlug] = useState('')
   const [banner, setBanner] = useState('')
+<<<<<<< HEAD
   const [uploadedIcon, setUploadedIcon] = useState('')
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
 
   const responseForm = JSON.parse(decodeURIComponent(props.params.menu))
   const [uploadFile] = useMutation<UploadMutationData>(UPLOAD_FILE)
@@ -128,6 +139,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }
   }
 
+<<<<<<< HEAD
   const handleIconDrop = async (acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles[0]) {
       try {
@@ -147,6 +159,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }
   }
 
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
   const handleImageReset = async () => {
     try {
       setBanner('')
@@ -155,6 +169,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }
   }
 
+<<<<<<< HEAD
   const handleIconReset = async () => {
     try {
       setUploadedIcon('')
@@ -163,6 +178,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }
   }
 
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
   const messageTranslate = (key: string) => {
     const keyObj = `admin/mega-menu.items.${key}`
 
@@ -218,7 +235,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           dataMenu.menu.icon
 
         setBanner(dataMenu.menu.banner)
+<<<<<<< HEAD
         setUploadedIcon(dataMenu.menu.uploadedIcon)
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         setDataForm(
           dataMenu.menu.id,
           dataMenu.menu.name,
@@ -457,7 +477,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slugRoot: mainMenuLevel.slugRoot,
           slugRelative: mainMenuLevel.slugRelative,
           banner: mainMenuLevel.banner,
+<<<<<<< HEAD
           optionalText: mainMenuLevel.optionalText,
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         },
       },
     })
@@ -517,7 +540,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           enableSty: menu.enableSty,
           order: menu.order,
           banner: menu.banner,
+<<<<<<< HEAD
           uploadedIcon: menu.uploadedIcon,
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         },
         secondMenu
       )
@@ -572,7 +598,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slugRoot: menu.slugRoot,
           slugRelative: menu.slugRelative,
           banner: menu.banner,
+<<<<<<< HEAD
           optionalText: menu.optionalText,
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         },
         menu.menu ? menu.menu : []
       )
@@ -674,15 +703,22 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           id: idMenu,
           name,
           icon,
+<<<<<<< HEAD
           uploadedIcon,
           slug,
           sellerIDs,
+=======
+          slug,
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
           styles,
           display,
           enableSty,
           order,
           banner,
+<<<<<<< HEAD
           optionalText,
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         },
         menuLevelTwoUpdate
       )
@@ -812,7 +848,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           enableSty: menu.enableSty,
           order: menu.order,
           banner: menu.banner,
+<<<<<<< HEAD
           optionalText: menu.optionalText,
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         },
         menu.menu ? menu.menu : []
       )
@@ -1103,6 +1142,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                     />
                   </div>
                 </div>
+<<<<<<< HEAD
 
                 {responseForm.level !== 'thirdLevel' && (
                   <div className="w-100 ml4 mr4">
@@ -1147,6 +1187,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                     </div>
                   </div>
                 )}
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
                 {responseForm.level === 'firstLevel' && (
                   <div className="w-100 ml4 mr4">
                     <div className="mb5">
@@ -1163,7 +1205,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       {banner && responseForm.level === 'firstLevel' && (
                         <UploadedBanner
                           banner={banner}
+<<<<<<< HEAD
                           textlabel="Uploaded banner"
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
                           onHandleImageReset={handleImageReset}
                         />
                       )}

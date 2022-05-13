@@ -200,6 +200,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
   )
 
   return (
+<<<<<<< HEAD
     <div style={{ display: departmentActive ? 'block' : 'none' }}>
       <h3
         className={classNames(
@@ -213,6 +214,45 @@ const Submenu: FC<ItemProps> = observer((props) => {
         {orientation === 'horizontal' && (
           <div style={{ display: showBtnCat ? 'block' : 'none' }}>
             {seeAllLink(departmentActive?.slug, 1, 't-small ml7')}
+=======
+    <>
+      {departmentActive && (
+        <>
+          <h3
+            className={classNames(
+              handles.submenuContainerTitle,
+              'f4 fw7 c-on-base lh-copy ma0 flex items-center',
+              orientation === 'horizontal' && 'mb6',
+              orientation === 'vertical' && 'pv5 ph5'
+            )}
+          >
+            {departmentActive.name}
+            {orientation === 'horizontal' && showBtnCat ? (
+              seeAllLink(departmentActive.slug, 1, 't-small ml7')
+            ) : (
+              <div />
+            )}
+          </h3>
+
+          <div
+            className={classNames(
+              orientation === 'horizontal' && styles.submenuList,
+              orientation === 'vertical' && handles.submenuListVertical
+            )}
+          >
+            {orientation === 'horizontal' ? (
+              <>
+                <ExtensionPoint id="before-menu" /> {items}{' '}
+                <ExtensionPoint id="after-menu" />
+                <img src={departmentActive.banner} alt="" />
+              </>
+            ) : (
+              <>
+                {items}
+                {/* showBtnCat ? seeAllLink(departmentActive.slug) : <div /> */}
+              </>
+            )}
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
           </div>
         )}
       </h3>

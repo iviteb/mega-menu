@@ -13,7 +13,10 @@ export type MenuItem = {
   slugRoot?: string
   slugRelative?: string
   banner?: string
+<<<<<<< HEAD
   optionalText?: string
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
 }
 
 export type MenuItemSave = {
@@ -31,7 +34,10 @@ export type MenuItemSave = {
   slugRoot?: string
   slugRelative?: string
   banner?: string
+<<<<<<< HEAD
   optionalText?: string
+=======
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
 }
 
 export type MenusResponse = {

@@ -12,8 +12,12 @@ type Menu {
   order: Int
   slugRoot: String
   slugRelative: String
+<<<<<<< HEAD
   banner: String
   optionalText: String
+=======
+  banner:String
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
 }
 
 input MenuInput {
@@ -32,6 +36,10 @@ input MenuInput {
   secondLevel: String
   slugRoot: String
   slugRelative: String
+<<<<<<< HEAD
   banner: String
   optionalText: String
+=======
+  banner:String
+>>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
 }
