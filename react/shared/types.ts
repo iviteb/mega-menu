@@ -10,8 +10,7 @@ export type MenuItem = {
   order?: number
   slugRoot?: string
   slugRelative?: string
-  mobile?: boolean
-  desktop?: boolean
+  banner?: string
 }
 
 export type MenuItemSave = {
@@ -26,8 +25,7 @@ export type MenuItemSave = {
   order?: number
   slugRoot?: string
   slugRelative?: string
-  mobile?: boolean
-  desktop?: boolean
+  banner?: string
 }
 
 export type MenusResponse = {

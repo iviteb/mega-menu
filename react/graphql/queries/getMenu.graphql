@@ -8,8 +8,7 @@ query getMenu($id: ID!) {
     display
     enableSty
     order
-    mobile
-    desktop
+    banner
     menu {
       id
       name
