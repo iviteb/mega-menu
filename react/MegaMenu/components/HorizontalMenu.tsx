@@ -7,9 +7,7 @@ import { injectIntl } from 'react-intl'
 import Skeleton from 'react-loading-skeleton'
 import { useCssHandles } from 'vtex.css-handles'
 import { formatIOMessage } from 'vtex.native-types'
-import _debounce from 'lodash/debounce'
 
-import type { MenuItem } from '../../shared'
 import { megaMenuState } from '../State'
 import styles from '../styles.css'
 import Item from './Item'
@@ -39,17 +37,6 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
   const departmentActiveHasCategories = !!departmentActive?.menu?.length
   const navRef = useRef<HTMLDivElement>(null)
 
-  const debouncedHandleMouseEnter = useCallback(
-    _debounce((department: MenuItem | null) => {
-      setDepartmentActive(department)
-    }, 400),
-    []
-  )
-
-  const handleOnMouseLeave = () => {
-    debouncedHandleMouseEnter.cancel()
-  }
-
   const handleClickOutside = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (event: any) => {
@@ -76,6 +63,8 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
     return () => {
       document.removeEventListener('click', handleClickOutside, true)
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -104,13 +93,12 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
               className={classNames(
                 handles.menuItem,
                 d.id === departmentActive?.id &&
-                `bg-black-05 ${handles.departmentActive}`
+                  `bg-black-05 ${handles.departmentActive}`
               )}
               key={d.id}
               onMouseEnter={() => {
-                debouncedHandleMouseEnter(d)
+                setDepartmentActive(d)
               }}
-              onMouseLeave={handleOnMouseLeave}
             >
               <Item
                 id={d.id}
@@ -121,7 +109,6 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
                 style={d.styles}
                 enableStyle={d.enableSty}
                 closeMenu={openMenu}
-                uploadedIcon={d.uploadedIcon}
               >
                 {d.name}
               </Item>
@@ -147,63 +134,54 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
     return blocks
   }, [])
 
-  return departmentItems?.length > 0 ? (
-    <div style={{ display: isOpenMenu ? 'block' : 'none' }}>
-      <nav
+  return isOpenMenu ? (
+    <nav
+      className={classNames(
+        handles.menuContainerNav,
+        'absolute left-0 bg-white bw1 bb b--muted-3 flex'
+      )}
+      ref={navRef}
+    >
+      <ul
         className={classNames(
-          handles.menuContainerNav,
-          'absolute left-0 bg-white bw1 bb b--muted-3 flex'
+          styles.menuContainer,
+          'list ma0 pa0 pb3 br b--muted-4'
         )}
-        ref={navRef}
       >
-        <ul
+        <h3
           className={classNames(
-            styles.menuContainer,
-            'list ma0 pa0 pb3 br b--muted-4'
+            handles.departmentsTitle,
+            'f4 fw7 c-on-base lh-copy ma0 pv5 ph5'
           )}
         >
-          <h3
-            className={classNames(
-              handles.departmentsTitle,
-              'f4 fw7 c-on-base lh-copy ma0 pv5 ph5'
-            )}
-          >
-            {formatIOMessage({ id: title, intl })}
-          </h3>
-          {departments.length ? (
-            departmentItems
-          ) : (
-            <div className="flex flex-column justify-center ph5 lh-copy">
-              <Skeleton count={3} height={30} />
-            </div>
-          )}
-        </ul>
+          {formatIOMessage({ id: title, intl })}
+        </h3>
         {departments.length ? (
-          <div
-            className={classNames(styles.submenuContainer, 'pa5 w-100')}
-            style={{
-              display:
-                departments.length &&
-                  departmentActive &&
-                  departmentActiveHasCategories
-                  ? 'block'
-                  : 'none',
-            }}
-          >
-            <Submenu closeMenu={openMenu} />
-          </div>
+          departmentItems
         ) : (
-          <div className="w-100" style={{ overflow: 'auto' }}>
-            <div className="w-30 mb4 ml4 mt5">
-              <Skeleton height={30} />
-            </div>
-            <div className={classNames(styles.submenuList, 'mh4 mb5')}>
-              {loaderBlocks}
-            </div>
+          <div className="flex flex-column justify-center ph5 lh-copy">
+            <Skeleton count={3} height={30} />
           </div>
         )}
-      </nav>
-    </div>
+      </ul>
+      {departments.length ? (
+        departmentActive &&
+        departmentActiveHasCategories && (
+          <div className={classNames(styles.submenuContainer, 'pa5 w-100')}>
+            <Submenu closeMenu={openMenu} />
+          </div>
+        )
+      ) : (
+        <div className="w-100" style={{ overflow: 'auto' }}>
+          <div className="w-30 mb4 ml4 mt5">
+            <Skeleton height={30} />
+          </div>
+          <div className={classNames(styles.submenuList, 'mh4 mb5')}>
+            {loaderBlocks}
+          </div>
+        </div>
+      )}
+    </nav>
   ) : null
 })
 
