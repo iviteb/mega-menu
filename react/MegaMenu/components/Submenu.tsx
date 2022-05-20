@@ -26,7 +26,9 @@ const CSS_HANDLES = [
   'seeAllLinkContainer',
   'seeAllLink',
   'submenuContainerTitle',
-  'hideArrow',
+  'submenuItemsContainer',
+  'departmentBannerContainer',
+  'departmentBanner',
 ] as const
 
 const messages = defineMessages({
@@ -38,11 +40,10 @@ const messages = defineMessages({
 
 export type ItemProps = InjectedIntlProps & {
   closeMenu?: (open: boolean) => void
-  openOnly?: string
 }
 
 const Submenu: FC<ItemProps> = observer((props) => {
-  const { intl, closeMenu, openOnly } = props
+  const { intl, closeMenu } = props
   const { handles } = useCssHandles(CSS_HANDLES)
   const { departmentActive, config, getCategories } = megaMenuState
   const { orientation } = config
@@ -53,31 +54,29 @@ const Submenu: FC<ItemProps> = observer((props) => {
 
   const [showBtnCat, setShowBtnCat] = useState(false)
 
-  const seeAllLink = (to: string, level = 1, className?: string) => {
-    return (
-      <div
+  const seeAllLink = (to: string, level = 1, className?: string) => (
+    <div
+      className={classNames(
+        handles.seeAllLinkContainer,
+        !className && level === 1 && 'bb b--light-gray pv5 ph5 w-100',
+        !className && level > 1 && 'mt4 mb6 t-body',
+        className
+      )}
+    >
+      <Link
+        to={to}
         className={classNames(
-          handles.seeAllLinkContainer,
-          !className && level === 1 && 'bb b--light-gray pv5 ph5 w-100',
-          !className && level > 1 && 'mt4 mb6 t-body',
-          className
+          handles.seeAllLink,
+          'link underline fw7 c-on-base'
         )}
+        onClick={() => {
+          if (closeMenu) closeMenu(false)
+        }}
       >
-        <Link
-          to={to}
-          className={classNames(
-            handles.seeAllLink,
-            'link underline fw7 c-on-base'
-          )}
-          onClick={() => {
-            if (closeMenu) closeMenu(false)
-          }}
-        >
-          {formatIOMessage({ id: messages.seeAllTitle.id, intl })}
-        </Link>
-      </div>
-    )
-  }
+        {formatIOMessage({ id: messages.seeAllTitle.id, intl })}
+      </Link>
+    </div>
+  )
 
   const subCategories = (items: MenuItem[]) => {
     return items
@@ -126,20 +125,18 @@ const Submenu: FC<ItemProps> = observer((props) => {
               key={category.id}
               className={classNames(
                 applyModifiers(
-                  orientation === 'horizontal' && openOnly === 'horizontal'
+                  orientation === 'horizontal'
                     ? styles.submenuItem
                     : handles.submenuItemVertical,
                   collapsibleStates[category.id] ? 'isOpen' : 'isClosed'
                 ),
-                (orientation === 'vertical' || openOnly === 'vertical') &&
+                orientation === 'vertical' &&
                   'c-on-base bb b--light-gray mv0 ph5',
-                (orientation === 'vertical' || openOnly === 'vertical') &&
-                  i === 0 &&
-                  'bt',
+                orientation === 'vertical' && i === 0 && 'bt',
                 collapsibleStates[category.id] && 'bg-near-white'
               )}
             >
-              {orientation === 'horizontal' && openOnly === 'horizontal' ? (
+              {orientation === 'horizontal' ? (
                 <>
                   <Item
                     to={category.slug}
@@ -161,54 +158,42 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   )}
                 </>
               ) : (
-                <div
-                  className={
-                    category.menu?.length ? '' : classNames(handles.hideArrow)
+                <Collapsible
+                  header={
+                    <p
+                      className={classNames(
+                        handles.collapsibleHeaderText,
+                        collapsibleStates[category.id] && 'fw7'
+                      )}
+                    >
+                      {category.name}
+                    </p>
                   }
+                  align="right"
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onClick={(e: any) =>
+                    setCollapsibleStates({
+                      ...collapsibleStates,
+                      [category.id]: e.target.isOpen,
+                    })
+                  }
+                  isOpen={collapsibleStates[category.id]}
+                  caretColor={`${
+                    collapsibleStates[category.id] ? 'base' : 'muted'
+                  }`}
                 >
-                  <Collapsible
-                    header={
-                      <p
-                        className={classNames(
-                          handles.collapsibleHeaderText,
-                          collapsibleStates[category.id] && 'fw7'
-                        )}
-                      >
-                        {category.name}
-                      </p>
-                    }
-                    align="right"
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    onClick={(e: any) => {
-                      if (subcategories.length >= 1) {
-                        setCollapsibleStates({
-                          ...collapsibleStates,
-                          [category.id]: e.target.isOpen,
-                        })
-                      } else {
-                        window.location.assign(`${category.slug}`)
-                        if (closeMenu) closeMenu(false)
-                      }
-                    }}
-                    isOpen={collapsibleStates[category.id]}
-                    caretColor={`${
-                      collapsibleStates[category.id] ? 'base' : 'muted'
-                    }`}
-                  >
-                    {!!subcategories.length && (
-                      <div className={handles.collapsibleContent}>
-                        {subcategories}
-                      </div>
-                    )}
+                  {!!subcategories.length && (
+                    <div className={handles.collapsibleContent}>
+                      {subcategories}
+                    </div>
+                  )}
 
-                    {subcategories.length >= 0 ? (
-                      seeAllLink(category.slug, 2)
-                    ) : (
-                      // eslint-disable-next-line jsx-a11y/anchor-has-content
-                      <a href={category.slug} />
-                    )}
-                  </Collapsible>
-                </div>
+                  {subcategories.length > 1 ? (
+                    seeAllLink(category.slug, 2)
+                  ) : (
+                    <div />
+                  )}
+                </Collapsible>
               )}
             </div>
           )
@@ -222,49 +207,58 @@ const Submenu: FC<ItemProps> = observer((props) => {
     <>
       {departmentActive && (
         <>
-          <h3
-            className={classNames(
-              handles.submenuContainerTitle,
-              'f4 fw7 c-on-base lh-copy ma0 flex items-center',
-              orientation === 'horizontal' &&
-                openOnly === 'horizontal' &&
-                'mb6',
-              (orientation === 'vertical' || openOnly === 'vertical') &&
-                'pv5 ph5'
-            )}
-          >
-            {departmentActive.name}
-            {orientation === 'horizontal' &&
-            openOnly === 'horizontal' &&
-            showBtnCat ? (
-              seeAllLink(departmentActive.slug, 1, 't-small ml7')
-            ) : (
-              <div />
-            )}
-          </h3>
-
-          <div
-            className={classNames(
-              orientation === 'horizontal' &&
-                openOnly === 'horizontal' &&
-                styles.submenuList,
-              (orientation === 'vertical' || openOnly === 'vertical') &&
-                handles.submenuListVertical
-            )}
-          >
-            {orientation === 'horizontal' && openOnly === 'horizontal' ? (
-              <>
-                <ExtensionPoint id="before-menu" /> {items}{' '}
-                <ExtensionPoint id="after-menu" />
-                <img src={departmentActive.banner} alt="" />
-              </>
-            ) : (
-              <>
+          {orientation === 'horizontal' && (
+            <>
+              <div
+                className={classNames(
+                  handles.submenuItemsContainer,
+                  'flex flex-column w-100'
+                )}
+              >
+                <h3
+                  className={classNames(
+                    handles.submenuContainerTitle,
+                    'f4 fw7 c-on-base lh-copy mt0 mb6 flex items-center'
+                  )}
+                >
+                  {departmentActive.name}
+                  {orientation === 'horizontal' && showBtnCat ? (
+                    seeAllLink(departmentActive.slug, 1, 't-small ml7')
+                  ) : (
+                    <div />
+                  )}
+                </h3>
+                <div className={handles.submenuList}>
+                  <ExtensionPoint id="before-menu" />
+                  {items}
+                  <ExtensionPoint id="after-menu" />
+                </div>
+              </div>
+              <div className={handles.departmentBannerContainer}>
+                <img
+                  className={handles.departmentBanner}
+                  src={departmentActive.banner}
+                  alt=""
+                />
+              </div>
+            </>
+          )}
+          {orientation === 'vertical' && (
+            <>
+              <h3
+                className={classNames(
+                  handles.submenuContainerTitle,
+                  'f4 fw7 c-on-base lh-copy ma0 flex items-center pa5'
+                )}
+              >
+                {departmentActive.name}
+              </h3>
+              <div className={handles.submenuListVertical}>
                 {items}
-                {/* showBtnCat ? seeAllLink(departmentActive.slug) : <div /> */}
-              </>
-            )}
-          </div>
+                {showBtnCat ? seeAllLink(departmentActive.slug) : <div />}
+              </div>
+            </>
+          )}
         </>
       )}
     </>

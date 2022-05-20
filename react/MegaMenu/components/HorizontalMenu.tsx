@@ -19,6 +19,8 @@ const CSS_HANDLES = [
   'menuContainerNav',
   'menuItem',
   'submenuContainer',
+  'departmentsTitle',
+  'departmentActive',
 ] as const
 
 const HorizontalMenu: FC<
@@ -97,7 +99,8 @@ const HorizontalMenu: FC<
             <li
               className={classNames(
                 handles.menuItem,
-                d.id === departmentActive?.id && 'bg-black-05'
+                d.id === departmentActive?.id &&
+                  `bg-black-05 ${handles.departmentActive}`
               )}
               key={d.id}
               onMouseEnter={() => {
@@ -152,7 +155,12 @@ const HorizontalMenu: FC<
           'list ma0 pa0 pb3 br b--muted-4'
         )}
       >
-        <h3 className="f4 fw7 c-on-base lh-copy ma0 pv5 ph5">
+        <h3
+          className={classNames(
+            handles.departmentsTitle,
+            'f4 fw7 c-on-base lh-copy ma0 pv5 ph5'
+          )}
+        >
           {formatIOMessage({ id: title, intl })}
         </h3>
         {departments.length ? (
