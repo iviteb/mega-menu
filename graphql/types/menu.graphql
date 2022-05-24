@@ -2,9 +2,8 @@ type Menu {
   id: ID!
   name: String!
   icon: String!
-  uploadedIcon: String
+  uploadedIcon:String
   slug: String!
-  sellerIDs: String
   styles: String
   menu: [Menu]
   display: Boolean!
@@ -12,21 +11,16 @@ type Menu {
   order: Int
   slugRoot: String
   slugRelative: String
-<<<<<<< HEAD
-  banner: String
-  optionalText: String
-=======
-  banner:String
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
+  banner:String,
+  optionalText:String
 }
 
 input MenuInput {
   id: ID!
   name: String!
   icon: String!
-  uploadedIcon: String
+  uploadedIcon:String
   slug: String!
-  sellerIDs: String
   styles: String!
   menu: [MenuInput]
   display: Boolean
@@ -36,10 +30,6 @@ input MenuInput {
   secondLevel: String
   slugRoot: String
   slugRelative: String
-<<<<<<< HEAD
-  banner: String
-  optionalText: String
-=======
-  banner:String
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
+  banner:String,
+  optionalText:String
 }

@@ -31,11 +31,7 @@ import EDIT from './graphql/mutations/edit.graphql'
 import UPLOAD_FILE from './graphql/mutations/uploadFile.graphql'
 import { IconSelector, messagesForm } from './shared'
 import type { DataMenu, MenuItem } from './shared'
-<<<<<<< HEAD
-import type { UploadMutationData } from './utils/interfaces'
-=======
 import { UploadMutationData } from './utils/interfaces'
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
 import UploadedBanner from './MegaMenu/components/UploadedBanner'
 
 const arrowLeft = <IconArrowLeft />
@@ -56,17 +52,13 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     id: '',
     name: '',
     slug: '',
-    sellerIDs: '',
     styles: '',
     menu: [],
     display: false,
     enableSty: false,
     banner: '',
-<<<<<<< HEAD
     optionalText: '',
     uploadedIcon: '',
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
   }
 
   const { navigate } = useRuntime()
@@ -76,7 +68,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   const [slug, setSlug] = useState('')
   const [slugRoot, setSlugRoot] = useState('')
   const [slugRelative, setSlugRelative] = useState('')
-  const [sellerIDs, setSellerIDs] = useState('')
   const [styles, setStyles] = useState('')
   const [display, setDisplay] = useState(true)
   const [enableSty, setEnableSty] = useState(true)
@@ -89,12 +80,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
 
   const [message, setMessage] = useState('')
   const [levelInfo, setLevelInfo] = useState(Object)
+  const [messageName, setMessageName] = useState('')
   const [messageSlug, setMessageSlug] = useState('')
   const [banner, setBanner] = useState('')
-<<<<<<< HEAD
   const [uploadedIcon, setUploadedIcon] = useState('')
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
 
   const responseForm = JSON.parse(decodeURIComponent(props.params.menu))
   const [uploadFile] = useMutation<UploadMutationData>(UPLOAD_FILE)
@@ -112,7 +101,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
       id: responseForm.firstLevel ? responseForm.firstLevel : responseForm.id,
     },
     fetchPolicy: 'no-cache',
-    ssr: true,
   })
 
   const btnSave = formatIOMessage({
@@ -139,7 +127,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }
   }
 
-<<<<<<< HEAD
   const handleIconDrop = async (acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles[0]) {
       try {
@@ -159,8 +146,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }
   }
 
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
   const handleImageReset = async () => {
     try {
       setBanner('')
@@ -169,7 +154,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }
   }
 
-<<<<<<< HEAD
   const handleIconReset = async () => {
     try {
       setUploadedIcon('')
@@ -178,8 +162,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }
   }
 
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
   const messageTranslate = (key: string) => {
     const keyObj = `admin/mega-menu.items.${key}`
 
@@ -198,7 +180,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     slugMenu: string,
     slugRootMenu: string,
     slugRelativeMenu: string,
-    sellerIDsMenu: string,
     stylesMenu: string,
     subMenuData: DataMenu[],
     displayMenu: boolean,
@@ -212,7 +193,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     setSlug(slugMenu)
     setSlugRoot(slugRootMenu)
     setSlugRelative(slugRelativeMenu)
-    setSellerIDs(sellerIDsMenu)
     setStyles(stylesMenu)
     setSubMenu(subMenuData)
     setDisplay(displayMenu)
@@ -235,10 +215,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           dataMenu.menu.icon
 
         setBanner(dataMenu.menu.banner)
-<<<<<<< HEAD
         setUploadedIcon(dataMenu.menu.uploadedIcon)
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         setDataForm(
           dataMenu.menu.id,
           dataMenu.menu.name,
@@ -246,7 +223,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           dataMenu.menu.slug,
           dataMenu.menu.slugRoot,
           dataMenu.menu.slugRelative,
-          dataMenu.menu.sellerIDs,
           dataMenu.menu.styles,
           dataMenu.menu.menu,
           dataMenu.menu.display,
@@ -271,7 +247,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
 
           rootRelative.shift()
         }
-
         setUploadedIcon(submenu[0].uploadedIcon)
         setDataForm(
           submenu[0].id,
@@ -280,7 +255,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           submenu[0].slug,
           submenu[0].slugRoot ?? rootRelative[1],
           submenu[0].slugRelative ?? rootRelative[0],
-          submenu[0].sellerIDs,
           submenu[0].styles,
           [],
           submenu[0].display,
@@ -329,7 +303,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           tempArrayTL[0].slug,
           tempArrayTL[0].slugRoot ?? rootRelative[0],
           tempArrayTL[0].slugRelative ?? rootRelative[1],
-          tempArrayTL[0].sellerIDs ?? '',
           tempArrayTL[0].styles,
           [],
           tempArrayTL[0].display,
@@ -367,8 +340,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
       responseForm.level === 'firstLevel'
         ? '1'
         : responseForm.level === 'secondLevel'
-          ? '2'
-          : '3'
+        ? '2'
+        : '3'
 
     navigate({
       to: `/admin/app/mega-menu/${tab}`,
@@ -397,6 +370,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
 
   const changeStyle = (e: { id: string; value: string }) => {
     setAlert(false)
+    setMessageName('')
     setMessageSlug('')
 
     switch (e.id) {
@@ -416,10 +390,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         setIcon(e.value)
         break
 
-      case 'sellerIDs':
-        setSellerIDs(e.value)
-        break
-
       case 'styles':
         setStyles(e.value)
         break
@@ -435,7 +405,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
       case 'slugRelative':
         setSlugRelative(e.value)
         break
-
       case 'optionalText':
         setOptionalText(e.value)
         break
@@ -468,7 +437,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           icon: mainMenuLevel.icon,
           uploadedIcon: mainMenuLevel.uploadedIcon,
           slug: mainMenuLevel.slug,
-          sellerIDs: mainMenuLevel.sellerIDs,
           styles: mainMenuLevel.styles,
           menu: subMenuLevel,
           display: mainMenuLevel.display,
@@ -477,10 +445,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slugRoot: mainMenuLevel.slugRoot,
           slugRelative: mainMenuLevel.slugRelative,
           banner: mainMenuLevel.banner,
-<<<<<<< HEAD
           optionalText: mainMenuLevel.optionalText,
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         },
       },
     })
@@ -499,7 +464,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
             icon,
             slug,
             uploadedIcon,
-            sellerIDs,
             styles,
             menu: subMenu,
             display,
@@ -518,7 +482,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         name,
         icon,
         slug: `${menu.slug}/${slug}`,
-        sellerIDs,
         styles,
         display,
         enableSty,
@@ -534,16 +497,12 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           name: menu.name,
           icon: menu.icon,
           slug: menu.slug,
-          sellerIDs: menu.sellerIDs,
           styles: menu.styles,
           display: menu.display,
           enableSty: menu.enableSty,
           order: menu.order,
           banner: menu.banner,
-<<<<<<< HEAD
           uploadedIcon: menu.uploadedIcon,
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         },
         secondMenu
       )
@@ -561,7 +520,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         name,
         icon,
         slug: `${valueSlug}/${slug}`,
-        sellerIDs,
         styles,
         display,
         enableSty,
@@ -590,7 +548,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           icon: menu.icon,
           uploadedIcon: menu.uploadedIcon,
           slug: menu.slug,
-          sellerIDs: menu.sellerIDs,
           styles: menu.styles,
           display: menu.display,
           enableSty: menu.enableSty,
@@ -598,10 +555,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slugRoot: menu.slugRoot,
           slugRelative: menu.slugRelative,
           banner: menu.banner,
-<<<<<<< HEAD
           optionalText: menu.optionalText,
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         },
         menu.menu ? menu.menu : []
       )
@@ -644,8 +598,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           let createSlug = !item.slugRoot
             ? `${slug}/${dataPath[1]}`
             : item.slugRoot === null
-              ? `${slug}/`
-              : `${slug}/${item.slugRoot}`
+            ? `${slug}/`
+            : `${slug}/${item.slugRoot}`
 
           createSlug = createSlug.replace('undefined', '')
 
@@ -679,8 +633,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                   dataPath.length >= 3
                     ? `${slug}/${dataPath[1]}/${dataPath[2]}`
                     : itemThird.slugRoot === null
-                      ? `${itemSecond.slug}/`
-                      : `${itemSecond.slug}/${itemThird.slugRoot}`,
+                    ? `${itemSecond.slug}/`
+                    : `${itemSecond.slug}/${itemThird.slugRoot}`,
                 slugRelative:
                   dataPath.length >= 3
                     ? `${slug}/${dataPath[1]}`
@@ -703,22 +657,14 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           id: idMenu,
           name,
           icon,
-<<<<<<< HEAD
           uploadedIcon,
           slug,
-          sellerIDs,
-=======
-          slug,
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
           styles,
           display,
           enableSty,
           order,
           banner,
-<<<<<<< HEAD
           optionalText,
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         },
         menuLevelTwoUpdate
       )
@@ -735,7 +681,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         tempSecond[0].slug = menuSecondSlug
         tempSecond[0].slugRoot = slugRoot
         tempSecond[0].slugRelative = slugRelative
-        tempSecond[0].sellerIDs = sellerIDs
         tempSecond[0].styles = styles
         tempSecond[0].display = display
         tempSecond[0].enableSty = enableSty
@@ -761,8 +706,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
               dataPath.length >= 3
                 ? `${menuSecondSlug}/${dataPath[2]}`
                 : itemThird.slugRoot === null
-                  ? `${itemSecond.slug}/`
-                  : `${itemSecond.slug}/${itemThird.slugRoot}`
+                ? `${itemSecond.slug}/`
+                : `${itemSecond.slug}/${itemThird.slugRoot}`
 
             createSlug = createSlug.replace('undefined', '')
 
@@ -791,7 +736,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slug: menu.slug,
           slugRoot: menu.slugRoot,
           slugRelative: menu.slugRelative,
-          sellerIDs: menu.sellerIDs,
           styles: menu.styles,
           display: menu.display,
           enableSty: menu.enableSty,
@@ -824,7 +768,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           tempThird[0].slug = menuThirdSlug
           tempThird[0].slugRoot = slugRoot
           tempThird[0].slugRelative = slugRelative
-          tempThird[0].sellerIDs = sellerIDs
           tempThird[0].styles = styles
           tempThird[0].display = display
           tempThird[0].enableSty = enableSty
@@ -842,16 +785,12 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slug: menu.slug,
           slugRoot: menu.slugRoot,
           slugRelative: menu.slugRelative,
-          sellerIDs: menu.sellerIDs,
           styles: menu.styles,
           display: menu.display,
           enableSty: menu.enableSty,
           order: menu.order,
           banner: menu.banner,
-<<<<<<< HEAD
           optionalText: menu.optionalText,
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
         },
         menu.menu ? menu.menu : []
       )
@@ -882,10 +821,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
               responseForm.type === 'edit'
                 ? messageTranslate('titleForm')
                 : responseForm.level === 'firstLevel'
-                  ? messageTranslate('newItemFirst')
-                  : responseForm.level === 'secondLevel'
-                    ? messageTranslate('newItemSecond')
-                    : messageTranslate('newItemThird')
+                ? messageTranslate('newItemFirst')
+                : responseForm.level === 'secondLevel'
+                ? messageTranslate('newItemSecond')
+                : messageTranslate('newItemThird')
             }
           />
         }
@@ -903,8 +842,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           </div>
         </div>
         {(responseForm.firstLevel && !responseForm.secondLevel) ||
-          (responseForm.type === 'new' &&
-            responseForm.level === 'secondLevel') ? (
+        (responseForm.type === 'new' &&
+          responseForm.level === 'secondLevel') ? (
           <div className="mb5">
             <Card>
               <div className=" ml4">
@@ -922,7 +861,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           <div />
         )}
         {(responseForm.firstLevel && responseForm.secondLevel) ||
-          (responseForm.type === 'new' && responseForm.level === 'thirdLevel') ? (
+        (responseForm.type === 'new' && responseForm.level === 'thirdLevel') ? (
           <div className="mb5">
             <div className="flex">
               <div className="w-50 mr4">
@@ -976,6 +915,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       label={messageTranslate('input1Form')}
                       value={name}
                       id="name"
+                      errorMessage={messageName}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         changeStyle({ id: e.target.id, value: e.target.value })
                       }
@@ -1033,8 +973,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       <>
                         {(responseForm.type === 'new' &&
                           responseForm.level === 'secondLevel') ||
-                          (responseForm.type === 'new' &&
-                            responseForm.level === 'thirdLevel') ? (
+                        (responseForm.type === 'new' &&
+                          responseForm.level === 'thirdLevel') ? (
                           <>
                             <p className="mb2">
                               {messageTranslate('input2Form')}
@@ -1107,17 +1047,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                     />
                   </div>
                   <div className="mb5">
-                    <Input
-                      placeholder={messageTranslate('inputSellerIDsPlaceholder')}
-                      label={messageTranslate('inputSellerIDs')}
-                      value={sellerIDs}
-                      id="sellerIDs"
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        changeStyle({ id: e.target.id, value: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div className="mb5">
                     <Textarea
                       label={
                         <div className="flex items-center">
@@ -1142,7 +1071,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                     />
                   </div>
                 </div>
-<<<<<<< HEAD
 
                 {responseForm.level !== 'thirdLevel' && (
                   <div className="w-100 ml4 mr4">
@@ -1187,8 +1115,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                     </div>
                   </div>
                 )}
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
                 {responseForm.level === 'firstLevel' && (
                   <div className="w-100 ml4 mr4">
                     <div className="mb5">
@@ -1205,10 +1131,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       {banner && responseForm.level === 'firstLevel' && (
                         <UploadedBanner
                           banner={banner}
-<<<<<<< HEAD
                           textlabel="Uploaded banner"
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
                           onHandleImageReset={handleImageReset}
                         />
                       )}
@@ -1252,9 +1175,9 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           label: btnSave,
           onClick: () => {
             if (!name) {
-              setMessage(messageTranslate('validateName'))
+              setMessageName(messageTranslate('validateName'))
             } else if (!slug) {
-              setMessage(messageTranslate('validateSlug'))
+              setMessageSlug(messageTranslate('validateSlug'))
             } else if (responseForm.type === 'edit') {
               editItem()
             } else {

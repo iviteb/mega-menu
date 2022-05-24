@@ -4,7 +4,6 @@ mutation create($menuInput: MenuInput!) {
     name
     icon
     slug
-    sellerIDs
     styles
     display
     enableSty
@@ -12,9 +11,6 @@ mutation create($menuInput: MenuInput!) {
     slugRoot
     slugRelative
     banner
-<<<<<<< HEAD
     optionalText
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
   }
 }

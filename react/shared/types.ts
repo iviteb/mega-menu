@@ -4,7 +4,6 @@ export type MenuItem = {
   uploadedIcon?: string
   name: string
   slug: string
-  sellerIDs?: string
   styles: string
   menu?: MenuItem[]
   display: boolean
@@ -13,10 +12,7 @@ export type MenuItem = {
   slugRoot?: string
   slugRelative?: string
   banner?: string
-<<<<<<< HEAD
   optionalText?: string
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
 }
 
 export type MenuItemSave = {
@@ -25,7 +21,6 @@ export type MenuItemSave = {
   uploadedIcon?: string
   name: string
   slug: string
-  sellerIDs?: string
   styles: string
   menu?: MenuItem[] | string
   display: boolean
@@ -34,10 +29,7 @@ export type MenuItemSave = {
   slugRoot?: string
   slugRelative?: string
   banner?: string
-<<<<<<< HEAD
   optionalText?: string
-=======
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
 }
 
 export type MenusResponse = {
@@ -69,7 +61,6 @@ export interface GlobalConfig {
   title?: string
   orientation?: Orientation
   defaultDepartmentActive?: string
-  openOnly?: string
 }
 
 export interface IconProps {
@@ -79,14 +70,4 @@ export interface IconProps {
   viewBox?: string
   activeClassName?: string
   mutedClassName?: string
-  Drawer?: any
-}
-
-export interface SettingsType {
-  settings: [
-    {
-      idMenu: string
-      orientation: string
-    }
-  ]
 }
