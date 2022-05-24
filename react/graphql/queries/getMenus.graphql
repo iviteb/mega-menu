@@ -1,8 +1,9 @@
-query getMenus($isMobile: Boolean) {
-  menus(isMobile: $isMobile) {
+query getMenus {
+  menus {
     id
     name
     icon
+    uploadedIcon
     slug
     styles
     display
@@ -15,6 +16,7 @@ query getMenus($isMobile: Boolean) {
       id
       name
       icon
+      uploadedIcon
       slug
       styles
       display
@@ -22,8 +24,6 @@ query getMenus($isMobile: Boolean) {
       order
       slugRoot
       slugRelative
-      mobile
-      desktop
       menu {
         id
         name
@@ -35,11 +35,8 @@ query getMenus($isMobile: Boolean) {
         order
         slugRoot
         slugRelative
-        mobile
-        desktop
+        optionalText
       }
     }
-    mobile
-    desktop
   }
 }

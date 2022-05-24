@@ -102,7 +102,7 @@ const HorizontalMenu: FC<
                 d.id === departmentActive?.id &&
                   `bg-black-05 ${handles.departmentActive}`
               )}
-              key={d.id}
+              key={String(d.id) + String(Math.random())}
               onMouseEnter={() => {
                 setDepartmentActive(d)
               }}

@@ -57,6 +57,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     display: false,
     enableSty: false,
     banner: '',
+    optionalText: '',
+    uploadedIcon: '',
   }
 
   const { navigate } = useRuntime()
@@ -69,18 +71,19 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   const [styles, setStyles] = useState('')
   const [display, setDisplay] = useState(true)
   const [enableSty, setEnableSty] = useState(true)
-  const [mobile, setMobile] = useState(true)
-  const [desktop, setDesktop] = useState(true)
   const [idMenu, setIdMenu] = useState('')
   const [mainMenu, setMainMenu] = useState(dataMenuType)
   const [subMenu, setSubMenu] = useState(dataMenuTypeArray)
   const [alert, setAlert] = useState(false)
   const [order, setOrder] = useState(0)
+  const [optionalText, setOptionalText] = useState('')
+
   const [message, setMessage] = useState('')
   const [levelInfo, setLevelInfo] = useState(Object)
   const [messageName, setMessageName] = useState('')
   const [messageSlug, setMessageSlug] = useState('')
   const [banner, setBanner] = useState('')
+  const [uploadedIcon, setUploadedIcon] = useState('')
 
   const responseForm = JSON.parse(decodeURIComponent(props.params.menu))
   const [uploadFile] = useMutation<UploadMutationData>(UPLOAD_FILE)
@@ -124,9 +127,36 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }
   }
 
+  const handleIconDrop = async (acceptedFiles: File[]) => {
+    if (acceptedFiles && acceptedFiles[0]) {
+      try {
+        setIsLoading(true)
+        const { data } = await uploadFile({
+          variables: { file: acceptedFiles[0] },
+        })
+
+        if (data?.uploadFile?.fileUrl) {
+          setUploadedIcon(data?.uploadFile?.fileUrl)
+
+          setIsLoading(false)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
   const handleImageReset = async () => {
     try {
       setBanner('')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleIconReset = async () => {
+    try {
+      setUploadedIcon('')
     } catch (error) {
       console.log(error)
     }
@@ -141,7 +171,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }).toString()
   }
 
-  /* eslint max-params: ["error", 13] */
+  /* eslint max-params: ["error", 12] */
   /* eslint-env es9 */
   const setDataForm = (
     idenMenu: string,
@@ -155,8 +185,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     displayMenu: boolean,
     enableStyMenu: boolean,
     orderMenu: number,
-    mobileMenu: boolean,
-    desktopMenu: boolean
+    optionalTextMenu: string
   ) => {
     setIdMenu(idenMenu)
     setName(nameMenu)
@@ -169,8 +198,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     setDisplay(displayMenu)
     setEnableSty(enableStyMenu)
     setOrder(orderMenu)
-    setMobile(mobileMenu)
-    setDesktop(desktopMenu)
+    setOptionalText(optionalTextMenu)
   }
 
   useEffect(() => {
@@ -183,10 +211,11 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
 
     if (responseForm.type === 'edit') {
       if (responseForm.level === 'firstLevel') {
-        document.getElementsByClassName('c-muted-2')[0].textContent =
+        document.getElementsByClassName('c-muted-2')[0].innerHTML =
           dataMenu.menu.icon
 
         setBanner(dataMenu.menu.banner)
+        setUploadedIcon(dataMenu.menu.uploadedIcon)
         setDataForm(
           dataMenu.menu.id,
           dataMenu.menu.name,
@@ -199,8 +228,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           dataMenu.menu.display,
           dataMenu.menu.enableSty,
           dataMenu.menu.order,
-          dataMenu.menu.mobile ?? mobile,
-          dataMenu.menu.desktop ?? desktop
+          dataMenu.menu.optionalText ?? ''
         )
       } else if (responseForm.level === 'secondLevel') {
         setLevelInfo({ firstLevel: dataMenu.menu.name })
@@ -219,7 +247,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
 
           rootRelative.shift()
         }
-
+        setUploadedIcon(submenu[0].uploadedIcon)
         setDataForm(
           submenu[0].id,
           submenu[0].name,
@@ -232,8 +260,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           submenu[0].display,
           submenu[0].enableSty,
           submenu[0].order,
-          submenu[0].mobile ?? mobile,
-          submenu[0].desktop ?? desktop
+          submenu[0].optionalText ?? ''
         )
       } else {
         const tempArrayTL: DataMenu[] = []
@@ -281,8 +308,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           tempArrayTL[0].display,
           tempArrayTL[0].enableSty,
           tempArrayTL[0].order ?? 0,
-          tempArrayTL[0].mobile ?? true,
-          tempArrayTL[0].desktop ?? true
+          tempArrayTL[0].optionalText ?? ''
         )
 
         setLevelInfo({
@@ -314,8 +340,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
       responseForm.level === 'firstLevel'
         ? '1'
         : responseForm.level === 'secondLevel'
-          ? '2'
-          : '3'
+        ? '2'
+        : '3'
 
     navigate({
       to: `/admin/app/mega-menu/${tab}`,
@@ -379,13 +405,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
       case 'slugRelative':
         setSlugRelative(e.value)
         break
-
-      case 'mobile':
-        setMobile(!mobile)
-        break
-
-      case 'desktop':
-        setDesktop(!desktop)
+      case 'optionalText':
+        setOptionalText(e.value)
         break
 
       default:
@@ -407,13 +428,14 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     return randomNumber
   }
 
-  const insertSubMenu = (mainMenuLevel: DataMenu, subMenuLevel: MenuItem[]) => {
+  const insertSubMenu = (mainMenuLevel: DataMenu, subMenuLevel: DataMenu[]) => {
     menuInput({
       variables: {
         editMenu: {
           id: mainMenuLevel.id,
           name: mainMenuLevel.name,
           icon: mainMenuLevel.icon,
+          uploadedIcon: mainMenuLevel.uploadedIcon,
           slug: mainMenuLevel.slug,
           styles: mainMenuLevel.styles,
           menu: subMenuLevel,
@@ -423,6 +445,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slugRoot: mainMenuLevel.slugRoot,
           slugRelative: mainMenuLevel.slugRelative,
           banner: mainMenuLevel.banner,
+          optionalText: mainMenuLevel.optionalText,
         },
       },
     })
@@ -440,6 +463,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
             name,
             icon,
             slug,
+            uploadedIcon,
             styles,
             menu: subMenu,
             display,
@@ -464,8 +488,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         order: orderSubMenu + 1,
         slugRoot: slug,
         slugRelative: menu.slug,
-        mobile,
-        desktop,
+        uploadedIcon,
       })
 
       insertSubMenu(
@@ -479,6 +502,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           enableSty: menu.enableSty,
           order: menu.order,
           banner: menu.banner,
+          uploadedIcon: menu.uploadedIcon,
         },
         secondMenu
       )
@@ -502,8 +526,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         order: valueOrder ? valueOrder.length + 1 : 1,
         slugRoot: slug,
         slugRelative: `${valueSlug}`,
-        mobile,
-        desktop,
+        optionalText,
       }
 
       if (menu.menu) {
@@ -523,6 +546,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           id: menu.id,
           name: menu.name,
           icon: menu.icon,
+          uploadedIcon: menu.uploadedIcon,
           slug: menu.slug,
           styles: menu.styles,
           display: menu.display,
@@ -531,6 +555,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slugRoot: menu.slugRoot,
           slugRelative: menu.slugRelative,
           banner: menu.banner,
+          optionalText: menu.optionalText,
         },
         menu.menu ? menu.menu : []
       )
@@ -559,7 +584,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     let tempSecond: DataMenu[] = []
 
     if (responseForm.level === 'firstLevel') {
-      const menuLevelTwo = menu.menu ? menu.menu : []
+      const menuLevelTwo = menu.menu
       const menuLevelTwoUpdate: MenuItem[] = []
 
       if (menuLevelTwo?.length) {
@@ -573,8 +598,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           let createSlug = !item.slugRoot
             ? `${slug}/${dataPath[1]}`
             : item.slugRoot === null
-              ? `${slug}/`
-              : `${slug}/${item.slugRoot}`
+            ? `${slug}/`
+            : `${slug}/${item.slugRoot}`
 
           createSlug = createSlug.replace('undefined', '')
 
@@ -608,8 +633,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                   dataPath.length >= 3
                     ? `${slug}/${dataPath[1]}/${dataPath[2]}`
                     : itemThird.slugRoot === null
-                      ? `${itemSecond.slug}/`
-                      : `${itemSecond.slug}/${itemThird.slugRoot}`,
+                    ? `${itemSecond.slug}/`
+                    : `${itemSecond.slug}/${itemThird.slugRoot}`,
                 slugRelative:
                   dataPath.length >= 3
                     ? `${slug}/${dataPath[1]}`
@@ -627,20 +652,19 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         })
       }
 
-      const subMenuOtherLevels: MenuItem[] =
-        menuLevelTwoUpdate.length > 0 ? menuLevelTwoUpdate : menuLevelTwo
-
       insertSubMenu(
         {
           id: idMenu,
           name,
           icon,
+          uploadedIcon,
           slug,
           styles,
           display,
           enableSty,
           order,
           banner,
+          optionalText,
         },
         menuLevelTwoUpdate
       )
@@ -661,8 +685,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         tempSecond[0].display = display
         tempSecond[0].enableSty = enableSty
         tempSecond[0].order = order
-        tempSecond[0].mobile = mobile
-        tempSecond[0].desktop = desktop
+        tempSecond[0].uploadedIcon = uploadedIcon
       }
 
       let menuLevelThirdUpdate: MenuItem[] = []
@@ -683,8 +706,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
               dataPath.length >= 3
                 ? `${menuSecondSlug}/${dataPath[2]}`
                 : itemThird.slugRoot === null
-                  ? `${itemSecond.slug}/`
-                  : `${itemSecond.slug}/${itemThird.slugRoot}`
+                ? `${itemSecond.slug}/`
+                : `${itemSecond.slug}/${itemThird.slugRoot}`
 
             createSlug = createSlug.replace('undefined', '')
 
@@ -694,6 +717,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
               slugRelative:
                 dataPath.length >= 3 ? `${menuSecondSlug}` : itemSecond.slug,
               slugRoot: !itemThird.slugRoot ? dataPath[2] : itemThird.slugRoot,
+              optionalText: itemThird.optionalText,
             }
 
             menuLevelThirdUpdate.push(updateLevel)
@@ -708,6 +732,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           id: menu.id,
           name: menu.name,
           icon: menu.icon,
+          uploadedIcon: menu.uploadedIcon,
           slug: menu.slug,
           slugRoot: menu.slugRoot,
           slugRelative: menu.slugRelative,
@@ -747,8 +772,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           tempThird[0].display = display
           tempThird[0].enableSty = enableSty
           tempThird[0].order = order
-          tempThird[0].mobile = mobile
-          tempThird[0].desktop = desktop
+          tempThird[0].optionalText = optionalText
         }
       }
 
@@ -757,6 +781,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           id: menu.id,
           name: menu.name,
           icon: menu.icon,
+          uploadedIcon: menu.uploadedIcon,
           slug: menu.slug,
           slugRoot: menu.slugRoot,
           slugRelative: menu.slugRelative,
@@ -765,6 +790,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           enableSty: menu.enableSty,
           order: menu.order,
           banner: menu.banner,
+          optionalText: menu.optionalText,
         },
         menu.menu ? menu.menu : []
       )
@@ -795,10 +821,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
               responseForm.type === 'edit'
                 ? messageTranslate('titleForm')
                 : responseForm.level === 'firstLevel'
-                  ? messageTranslate('newItemFirst')
-                  : responseForm.level === 'secondLevel'
-                    ? messageTranslate('newItemSecond')
-                    : messageTranslate('newItemThird')
+                ? messageTranslate('newItemFirst')
+                : responseForm.level === 'secondLevel'
+                ? messageTranslate('newItemSecond')
+                : messageTranslate('newItemThird')
             }
           />
         }
@@ -816,8 +842,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           </div>
         </div>
         {(responseForm.firstLevel && !responseForm.secondLevel) ||
-          (responseForm.type === 'new' &&
-            responseForm.level === 'secondLevel') ? (
+        (responseForm.type === 'new' &&
+          responseForm.level === 'secondLevel') ? (
           <div className="mb5">
             <Card>
               <div className=" ml4">
@@ -835,7 +861,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           <div />
         )}
         {(responseForm.firstLevel && responseForm.secondLevel) ||
-          (responseForm.type === 'new' && responseForm.level === 'thirdLevel') ? (
+        (responseForm.type === 'new' && responseForm.level === 'thirdLevel') ? (
           <div className="mb5">
             <div className="flex">
               <div className="w-50 mr4">
@@ -947,8 +973,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       <>
                         {(responseForm.type === 'new' &&
                           responseForm.level === 'secondLevel') ||
-                          (responseForm.type === 'new' &&
-                            responseForm.level === 'thirdLevel') ? (
+                        (responseForm.type === 'new' &&
+                          responseForm.level === 'thirdLevel') ? (
                           <>
                             <p className="mb2">
                               {messageTranslate('input2Form')}
@@ -1045,6 +1071,50 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                     />
                   </div>
                 </div>
+
+                {responseForm.level !== 'thirdLevel' && (
+                  <div className="w-100 ml4 mr4">
+                    <div className="mb5">
+                      <div className="flex items-center">
+                        <p className="mb2">Upload icon</p>
+                      </div>
+
+                      <Dropzone
+                        onDropAccepted={handleIconDrop}
+                        onFileReset={handleIconReset}
+                        isLoading={isLoading}
+                      />
+
+                      {uploadedIcon && (
+                        <UploadedBanner
+                          textlabel="Uploaded Icon"
+                          banner={uploadedIcon}
+                          onHandleImageReset={handleIconReset}
+                        />
+                      )}
+                    </div>
+                  </div>
+                )}
+                {responseForm.level === 'thirdLevel' && (
+                  <div className="w-100 ml4 mr4">
+                    <div className="mb5">
+                      <div className="flex items-center">
+                        <Input
+                          placeholder="Option text near category name"
+                          label="Optional text"
+                          value={optionalText}
+                          id="optionalText"
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            changeStyle({
+                              id: e.target.id,
+                              value: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
                 {responseForm.level === 'firstLevel' && (
                   <div className="w-100 ml4 mr4">
                     <div className="mb5">
@@ -1061,6 +1131,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       {banner && responseForm.level === 'firstLevel' && (
                         <UploadedBanner
                           banner={banner}
+                          textlabel="Uploaded banner"
                           onHandleImageReset={handleImageReset}
                         />
                       )}
@@ -1096,28 +1167,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                 }
               />
             </div>
-            <div className="mt7 mb7">
-              <p>Mobile</p>
-              <Toggle
-                label={mobile ? 'Show' : 'Hide'}
-                checked={mobile}
-                id="mobile"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  changeStyle({ id: e.target.id, value: e.target.value })
-                }
-              />
-            </div>
-            <div className="mt7 mb7">
-              <p>Desktop</p>
-              <Toggle
-                label={desktop ? 'Show' : 'Hide'}
-                checked={desktop}
-                id="desktop"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  changeStyle({ id: e.target.id, value: e.target.value })
-                }
-              />
-            </div>
           </div>
         </PageBlock>
       </Layout>
@@ -1126,9 +1175,9 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           label: btnSave,
           onClick: () => {
             if (!name) {
-              setMessageName(messageTranslate('validateName'))
+              setMessage(messageTranslate('validateName'))
             } else if (!slug) {
-              setMessageSlug(messageTranslate('validateSlug'))
+              setMessage(messageTranslate('validateSlug'))
             } else if (responseForm.type === 'edit') {
               editItem()
             } else {
