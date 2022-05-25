@@ -23,12 +23,7 @@ const CSS_HANDLES = [
   'departmentActive',
 ] as const
 
-const HorizontalMenu: FC<
-  InjectedIntlProps & {
-    openOnly: string
-    orientation: string
-  }
-> = observer((props) => {
+const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
   const { handles } = useCssHandles(CSS_HANDLES)
   const {
     isOpenMenu,
@@ -39,9 +34,7 @@ const HorizontalMenu: FC<
     openMenu,
   } = megaMenuState
 
-  const { openOnly, orientation, intl } = props
-
-  const departmentActiveHasCategories = !!departmentActive?.menu?.length
+  // const departmentActiveHasCategories = !!departmentActive?.menu?.length
   const navRef = useRef<HTMLDivElement>(null)
 
   const handleClickOutside = useCallback(
@@ -70,8 +63,6 @@ const HorizontalMenu: FC<
     return () => {
       document.removeEventListener('click', handleClickOutside, true)
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -124,7 +115,7 @@ const HorizontalMenu: FC<
           )
         }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [departments, departmentActive]
+    [departments]
   )
 
   const loaderBlocks = useMemo(() => {
@@ -142,7 +133,7 @@ const HorizontalMenu: FC<
     return blocks
   }, [])
 
-  return isOpenMenu && openOnly === orientation ? (
+  return isOpenMenu ? (
     <nav
       className={classNames(
         handles.menuContainerNav,
@@ -173,12 +164,9 @@ const HorizontalMenu: FC<
         )}
       </ul>
       {departments.length ? (
-        departmentActive &&
-        departmentActiveHasCategories && (
-          <div className={classNames(styles.submenuContainer, 'pa5 w-100')}>
-            <Submenu closeMenu={openMenu ?? 'horizontal'} openOnly={openOnly} />
-          </div>
-        )
+        <div className={classNames(styles.submenuContainer, 'pa5 w-100')}>
+          <Submenu closeMenu={openMenu} />
+        </div>
       ) : (
         <div className="w-100" style={{ overflow: 'auto' }}>
           <div className="w-30 mb4 ml4 mt5">

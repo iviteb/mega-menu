@@ -58,6 +58,7 @@ const VerticalMenu: FC<VerticalMenuProps> = observer((props) => {
           onClick: openDepartment,
           style: d.styles,
           enableStyle: d.enableSty,
+          uploadedIcon: d.uploadedIcon,
           ...(!hasCategories && { to: d.slug }),
         }
 
