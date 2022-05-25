@@ -29,6 +29,8 @@ const CSS_HANDLES = [
   'submenuItemsContainer',
   'departmentBannerContainer',
   'departmentBanner',
+  'submenuVerticalNameContainer',
+  'menuItemIcon',
 ] as const
 
 const messages = defineMessages({
@@ -163,123 +165,128 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   )}
                 </>
               ) : (
-                <div
-                  className={
-                    category.menu?.length ? '' : classNames(handles.hideArrow)
-                  }
-                >
-                  <Collapsible
-                    header={
-                      <p
+                <Collapsible
+                  header={
+                    <>
+                      <div
                         className={classNames(
-                          handles.collapsibleHeaderText,
-                          collapsibleStates[category.id] && 'fw7'
+                          handles.submenuVerticalNameContainer,
+                          'flex'
                         )}
                       >
-                        {category.name}
-                      </p>
-                    }
-                    align="right"
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    onClick={(e: any) => {
-                      if (subcategories.length >= 1) {
-                        setCollapsibleStates({
-                          ...collapsibleStates,
-                          [category.id]: e.target.isOpen,
-                        })
-                      } else {
-                        window.location.assign(`${category.slug}`)
-                        if (closeMenu) closeMenu(false)
-                      }
-                    }}
-                    isOpen={collapsibleStates[category.id]}
-                    caretColor={`${collapsibleStates[category.id] ? 'base' : 'muted'
-                      }`}
-                  >
-                    {!!subcategories.length && (
-                      <div className={handles.collapsibleContent}>
-                        {subcategories}
+                        <img
+                          className={handles.menuItemIcon}
+                          src={category.uploadedIcon}
+                          alt=""
+                        />
+                        <p
+                          className={classNames(
+                            handles.collapsibleHeaderText,
+                            collapsibleStates[category.id] && 'fw7'
+                          )}
+                        >
+                          {category.name}
+                        </p>
                       </div>
-                    )}
+                    </>
+                  }
+                  align="right"
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onClick={(e: any) =>
+                    setCollapsibleStates({
+                      ...collapsibleStates,
+                      [category.id]: e.target.isOpen,
+                    })
+                  }
+                  isOpen={collapsibleStates[category.id]}
+                  caretColor={`${collapsibleStates[category.id] ? 'base' : 'muted'
+                    }`}
+                >
+                  {!!subcategories.length && (
+                    <div className={handles.collapsibleContent}>
+                      {subcategories}
+                    </div>
+                  )}
 
-                    {subcategories.length >= 0 ? (
-                      seeAllLink(category.slug, 2)
-                    ) : (
-                      // eslint-disable-next-line jsx-a11y/anchor-has-content
-                      <a href={category.slug} />
-                    )}
-                  </Collapsible>
+                  {subcategories.length >= 0 ? (
+                    seeAllLink(category.slug, 2)
+                  ) : (
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
+                    <a href={category.slug} />
+                  )}
+                </Collapsible>
                 </div>
-              )}
-            </div>
+          )
+        }
+            </div >
           )
         })
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [departmentActive, collapsibleStates]
+// eslint-disable-next-line react-hooks/exhaustive-deps
+[departmentActive, collapsibleStates]
   )
 
-  return (
-    <>
-      {departmentActive && (
-        <>
-          {orientation === 'horizontal' && (
-            <>
-              <div
-                className={classNames(
-                  handles.submenuItemsContainer,
-                  'flex flex-column w-100'
-                )}
-              >
-                <h3
-                  className={classNames(
-                    handles.submenuContainerTitle,
-                    'f4 fw7 c-on-base lh-copy mt0 mb6 flex items-center'
-                  )}
-                >
-                  {departmentActive.name}
-                  {orientation === 'horizontal' && showBtnCat ? (
-                    seeAllLink(departmentActive.slug, 1, 't-small ml7')
-                  ) : (
-                    <div />
-                  )}
-                </h3>
-                <div className={handles.submenuList}>
-                  <ExtensionPoint id="before-menu" />
-                  {items}
-                  <ExtensionPoint id="after-menu" />
-                </div>
-              </div>
-
-              <div className={handles.departmentBannerContainer}>
-                <img
-                  className={handles.departmentBanner}
-                  src={departmentActive.banner}
-                  alt=""
-                />
-              </div>
-            </>
-          )}
-          {orientation === 'vertical' && (
-            <>
+return (
+  <>
+    {departmentActive && (
+      <>
+        {orientation === 'horizontal' && (
+          <>
+            <div
+              className={classNames(
+                handles.submenuItemsContainer,
+                'flex flex-column w-100'
+              )}
+            >
               <h3
                 className={classNames(
                   handles.submenuContainerTitle,
-                  'f4 fw7 c-on-base lh-copy ma0 flex items-center pa5'
+                  'f4 fw7 c-on-base lh-copy mt0 mb6 flex items-center'
                 )}
               >
                 {departmentActive.name}
+                {orientation === 'horizontal' && showBtnCat ? (
+                  seeAllLink(departmentActive.slug, 1, 't-small ml7')
+                ) : (
+                  <div />
+                )}
               </h3>
-              <div className={handles.submenuListVertical}>
+              <div className={handles.submenuList}>
+                <ExtensionPoint id="before-menu" />
                 {items}
-                {showBtnCat ? seeAllLink(departmentActive.slug) : <div />}
+                <ExtensionPoint id="after-menu" />
               </div>
-            </>
-          )}
-        </>
-      )}
-    </>
-  )
+            </div>
+
+            <div className={handles.departmentBannerContainer}>
+              <img
+                className={handles.departmentBanner}
+                src={departmentActive.banner}
+                alt=""
+              />
+            </div>
+          </>
+        )}
+        {orientation === 'vertical' && (
+          <>
+            <h3
+              className={classNames(
+                handles.submenuContainerTitle,
+                'f4 fw7 c-on-base lh-copy ma0 flex items-center pa5'
+              )}
+            >
+              {departmentActive.name}
+            </h3>
+            <div className={handles.submenuListVertical}>
+              {items}
+              {showBtnCat ? seeAllLink(departmentActive.slug) : <div />}
+            </div>
+          </>
+        )}
+      </>
+    )}
+  </>
+)
 })
 
 export default injectIntl(Submenu)
