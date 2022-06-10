@@ -7,7 +7,6 @@ import { injectIntl } from 'react-intl'
 import Skeleton from 'react-loading-skeleton'
 import { useCssHandles } from 'vtex.css-handles'
 import { formatIOMessage } from 'vtex.native-types'
-import { useDevice } from 'vtex.device-detector'
 
 import { megaMenuState } from '../State'
 import type { ItemProps } from './Item'
@@ -23,19 +22,10 @@ const CSS_HANDLES = [
   'departmentsTitle',
 ] as const
 
-const VerticalMenu: FC<VerticalMenuProps> = observer((props) => {
+const VerticalMenu: FC<VerticalMenuProps> = observer(({ intl }) => {
   const { handles } = useCssHandles(CSS_HANDLES)
-  const {
-    departments,
-    departmentActive,
-    config,
-    setDepartmentActive,
-    isOpenMenu,
-  } = megaMenuState
-
-  const { isMobile } = useDevice()
-
-  const { openOnly, orientation, intl } = props
+  const { departments, departmentActive, config, setDepartmentActive } =
+    megaMenuState
 
   const departmentActiveHasCategories = !!departmentActive?.menu?.length
 
@@ -58,7 +48,6 @@ const VerticalMenu: FC<VerticalMenuProps> = observer((props) => {
           onClick: openDepartment,
           style: d.styles,
           enableStyle: d.enableSty,
-          uploadedIcon: d.uploadedIcon,
           ...(!hasCategories && { to: d.slug }),
         }
 
@@ -83,7 +72,7 @@ const VerticalMenu: FC<VerticalMenuProps> = observer((props) => {
     [departments]
   )
 
-  return (isOpenMenu && openOnly === orientation) || isMobile ? (
+  return departmentItems?.length > 0 ? (
     <nav className={classNames(handles.menuContainerNavVertical, 'w-100')}>
       <div
         className={classNames(handles.departmentsContainer, {
@@ -108,23 +97,24 @@ const VerticalMenu: FC<VerticalMenuProps> = observer((props) => {
           )}
         </ul>
       </div>
-      {departmentActive && departmentActiveHasCategories && (
-        <div
-          className={classNames(
-            handles.submenuContainerVertical,
-            'bg-base w-100'
-          )}
-        >
-          <Submenu openOnly={openOnly} />
-        </div>
-      )}
+      <div
+        className={classNames(
+          handles.submenuContainerVertical,
+          'bg-base w-100'
+        )}
+        style={{
+          display:
+            departmentActive && departmentActiveHasCategories
+              ? 'block'
+              : 'none',
+        }}
+      >
+        <Submenu />
+      </div>
     </nav>
   ) : null
 })
 
-type VerticalMenuProps = InjectedIntlProps & {
-  openOnly: string
-  orientation: string
-}
+type VerticalMenuProps = InjectedIntlProps
 
 export default injectIntl(VerticalMenu)
