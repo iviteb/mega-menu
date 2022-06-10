@@ -2,9 +2,6 @@
 import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo'
 import { useDevice } from 'vtex.device-detector'
-import { canUseDOM } from 'vtex.render-runtime'
-// import { useOrderForm } from 'vtex.order-manager/OrderForm'
-// import { useFullSession } from 'vtex.session-client'
 
 import GET_MENUS from '../graphql/queries/getMenus.graphql'
 import type { GlobalConfig, MenusResponse, Orientation } from '../shared'
@@ -14,14 +11,8 @@ import { megaMenuState } from './State'
 
 const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
   const { orientation } = props
-
-  /* "filterMenuItems" filters the menu items returned in node,
-  such that the items with sellerID matching the current regionId (sellerID) are not returned */
   const { data } = useQuery<MenusResponse>(GET_MENUS, {
     ssr: true,
-    variables: {
-      filterMenuItems: true,
-    },
   })
 
   const { setDepartments, setConfig } = megaMenuState
@@ -41,9 +32,7 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
     }
   }
 
-  if (!canUseDOM) {
-    initMenu()
-  }
+  initMenu()
 
   useEffect(() => {
     initMenu()

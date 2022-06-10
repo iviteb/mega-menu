@@ -1,13 +1,11 @@
 type Query {
-  menus(filterMenuItems: Boolean): [Menu]
-    @cacheControl(scope: SEGMENT, maxAge: MEDIUM)
-    @withSegment
-  menu(id: ID!): Menu @cacheControl(scope: SEGMENT, maxAge: MEDIUM) @withSegment
+  menus: [Menu] @cacheControl(scope: SEGMENT, maxAge: SHORT) @withSegment
+  menu(id: ID!): Menu @cacheControl(scope: SEGMENT, maxAge: SHORT) @withSegment
 }
 
 type Mutation {
   editMenu(menuInput: MenuInput!): [Menu]
-  deleteMenu(id: String!, idSecond: String, idThird: String): [Menu]
+  deleteMenu(id: String, idSecond: String, idThird: String): [Menu]
   createMenu(menuInput: MenuInput!): Menu
   uploadMenu(menuData: [MenuInput]): [Menu]
 }
