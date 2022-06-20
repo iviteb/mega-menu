@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo'
 import { useDevice } from 'vtex.device-detector'
+import { canUseDOM } from 'vtex.render-runtime'
 
 import GET_MENUS from '../graphql/queries/getMenus.graphql'
 import type { GlobalConfig, MenusResponse, Orientation } from '../shared'
@@ -32,7 +33,9 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
     }
   }
 
-  initMenu()
+  if (!canUseDOM) {
+    initMenu()
+  }
 
   useEffect(() => {
     initMenu()
