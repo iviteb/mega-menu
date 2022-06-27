@@ -1,7 +1,7 @@
 {
   "name": "mega-menu",
   "vendor": "vtex",
-  "version": "2.6.3-hkignore.0",
+  "version": "2.7.0",
   "title": "Mega Menu",
   "description": "Create, personalize and manage the category tree. It's can be used in the shop as main menu",
   "mustUpdateAt": "2022-08-28",
@@ -23,17 +23,7 @@
     "vtex.store-icons": "0.x",
     "vtex.device-detector": "0.x",
     "vtex.native-types": "0.x",
-    "vtex.file-manager-graphql": "0.x",
-    "vtex.file-manager": "0.x",
-    "vtex.store-graphql": "2.x",
-<<<<<<< HEAD
-    "vtex.store": "2.x",
-    "vtex.render-runtime": "8.x",
-    "vtex.order-manager": "0.x",
-    "vtex.session-client": "1.x"
-=======
-    "vtex.store": "2.x"
->>>>>>> 7075498 (CU-2am52gt - [Auchan] [PR] Mega menu images)
+    "vtex.render-runtime": "8.x"
   },
   "billingOptions": {
     "type": "free",
@@ -47,90 +37,7 @@
       "name": "graphql-query"
     },
     {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "*",
-        "path": "*"
-      }
-    },
-    {
-      "name": "vtex.file-manager:file-manager-read-write"
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "{{account}}.vtexcommercestable.com.br",
-        "path": "/api/*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "portal.vtexcommercestable.com.br",
-        "path": "/api/*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "{{account}}.myvtex.com",
-        "path": "/api/*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "api.vtex.com",
-        "path": "/api/*"
-      }
-    },
-    {
-      "name": "ADMIN_CRM"
-    },
-    {
-      "name": "ADMIN_DS"
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "{{account}}.vtexassets.com/",
-        "path": "*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "app.io.vtex.com/vtex.file-manager/v0/{{account}}/preleadform",
-        "path": "*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "{{account}}.vtexcommercestable.com.br",
-        "path": "/api/oms/pvt/*"
-      }
-    },
-    {
-      "name": "colossus-fire-event"
-    },
-    {
       "name": "vbase-read-write"
-    },
-    {
-      "name": "OMSViewer"
-    },
-    {
-      "name": "colossus-fire-event"
-    },
-    {
-      "name": "colossus-write-logs"
-    },
-    {
-      "name": "WorkflowAction"
-    },
-    {
-      "name": "Changes"
     }
   ],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
