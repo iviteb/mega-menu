@@ -40,7 +40,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
   const debouncedHandleMouseEnter = useCallback(
     _debounce((department: MenuItem | null) => {
       setDepartmentActive(department)
-    }, 1000),
+    }, 800),
     []
   )
 
