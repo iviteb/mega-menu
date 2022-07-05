@@ -40,11 +40,11 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
   const debouncedHandleMouseEnter = useCallback(
     _debounce((department: MenuItem | null) => {
       setDepartmentActive(department)
-    }, 800),
+    }, 300),
     []
   )
 
-  const handlOnMouseLeave = () => {
+  const handleOnMouseLeave = () => {
     debouncedHandleMouseEnter.cancel()
   }
 
@@ -109,7 +109,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
               onMouseEnter={() => {
                 debouncedHandleMouseEnter(d)
               }}
-              onMouseLeave={handlOnMouseLeave}
+              onMouseLeave={handleOnMouseLeave}
             >
               <Item
                 id={d.id}
