@@ -5265,13 +5265,17 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+"vtex.css-handles@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.css-handles@1.0.0/public/@types/vtex.css-handles":
+  version "1.0.0"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.css-handles@1.0.0/public/@types/vtex.css-handles#336b23ef3a9bcb2b809529ba736783acd405d081"
+
 "vtex.device-detector@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.device-detector@0.2.6/public/@types/vtex.device-detector":
   version "0.2.6"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.device-detector@0.2.6/public/@types/vtex.device-detector#3219242fa5c2f14023d33c3549c2d8de93c76d1f"
 
-"vtex.mega-menu@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.mega-menu@2.6.2-hkignore.2/public/@types/vtex.mega-menu":
-  version "2.6.2-hkignore.2"
-  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.mega-menu@2.6.2-hkignore.2/public/@types/vtex.mega-menu#38ef78a0cd4613cd494e71257dcc902184f77860"
+"vtex.mega-menu@https://megamenutest--auchanqa.myvtex.com/_v/private/typings/linked/v1/vtex.mega-menu@2.6.1+build1657121039/public/@types/vtex.mega-menu":
+  version "2.6.1"
+  resolved "https://megamenutest--auchanqa.myvtex.com/_v/private/typings/linked/v1/vtex.mega-menu@2.6.1+build1657121039/public/@types/vtex.mega-menu#41d4bb2099d359c64ce4da5f269f2531ea097d0a"
 
 "vtex.native-types@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types":
   version "0.8.0"
