@@ -1354,7 +1354,7 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-"stats-lite@github:vtex/node-stats-lite#dist":
+stats-lite@vtex/node-stats-lite#dist:
   version "2.2.0"
   resolved "https://codeload.github.com/vtex/node-stats-lite/tar.gz/1b0d39cc41ef7aaecfd541191f877887a2044797"
   dependencies:
@@ -1567,17 +1567,37 @@ vary@^1.1.2:
   version "0.2.6"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.device-detector@0.2.6/public/@types/vtex.device-detector#3219242fa5c2f14023d33c3549c2d8de93c76d1f"
 
-"vtex.mega-menu@https://megamenutest--auchanqa.myvtex.com/_v/private/typings/linked/v1/vtex.mega-menu@2.6.1+build1657121039/public/@types/vtex.mega-menu":
-  version "2.6.1"
-  resolved "https://megamenutest--auchanqa.myvtex.com/_v/private/typings/linked/v1/vtex.mega-menu@2.6.1+build1657121039/public/@types/vtex.mega-menu#41d4bb2099d359c64ce4da5f269f2531ea097d0a"
+"vtex.file-manager-graphql@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.file-manager-graphql@0.3.0/public/@types/vtex.file-manager-graphql":
+  version "0.3.0"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.file-manager-graphql@0.3.0/public/@types/vtex.file-manager-graphql#601e8962c656e184a9f30b258b9441df5970bbdd"
+
+"vtex.file-manager@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.file-manager@0.11.0/public/_types/react":
+  version "0.0.0"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.file-manager@0.11.0/public/_types/react#fa7a0347e046eab3dd768998fc9252b2c0dd5aef"
+
+"vtex.mega-menu@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.mega-menu@2.6.2-hkignore.5/public/@types/vtex.mega-menu":
+  version "2.6.2-hkignore.5"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.mega-menu@2.6.2-hkignore.5/public/@types/vtex.mega-menu#f346f7ebf0188cd5d1903e078b0e0ea5076f8f8a"
 
 "vtex.native-types@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types":
   version "0.8.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types#4fb38349122295832408d511efefa604a0addc57"
 
+"vtex.render-runtime@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.4/public/@types/vtex.render-runtime":
+  version "8.132.4"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.4/public/@types/vtex.render-runtime#66bb41bd4d342e37c9d85172aad5f7eefebfb6dc"
+
+"vtex.store-graphql@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-graphql@2.152.2/public/@types/vtex.store-graphql":
+  version "2.152.2"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-graphql@2.152.2/public/@types/vtex.store-graphql#fc9699766e34fa77d75c69072f577818bfd5f6fb"
+
 "vtex.store-icons@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-icons@0.18.0/public/@types/vtex.store-icons":
   version "0.18.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-icons@0.18.0/public/@types/vtex.store-icons#0ee94d549aa283ce3a13ab987c13eac4fdfd1bba"
+
+"vtex.store@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store@2.125.0/public/@types/vtex.store":
+  version "2.125.0"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store@2.125.0/public/@types/vtex.store#2fcc423f7d8b1eaaf3eb5422afb52a91729a75e2"
 
 "vtex.styleguide@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.1/public/@types/vtex.styleguide":
   version "9.146.1"
