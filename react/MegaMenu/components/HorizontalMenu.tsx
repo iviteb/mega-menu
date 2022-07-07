@@ -7,7 +7,9 @@ import { injectIntl } from 'react-intl'
 import Skeleton from 'react-loading-skeleton'
 import { useCssHandles } from 'vtex.css-handles'
 import { formatIOMessage } from 'vtex.native-types'
+import _debounce from 'lodash/debounce'
 
+import type { MenuItem } from '../../shared'
 import { megaMenuState } from '../State'
 import styles from '../styles.css'
 import Item from './Item'
@@ -36,6 +38,17 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
 
   // const departmentActiveHasCategories = !!departmentActive?.menu?.length
   const navRef = useRef<HTMLDivElement>(null)
+
+  const debouncedHandleMouseEnter = useCallback(
+    _debounce((department: MenuItem | null) => {
+      setDepartmentActive(department)
+    }, 400),
+    []
+  )
+
+  const handleOnMouseLeave = () => {
+    debouncedHandleMouseEnter.cancel()
+  }
 
   const handleClickOutside = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,39 +92,45 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultDepartmentActive])
 
-  const departmentItems = departments
-    .filter((j) => j.display)
-    .map((d) => {
-      const hasCategories = !!d.menu?.length
+  const departmentItems = useMemo(
+    () =>
+      departments
+        .filter((j) => j.display)
+        .map((d) => {
+          const hasCategories = !!d.menu?.length
 
-      return (
-        <li
-          className={classNames(
-            handles.menuItem,
-            d.id === departmentActive?.id &&
-            `bg-black-05 ${handles.departmentActive}`
-          )}
-          key={d.id}
-          onMouseEnter={() => {
-            setDepartmentActive(d)
-          }}
-        >
-          <Item
-            id={d.id}
-            to={d.slug}
-            iconId={d.icon}
-            accordion={hasCategories}
-            className={classNames('pv3 mh5')}
-            style={d.styles}
-            enableStyle={d.enableSty}
-            closeMenu={openMenu}
-            uploadedIcon={d.uploadedIcon}
-          >
-            {d.name}
-          </Item>
-        </li>
-      )
-    })
+          return (
+            <li
+              className={classNames(
+                handles.menuItem,
+                d.id === departmentActive?.id &&
+                `bg-black-05 ${handles.departmentActive}`
+              )}
+              key={d.id}
+              onMouseEnter={() => {
+                debouncedHandleMouseEnter(d)
+              }}
+              onMouseLeave={handleOnMouseLeave}
+            >
+              <Item
+                id={d.id}
+                to={d.slug}
+                iconId={d.icon}
+                accordion={hasCategories}
+                className={classNames('pv3 mh5')}
+                style={d.styles}
+                enableStyle={d.enableSty}
+                closeMenu={openMenu}
+                uploadedIcon={d.uploadedIcon}
+              >
+                {d.name}
+              </Item>
+            </li>
+          )
+        }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [departments, departmentActive]
+  )
 
   const loaderBlocks = useMemo(() => {
     const blocks: JSX.Element[] = []
