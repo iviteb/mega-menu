@@ -7,7 +7,9 @@ import { injectIntl } from 'react-intl'
 import Skeleton from 'react-loading-skeleton'
 import { useCssHandles } from 'vtex.css-handles'
 import { formatIOMessage } from 'vtex.native-types'
+import _debounce from 'lodash/debounce'
 
+import type { MenuItem } from '../../shared'
 import { megaMenuState } from '../State'
 import styles from '../styles.css'
 import Item from './Item'
@@ -36,6 +38,17 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
 
   const departmentActiveHasCategories = !!departmentActive?.menu?.length
   const navRef = useRef<HTMLDivElement>(null)
+
+  const debouncedHandleMouseEnter = useCallback(
+    _debounce((department: MenuItem | null) => {
+      setDepartmentActive(department)
+    }, 400),
+    []
+  )
+
+  const handleOnMouseLeave = () => {
+    debouncedHandleMouseEnter.cancel()
+  }
 
   const handleClickOutside = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -95,8 +108,9 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
               )}
               key={d.id}
               onMouseEnter={() => {
-                setDepartmentActive(d)
+                debouncedHandleMouseEnter(d)
               }}
+              onMouseLeave={handleOnMouseLeave}
             >
               <Item
                 id={d.id}
