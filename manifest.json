@@ -1,7 +1,7 @@
 {
   "name": "mega-menu",
   "vendor": "vtex",
-  "version": "2.6.1",
+  "version": "2.6.3-hkignore.0",
   "title": "Mega Menu",
   "description": "Create, personalize and manage the category tree. It's can be used in the shop as main menu",
   "mustUpdateAt": "2022-08-28",
@@ -23,6 +23,10 @@
     "vtex.store-icons": "0.x",
     "vtex.device-detector": "0.x",
     "vtex.native-types": "0.x",
+    "vtex.file-manager-graphql": "0.x",
+    "vtex.file-manager": "0.x",
+    "vtex.store-graphql": "2.x",
+    "vtex.store": "2.x",
     "vtex.render-runtime": "8.x"
   },
   "billingOptions": {
@@ -30,7 +34,9 @@
     "support": {
       "url": "https://support.vtex.com/hc/requests"
     },
-    "availableCountries": ["*"]
+    "availableCountries": [
+      "*"
+    ]
   },
   "policies": [
     {
