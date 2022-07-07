@@ -510,7 +510,11 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
 
       if (menuLevelTwo?.length) {
         menuLevelTwo.forEach((item: MenuItem) => {
-          if (item.slugRelative === slug) return
+          if (item.slugRelative === slug) {
+            menuLevelTwoUpdate.push(item)
+
+            return
+          }
 
           const dataPath = getNewPath(
             item.slug,
@@ -544,7 +548,11 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           menuLevelThirdUpdate = []
           if (itemSecond.menu?.length) {
             itemSecond.menu.forEach((itemThird: MenuItem) => {
-              if (itemSecond.slugRelative === itemThird.slug) return
+              if (itemSecond.slugRelative === itemThird.slug) {
+                menuLevelThirdUpdate.push(itemThird)
+
+                return
+              }
 
               const dataPath = getNewPath(
                 itemThird.slug,
@@ -616,7 +624,11 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         menuLevelThirdUpdate = []
         if (itemSecond.menu?.length) {
           itemSecond.menu.forEach((itemThird: MenuItem) => {
-            if (itemSecond.slugRelative === itemThird.slug) return
+            if (itemSecond.slugRelative === itemThird.slug) {
+              menuLevelThirdUpdate.push(itemThird)
+
+              return
+            }
 
             const dataPath = getNewPath(
               itemThird.slug,
@@ -642,9 +654,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
             }
 
             menuLevelThirdUpdate.push(updateLevel)
-
-            itemSecond.menu = menuLevelThirdUpdate
           })
+          itemSecond.menu = menuLevelThirdUpdate
         }
       })
 
