@@ -38,5 +38,7 @@
     "referenceLocale": "en",
     "localeDirectory": "messages"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@vtex/clients": "^2.19.5"
+  }
 }

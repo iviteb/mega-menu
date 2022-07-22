@@ -37,7 +37,6 @@ mutation delete($id: String, $idSecond: String, $idThird: String) {
         order
         slugRoot
         slugRelative
-
       }
     }
   }
