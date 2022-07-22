@@ -58,7 +58,28 @@ const replaceStyles = (menuStyle: Menu[]) => {
   })
 }
 
-export const menus = async (_: unknown, __: unknown, ctx: Context) => {
+const parseSellerIDs = (menuItems: Menu[], formSellers: string[]) => {
+  for (const item of menuItems) {
+    const menuItemIDs = item?.sellerIDs?.trim().split(',')
+
+    formSellers?.forEach((formSeller) => {
+      if (menuItemIDs?.find((id: string) => id === formSeller)) {
+        item.display = false
+      }
+    })
+    if (item.menu?.length > 0) {
+      parseSellerIDs(item.menu, formSellers)
+    }
+  }
+
+  return menuItems
+}
+
+export const menus = async (
+  _: unknown,
+  { formSellers }: { formSellers: [string] },
+  ctx: Context
+) => {
   const {
     clients: { vbase },
   } = ctx
@@ -67,6 +88,8 @@ export const menus = async (_: unknown, __: unknown, ctx: Context) => {
 
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
+
+    menuItems = parseSellerIDs(menuItems, formSellers)
   } catch (err) {
     const errStr = err.toString()
 
