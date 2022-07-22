@@ -3,6 +3,7 @@ export interface Menu {
   name: string
   icon: string
   slug: string
+  sellerIDs?: string
   styles: string
   menu: Menu[]
   display: boolean

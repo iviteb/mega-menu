@@ -4,6 +4,7 @@ export type MenuItem = {
   uploadedIcon?: string
   name: string
   slug: string
+  sellerIDs?: string
   styles: string
   menu?: MenuItem[]
   display: boolean
@@ -21,6 +22,7 @@ export type MenuItemSave = {
   uploadedIcon?: string
   name: string
   slug: string
+  sellerIDs?: string
   styles: string
   menu?: MenuItem[] | string
   display: boolean

@@ -58,36 +58,26 @@ const replaceStyles = (menuStyle: Menu[]) => {
   })
 }
 
-const filterDataDevice = (key: string, menuItems: Menu[]) => {
-  let dataToFilter = [...menuItems]
+const parseSellerIDs = (menuItems: Menu[], formSellers: string[]) => {
+  for (const item of menuItems) {
+    const menuItemIDs = item?.sellerIDs?.trim().split(',')
 
-  dataToFilter = dataToFilter.filter(
-    (item) =>
-      item[key as keyof Menu] === true || item[key as keyof Menu] === null
-  )
-
-  dataToFilter.forEach((subitem) => {
-    subitem.menu = subitem.menu.filter(
-      (sub) =>
-        sub[key as keyof Menu] === true || sub[key as keyof Menu] === null
-    )
-    subitem.menu.forEach((thrditem) => {
-      thrditem.menu &&
-        (thrditem.menu = thrditem.menu.filter(
-          (thrd) =>
-            thrd[key as keyof Menu] === true || thrd[key as keyof Menu] === null
-        ))
+    formSellers?.forEach((formSeller) => {
+      if (menuItemIDs?.find((id: string) => id === formSeller)) {
+        item.display = false
+      }
     })
-  })
+    if (item.menu?.length > 0) {
+      parseSellerIDs(item.menu, formSellers)
+    }
+  }
 
-  if (!dataToFilter.length) dataToFilter = [...menuItems]
-
-  return dataToFilter
+  return menuItems
 }
 
 export const menus = async (
   _: unknown,
-  { isMobile }: { isMobile: boolean },
+  { formSellers }: { formSellers: [string] },
   ctx: Context
 ) => {
   const {
@@ -98,6 +88,8 @@ export const menus = async (
 
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
+
+    menuItems = parseSellerIDs(menuItems, formSellers)
   } catch (err) {
     const errStr = err.toString()
 
@@ -110,14 +102,8 @@ export const menus = async (
   }
 
   replaceStyles(menuItems)
-  orderArray(menuItems)
 
-  if (isMobile !== undefined) {
-    if (isMobile) menuItems = filterDataDevice('mobile', menuItems)
-    else menuItems = filterDataDevice('desktop', menuItems)
-  }
-
-  return menuItems
+  return orderArray(menuItems)
 }
 
 export const menu = async (
@@ -138,26 +124,21 @@ export const createMenu = async (
 ) => {
   let menuItems: Menu[] = []
 
-  // eslint-disable-next-line vtex/prefer-early-return
-  if (menuInput.id) {
-    try {
-      menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
-    } catch (err) {
-      const errStr = err.toString()
+  try {
+    menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
+  } catch (err) {
+    const errStr = err.toString()
 
-      if (errStr !== 'Error: Request failed with status code 404') {
-        throw err
-      }
+    if (errStr !== 'Error: Request failed with status code 404') {
+      throw err
     }
-
-    menuInput.order = menuItems.length + 1
-
-    return vbase
-      .saveJSON('menu', 'menuItems', [...menuItems, menuInput])
-      .then(() => menuInput)
   }
 
-  return 'Error creating the item'
+  menuInput.order = menuItems.length + 1
+
+  return vbase
+    .saveJSON('menu', 'menuItems', [...menuItems, menuInput])
+    .then(() => menuInput)
 }
 
 export const uploadMenu = async (
@@ -197,19 +178,7 @@ export const deleteMenu = async (
   const menuDelete = await vbase.getJSON<Menu[]>('menu', 'menuItems')
   let deleteArray: Menu[] = []
 
-  if (!id && !idSecond && !idThird) {
-    deleteArray = menuDelete.filter(
-      (itemArray: Menu) =>
-        itemArray.id !== '' &&
-        itemArray.id !== undefined &&
-        itemArray.id !== null
-    )
-    const sortnewArray = deleteArray.sort((a, b) => a.order - b.order)
-    let count = 1
-
-    sortnewArray.map((as) => (as.order = count++))
-    deleteArray = sortnewArray
-  } else if (id && !idSecond && !idThird) {
+  if (id && !idSecond && !idThird) {
     deleteArray = menuDelete.filter((itemArray: Menu) => itemArray.id !== id)
     const getMenuOrder = menuDelete.filter(
       (menuOrder: Menu) => menuOrder.id === id

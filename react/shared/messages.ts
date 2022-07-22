@@ -29,6 +29,14 @@ export const messagesForm = defineMessages({
     defaultMessage: '',
     id: 'admin/mega-menu.items.input3Form',
   },
+  inputSellerIDs: {
+    defaultMessage: '',
+    id: 'admin/mega-menu.items.inputSellerIDs',
+  },
+  inputSellerIDsPlaceholder: {
+    defaultMessage: '',
+    id: 'admin/mega-menu.items.inputSellerIDsPlaceholder',
+  },
   input4Form: {
     defaultMessage: '',
     id: 'admin/mega-menu.items.input4Form',

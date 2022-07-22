@@ -4,6 +4,7 @@ mutation delete($id: String, $idSecond: String, $idThird: String) {
     name
     icon
     slug
+    sellerIDs
     styles
     display
     enableSty
@@ -16,6 +17,7 @@ mutation delete($id: String, $idSecond: String, $idThird: String) {
       name
       icon
       slug
+      sellerIDs
       styles
       display
       enableSty
@@ -27,6 +29,7 @@ mutation delete($id: String, $idSecond: String, $idThird: String) {
         name
         icon
         slug
+        sellerIDs
         styles
         display
         enableSty

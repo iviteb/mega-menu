@@ -5,6 +5,7 @@ query getMenu($id: ID!) {
     icon
     uploadedIcon
     slug
+    sellerIDs
     styles
     display
     enableSty
@@ -16,6 +17,7 @@ query getMenu($id: ID!) {
       icon
       uploadedIcon
       slug
+      sellerIDs
       styles
       display
       enableSty
@@ -27,6 +29,7 @@ query getMenu($id: ID!) {
         name
         icon
         slug
+        sellerIDs
         styles
         display
         enableSty
