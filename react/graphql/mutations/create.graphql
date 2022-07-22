@@ -4,6 +4,7 @@ mutation create($menuInput: MenuInput!) {
     name
     icon
     slug
+    sellerIDs
     styles
     display
     enableSty

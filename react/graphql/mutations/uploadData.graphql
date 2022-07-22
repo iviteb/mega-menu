@@ -4,6 +4,7 @@ mutation uploadData($uploadData: [MenuInput]!) {
     name
     icon
     slug
+    sellerIDs
     styles
     display
     enableSty
