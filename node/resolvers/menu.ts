@@ -75,21 +75,23 @@ const parseSellerIDs = (menuItems: Menu[], formSellers: string[]) => {
   return menuItems
 }
 
-export const menus = async (
-  _: unknown,
-  { formSellers }: { formSellers: [string] },
-  ctx: Context
-) => {
+export const menus = async (_: unknown, __: unknown, ctx: Context) => {
   const {
-    clients: { vbase },
+    clients: { vbase, session },
   } = ctx
+
+  console.log('🚀 ~ file: menu.ts ~ line 84 ~ menus ~ ctx.vtex', ctx.vtex)
+
+  const sess = await session.getSession(ctx.vtex.sessionToken ?? '', ['*'])
+
+  console.log('sess', sess)
 
   let menuItems: Menu[] = []
 
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
 
-    menuItems = parseSellerIDs(menuItems, formSellers)
+    menuItems = parseSellerIDs(menuItems, ['1'])
   } catch (err) {
     const errStr = err.toString()
 
