@@ -28,7 +28,8 @@
     "vtex.store-graphql": "2.x",
     "vtex.store": "2.x",
     "vtex.render-runtime": "8.x",
-    "vtex.order-manager": "0.x"
+    "vtex.order-manager": "0.x",
+    "vtex.session-client": "1.x"
   },
   "billingOptions": {
     "type": "free",
@@ -42,7 +43,90 @@
       "name": "graphql-query"
     },
     {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "*",
+        "path": "*"
+      }
+    },
+    {
+      "name": "vtex.file-manager:file-manager-read-write"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexcommercestable.com.br",
+        "path": "/api/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "portal.vtexcommercestable.com.br",
+        "path": "/api/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.myvtex.com",
+        "path": "/api/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.vtex.com",
+        "path": "/api/*"
+      }
+    },
+    {
+      "name": "ADMIN_CRM"
+    },
+    {
+      "name": "ADMIN_DS"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexassets.com/",
+        "path": "*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "app.io.vtex.com/vtex.file-manager/v0/{{account}}/preleadform",
+        "path": "*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexcommercestable.com.br",
+        "path": "/api/oms/pvt/*"
+      }
+    },
+    {
+      "name": "colossus-fire-event"
+    },
+    {
       "name": "vbase-read-write"
+    },
+    {
+      "name": "OMSViewer"
+    },
+    {
+      "name": "colossus-fire-event"
+    },
+    {
+      "name": "colossus-write-logs"
+    },
+    {
+      "name": "WorkflowAction"
+    },
+    {
+      "name": "Changes"
     }
   ],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"

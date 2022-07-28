@@ -1,7 +1,5 @@
 type Query {
-  menus(formSellers: [String]): [Menu]
-    @cacheControl(scope: SEGMENT, maxAge: MEDIUM)
-    @withSegment
+  menus: [Menu] @cacheControl(scope: SEGMENT, maxAge: MEDIUM) @withSegment
   menu(id: ID!): Menu @cacheControl(scope: SEGMENT, maxAge: MEDIUM) @withSegment
 }
 

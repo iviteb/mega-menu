@@ -1,5 +1,5 @@
-query getMenus($formSellers: [String]) {
-  menus(formSellers: $formSellers) {
+query getMenus {
+  menus {
     id
     name
     icon
