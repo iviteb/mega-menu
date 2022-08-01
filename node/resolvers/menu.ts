@@ -58,17 +58,16 @@ const replaceStyles = (menuStyle: Menu[]) => {
   })
 }
 
-const parseSellerIDs = (menuItems: Menu[], formSellers: string[]) => {
+const parseSellerIDs = (menuItems: Menu[], regionID: string) => {
   for (const item of menuItems) {
     const menuItemIDs = item?.sellerIDs?.trim().split(',')
 
-    formSellers?.forEach((formSeller) => {
-      if (menuItemIDs?.find((id: string) => id === formSeller)) {
-        item.display = false
-      }
-    })
+    if (menuItemIDs?.find((id: string) => id === regionID)) {
+      item.display = false
+    }
+
     if (item.menu?.length > 0) {
-      parseSellerIDs(item.menu, formSellers)
+      parseSellerIDs(item.menu, regionID)
     }
   }
 
@@ -77,21 +76,25 @@ const parseSellerIDs = (menuItems: Menu[], formSellers: string[]) => {
 
 export const menus = async (_: unknown, __: unknown, ctx: Context) => {
   const {
-    clients: { vbase, session },
+    clients: { vbase },
   } = ctx
 
-  console.log('🚀 ~ file: menu.ts ~ line 84 ~ menus ~ ctx.vtex', ctx.vtex)
+  const { segmentToken } = ctx.vtex
 
-  const sess = await session.getSession(ctx.vtex.sessionToken ?? '', ['*'])
+  const segmentData = JSON.parse(
+    Buffer.from(segmentToken ?? '', 'base64').toString('utf-8')
+  )
 
-  console.log('sess', sess)
+  const regionID = Buffer.from(segmentData?.regionId ?? '', 'base64').toString(
+    'utf-8'
+  )
 
   let menuItems: Menu[] = []
 
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
 
-    menuItems = parseSellerIDs(menuItems, ['1'])
+    menuItems = parseSellerIDs(menuItems, regionID)
   } catch (err) {
     const errStr = err.toString()
 
