@@ -5303,9 +5303,9 @@ verror@1.10.0:
   version "0.0.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.file-manager@0.11.0/public/_types/react#fa7a0347e046eab3dd768998fc9252b2c0dd5aef"
 
-"vtex.mega-menu@https://robertmega--auchanqa.myvtex.com/_v/private/typings/linked/v1/vtex.mega-menu@2.6.3-hkignore.0+build1659008590/public/@types/vtex.mega-menu":
+"vtex.mega-menu@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.mega-menu@2.6.3-hkignore.0/public/@types/vtex.mega-menu":
   version "2.6.3-hkignore.0"
-  resolved "https://robertmega--auchanqa.myvtex.com/_v/private/typings/linked/v1/vtex.mega-menu@2.6.3-hkignore.0+build1659008590/public/@types/vtex.mega-menu#53752bb5360288554edbaede4b4bea1f9f57a414"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.mega-menu@2.6.3-hkignore.0/public/@types/vtex.mega-menu#b69046bf8e069895659764141efee1b979f7c111"
 
 "vtex.native-types@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types":
   version "0.8.0"
@@ -5331,9 +5331,9 @@ verror@1.10.0:
   version "0.18.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-icons@0.18.0/public/@types/vtex.store-icons#0ee94d549aa283ce3a13ab987c13eac4fdfd1bba"
 
-"vtex.store@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store@2.126.18/public/@types/vtex.store":
-  version "2.126.18"
-  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store@2.126.18/public/@types/vtex.store#f260ee691c92d9c043124b298d86feb527667fef"
+"vtex.store@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store@2.126.23/public/@types/vtex.store":
+  version "2.126.23"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store@2.126.23/public/@types/vtex.store#27d785cfc1cf6491a9e5fcb0ac836c318f100707"
 
 "vtex.styleguide@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.1/public/@types/vtex.styleguide":
   version "9.146.1"
