@@ -15,10 +15,12 @@ import { megaMenuState } from './State'
 const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
   const { orientation } = props
 
+  /* "filterMenuItems" filters the menu items returned in node,
+  such that the items with sellerID matching the current regionId (sellerID) are not returned */
   const { data } = useQuery<MenusResponse>(GET_MENUS, {
     ssr: true,
     variables: {
-      filterBackEnd: true,
+      filterMenuItems: true,
     },
   })
 
