@@ -81,7 +81,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
 
   const [message, setMessage] = useState('')
   const [levelInfo, setLevelInfo] = useState(Object)
-  const [messageName, setMessageName] = useState('')
   const [messageSlug, setMessageSlug] = useState('')
   const [banner, setBanner] = useState('')
   const [uploadedIcon, setUploadedIcon] = useState('')
@@ -378,7 +377,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
 
   const changeStyle = (e: { id: string; value: string }) => {
     setAlert(false)
-    setMessageName('')
     setMessageSlug('')
 
     switch (e.id) {
@@ -1075,7 +1073,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       label={messageTranslate('inputSellerIDs')}
                       value={sellerIDs}
                       id="sellerIDs"
-                      errorMessage={messageName}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         changeStyle({ id: e.target.id, value: e.target.value })
                       }

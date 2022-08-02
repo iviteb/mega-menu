@@ -76,7 +76,7 @@ const parseSellerIDs = (menuItems: Menu[], regionID: string) => {
 
 export const menus = async (
   _: unknown,
-  { filterBackEnd }: { filterBackEnd: string },
+  { filterMenuItems }: { filterMenuItems: boolean },
   ctx: Context
 ) => {
   const {
@@ -98,7 +98,7 @@ export const menus = async (
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
 
-    if (filterBackEnd) {
+    if (filterMenuItems) {
       menuItems = parseSellerIDs(menuItems, regionID)
     }
   } catch (err) {
