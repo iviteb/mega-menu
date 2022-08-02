@@ -59,22 +59,26 @@ const replaceStyles = (menuStyle: Menu[]) => {
 }
 
 const parseSellerIDs = (menuItems: Menu[], regionID: string) => {
-  for (const item of menuItems) {
-    const menuItemIDs = item?.sellerIDs?.trim().split(',')
+  return menuItems.filter((item) => {
+    const excludeSellerIDs = item?.sellerIDs?.trim().split(',')
 
-    if (menuItemIDs?.find((id: string) => id === regionID)) {
-      item.display = false
+    if (excludeSellerIDs?.includes(regionID)) {
+      return false
     }
 
     if (item.menu?.length > 0) {
-      parseSellerIDs(item.menu, regionID)
+      item.menu = parseSellerIDs(item.menu, regionID)
     }
-  }
 
-  return menuItems
+    return true
+  })
 }
 
-export const menus = async (_: unknown, __: unknown, ctx: Context) => {
+export const menus = async (
+  _: unknown,
+  { filterBackEnd }: { filterBackEnd: string },
+  ctx: Context
+) => {
   const {
     clients: { vbase },
   } = ctx
@@ -94,7 +98,9 @@ export const menus = async (_: unknown, __: unknown, ctx: Context) => {
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
 
-    menuItems = parseSellerIDs(menuItems, regionID)
+    if (filterBackEnd) {
+      menuItems = parseSellerIDs(menuItems, regionID)
+    }
   } catch (err) {
     const errStr = err.toString()
 

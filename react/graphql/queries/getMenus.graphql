@@ -1,5 +1,5 @@
-query getMenus {
-  menus {
+query getMenus($filterBackEnd: Boolean) {
+  menus(filterBackEnd: $filterBackEnd) {
     id
     name
     icon
