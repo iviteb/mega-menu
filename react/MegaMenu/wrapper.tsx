@@ -17,6 +17,9 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
 
   const { data } = useQuery<MenusResponse>(GET_MENUS, {
     ssr: true,
+    variables: {
+      filterBackEnd: true,
+    },
   })
 
   const { setDepartments, setConfig } = megaMenuState
