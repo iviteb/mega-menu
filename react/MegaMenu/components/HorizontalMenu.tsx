@@ -162,7 +162,12 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
             'list ma0 pa0 pb3 br b--muted-4'
           )}
         >
-          <h3 className="f4 fw7 c-on-base lh-copy ma0 pv5 ph5">
+          <h3
+            className={classNames(
+              handles.departmentsTitle,
+              'f4 fw7 c-on-base lh-copy ma0 pv5 ph5'
+            )}
+          >
             {formatIOMessage({ id: title, intl })}
           </h3>
           {departments.length ? (
