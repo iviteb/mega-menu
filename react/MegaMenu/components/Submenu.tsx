@@ -212,55 +212,54 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     <a href={category.slug} />
                   )}
                 </Collapsible>
-                </div>
-          )
-        }
+              )
+              }
             </div >
           )
         })
     },
-// eslint-disable-next-line react-hooks/exhaustive-deps
-[departmentActive, collapsibleStates]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [departmentActive, collapsibleStates]
   )
 
-return (
-  <div style={{ display: departmentActive ? 'block' : 'none' }}>
-    <h3
-      className={classNames(
-        handles.submenuContainerTitle,
-        'f4 fw7 c-on-base lh-copy ma0 flex items-center',
-        orientation === 'horizontal' && 'mb6',
-        orientation === 'vertical' && 'pv5 ph5'
-      )}
-    >
-      {departmentActive?.name}
-      {orientation === 'horizontal' && (
-        <div style={{ display: showBtnCat ? 'block' : 'none' }}>
-          {seeAllLink(departmentActive?.slug, 1, 't-small ml7')}
-        </div>
-      )}
-    </h3>
+  return (
+    <div style={{ display: departmentActive ? 'block' : 'none' }}>
+      <h3
+        className={classNames(
+          handles.submenuContainerTitle,
+          'f4 fw7 c-on-base lh-copy ma0 flex items-center',
+          orientation === 'horizontal' && 'mb6',
+          orientation === 'vertical' && 'pv5 ph5'
+        )}
+      >
+        {departmentActive?.name}
+        {orientation === 'horizontal' && (
+          <div style={{ display: showBtnCat ? 'block' : 'none' }}>
+            {seeAllLink(departmentActive?.slug, 1, 't-small ml7')}
+          </div>
+        )}
+      </h3>
 
-    <div
-      className={classNames(
-        orientation === 'horizontal' && styles.submenuList,
-        orientation === 'vertical' && handles.submenuListVertical
-      )}
-    >
-      {orientation === 'horizontal' ? (
-        <>
-          <ExtensionPoint id="before-menu" /> {items}{' '}
-          <ExtensionPoint id="after-menu" />
-        </>
-      ) : (
-        <>
-          {items}
-          {showBtnCat ? seeAllLink(departmentActive?.slug) : <div />}
-        </>
-      )}
+      <div
+        className={classNames(
+          orientation === 'horizontal' && styles.submenuList,
+          orientation === 'vertical' && handles.submenuListVertical
+        )}
+      >
+        {orientation === 'horizontal' ? (
+          <>
+            <ExtensionPoint id="before-menu" /> {items}{' '}
+            <ExtensionPoint id="after-menu" />
+          </>
+        ) : (
+          <>
+            {items}
+            {showBtnCat ? seeAllLink(departmentActive?.slug) : <div />}
+          </>
+        )}
+      </div>
     </div>
-  </div>
-)
+  )
 })
 
 export default injectIntl(Submenu)
