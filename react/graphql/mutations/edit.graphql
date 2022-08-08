@@ -4,6 +4,7 @@ mutation edit($editMenu: MenuInput!) {
     name
     icon
     slug
+    sellerIDs
     styles
     display
     enableSty
@@ -16,6 +17,7 @@ mutation edit($editMenu: MenuInput!) {
       name
       icon
       slug
+      sellerIDs
       styles
       display
       enableSty
@@ -28,6 +30,7 @@ mutation edit($editMenu: MenuInput!) {
         name
         icon
         slug
+        sellerIDs
         styles
         display
         enableSty

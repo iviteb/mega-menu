@@ -1,0 +1,7 @@
+{
+  "mega-menu": {
+    "input": {
+      "public": ["regionId"]
+    }
+  }
+}

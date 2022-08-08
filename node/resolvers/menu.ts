@@ -58,15 +58,49 @@ const replaceStyles = (menuStyle: Menu[]) => {
   })
 }
 
-export const menus = async (_: unknown, __: unknown, ctx: Context) => {
+const parseSellerIDs = (menuItems: Menu[], regionID: string) => {
+  return menuItems.filter((item) => {
+    const excludeSellerIDs = item?.sellerIDs?.trim().split(',')
+
+    if (excludeSellerIDs?.includes(regionID)) {
+      return false
+    }
+
+    if (item.menu?.length > 0) {
+      item.menu = parseSellerIDs(item.menu, regionID)
+    }
+
+    return true
+  })
+}
+
+export const menus = async (
+  _: unknown,
+  { filterMenuItems }: { filterMenuItems: boolean },
+  ctx: Context
+) => {
   const {
     clients: { vbase },
   } = ctx
+
+  const { segmentToken } = ctx.vtex
+
+  const segmentData = JSON.parse(
+    Buffer.from(segmentToken ?? '', 'base64').toString('utf-8')
+  )
+
+  const regionID = Buffer.from(segmentData?.regionId ?? '', 'base64').toString(
+    'utf-8'
+  )
 
   let menuItems: Menu[] = []
 
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
+
+    if (filterMenuItems) {
+      menuItems = parseSellerIDs(menuItems, regionID)
+    }
   } catch (err) {
     const errStr = err.toString()
 
