@@ -125,7 +125,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
           return (
             <div
               key={category.id}
-              style={{ display: departmentActive && (departmentActive?.menu ?? []).length > 0 ? 'block' : 'none' }}
+              style={{ display: departmentActive ? 'block' : 'none' }}
               className={classNames(
                 applyModifiers(
                   orientation === 'horizontal'
