@@ -36,7 +36,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
     openMenu,
   } = megaMenuState
 
-  // const departmentActiveHasCategories = !!departmentActive?.menu?.length
+  const departmentActiveHasCategories = !!departmentActive?.menu?.length
   const navRef = useRef<HTMLDivElement>(null)
 
   const debouncedHandleMouseEnter = useCallback(
