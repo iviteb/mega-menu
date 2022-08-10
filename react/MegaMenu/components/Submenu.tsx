@@ -55,7 +55,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
   >({})
 
   const [showBtnCat, setShowBtnCat] = useState(false)
-
+  console.log('aicicicic')
   const seeAllLink = (to?: string, level = 1, className?: string) => (
     <div
       className={classNames(
@@ -121,7 +121,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
           const subcategories = category.menu?.length
             ? subCategories(category.menu)
             : []
-
+          console.log('-> category', category)
           return (
             <div
               key={category.id}
@@ -206,10 +206,11 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     </div>
                   )}
 
-                  {subcategories.length > 1 ? (
+                  {subcategories.length >= 0 ? (
                     seeAllLink(category.slug, 2)
                   ) : (
-                    <div />
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
+                    <a href={category.slug} />
                   )}
                 </Collapsible>
               )}
@@ -222,59 +223,42 @@ const Submenu: FC<ItemProps> = observer((props) => {
   )
 
   return (
-    <>
-      <div
-        style={{ display: departmentActive ? 'block' : 'none' }}
+    <div style={{ display: departmentActive ? 'block' : 'none' }}>
+      <h3
         className={classNames(
-          handles.submenuItemsContainer,
-          'flex flex-column w-100'
+          handles.submenuContainerTitle,
+          'f4 fw7 c-on-base lh-copy ma0 flex items-center',
+          orientation === 'horizontal' && 'mb6',
+          orientation === 'vertical' && 'pv5 ph5'
         )}
       >
-        <h3
-          className={classNames(
-            handles.submenuContainerTitle,
-            'f4 fw7 c-on-base lh-copy ma0 flex items-center',
-            orientation === 'horizontal' && 'mb6',
-            orientation === 'vertical' && 'pv5 ph5'
-          )}
-        >
-          {departmentActive?.name}
-          {orientation === 'horizontal' && (
-            <div style={{ display: showBtnCat ? 'block' : 'none' }}>
-              {seeAllLink(departmentActive?.slug, 1, 't-small ml7')}
-            </div>
-          )}
-        </h3>
+        {departmentActive?.name}
+        {orientation === 'horizontal' && (
+          <div style={{ display: showBtnCat ? 'block' : 'none' }}>
+            {seeAllLink(departmentActive?.slug, 1, 't-small ml7')}
+          </div>
+        )}
+      </h3>
 
-        <div
-          className={classNames(
-            orientation === 'horizontal' && styles.submenuList,
-            orientation === 'vertical' && handles.submenuListVertical
-          )}
-        >
-          {orientation === 'horizontal' ? (
-            <>
-              <ExtensionPoint id="before-menu" /> {items}{' '}
-              <ExtensionPoint id="after-menu" />
-            </>
-          ) : (
-            <>
-              {items}
-              {showBtnCat ? seeAllLink(departmentActive?.slug) : <div />}
-            </>
-          )}
-        </div>
+      <div
+        className={classNames(
+          orientation === 'horizontal' && styles.submenuList,
+          orientation === 'vertical' && handles.submenuListVertical
+        )}
+      >
+        {orientation === 'horizontal' ? (
+          <>
+            <ExtensionPoint id="before-menu" /> {items}{' '}
+            <ExtensionPoint id="after-menu" />
+          </>
+        ) : (
+          <>
+            {items}
+            {showBtnCat ? seeAllLink(departmentActive?.slug) : <div />}
+          </>
+        )}
       </div>
-      {orientation === 'horizontal' && (
-        <div className={handles.departmentBannerContainer}>
-          <img
-            className={handles.departmentBanner}
-            src={departmentActive?.banner}
-            alt=""
-          />
-        </div>
-      )}
-    </>
+    </div>
   )
 })
 
