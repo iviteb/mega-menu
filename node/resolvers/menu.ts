@@ -62,7 +62,7 @@ const parseSellerIDs = (menuItems: Menu[], regionID: string) => {
   return menuItems.filter((item) => {
     const excludeSellerIDs = item?.sellerIDs?.trim().split(',')
 
-    if (excludeSellerIDs?.includes(regionID)) {
+    if (excludeSellerIDs?.includes(regionID) && regionID !== '') {
       return false
     }
 
@@ -88,20 +88,24 @@ export const menus = async (
   const segmentData = JSON.parse(
     Buffer.from(segmentToken ?? '', 'base64').toString('utf-8')
   )
+  console.log('-> segmentData', segmentData)
 
   const regionID = Buffer.from(segmentData?.regionId ?? '', 'base64').toString(
     'utf-8'
   )
+  console.log('-> regionID', regionID)
 
   let menuItems: Menu[] = []
 
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
+    console.log('-> menuItems', menuItems)
 
     if (filterMenuItems) {
       menuItems = parseSellerIDs(menuItems, regionID)
     }
   } catch (err) {
+    console.log('-> err', err)
     const errStr = err.toString()
 
     // If there are no menus, it is initialized empty
