@@ -101,6 +101,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
       ))
   }
 
+  console.log(getCategories())
   const items = useMemo(
     () => {
       if (departmentActive?.menu) {
@@ -121,6 +122,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
           const subcategories = category.menu?.length
             ? subCategories(category.menu)
             : []
+          console.log('-> subcategories', category.name, subcategories)
 
           return (
             <div

@@ -81,6 +81,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
 
   const [message, setMessage] = useState('')
   const [levelInfo, setLevelInfo] = useState(Object)
+  const [messageName, setMessageName] = useState('')
+
   const [messageSlug, setMessageSlug] = useState('')
   const [banner, setBanner] = useState('')
   const [uploadedIcon, setUploadedIcon] = useState('')
@@ -347,8 +349,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
       responseForm.level === 'firstLevel'
         ? '1'
         : responseForm.level === 'secondLevel'
-          ? '2'
-          : '3'
+        ? '2'
+        : '3'
 
     navigate({
       to: `/admin/app/mega-menu/${tab}`,
@@ -377,6 +379,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
 
   const changeStyle = (e: { id: string; value: string }) => {
     setAlert(false)
+    setMessageName('')
     setMessageSlug('')
 
     switch (e.id) {
@@ -440,6 +443,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   }
 
   const insertSubMenu = (mainMenuLevel: DataMenu, subMenuLevel: DataMenu[]) => {
+    console.log('-> subMenuLevel', subMenuLevel)
     menuInput({
       variables: {
         editMenu: {
@@ -599,6 +603,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     const menu = { ...mainMenu }
 
     let tempSecond: DataMenu[] = []
+    console.log('-> responseForm.level', responseForm.level)
 
     if (responseForm.level === 'firstLevel') {
       const menuLevelTwo = menu.menu
@@ -615,8 +620,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           let createSlug = !item.slugRoot
             ? `${slug}/${dataPath[1]}`
             : item.slugRoot === null
-              ? `${slug}/`
-              : `${slug}/${item.slugRoot}`
+            ? `${slug}/`
+            : `${slug}/${item.slugRoot}`
 
           createSlug = createSlug.replace('undefined', '')
 
@@ -650,8 +655,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                   dataPath.length >= 3
                     ? `${slug}/${dataPath[1]}/${dataPath[2]}`
                     : itemThird.slugRoot === null
-                      ? `${itemSecond.slug}/`
-                      : `${itemSecond.slug}/${itemThird.slugRoot}`,
+                    ? `${itemSecond.slug}/`
+                    : `${itemSecond.slug}/${itemThird.slugRoot}`,
                 slugRelative:
                   dataPath.length >= 3
                     ? `${slug}/${dataPath[1]}`
@@ -725,8 +730,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
               dataPath.length >= 3
                 ? `${menuSecondSlug}/${dataPath[2]}`
                 : itemThird.slugRoot === null
-                  ? `${itemSecond.slug}/`
-                  : `${itemSecond.slug}/${itemThird.slugRoot}`
+                ? `${itemSecond.slug}/`
+                : `${itemSecond.slug}/${itemThird.slugRoot}`
 
             createSlug = createSlug.replace('undefined', '')
 
@@ -796,7 +801,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           tempThird[0].optionalText = optionalText
         }
       }
-
+      console.log('-> menu', menu)
       insertSubMenu(
         {
           id: menu.id,
@@ -843,10 +848,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
               responseForm.type === 'edit'
                 ? messageTranslate('titleForm')
                 : responseForm.level === 'firstLevel'
-                  ? messageTranslate('newItemFirst')
-                  : responseForm.level === 'secondLevel'
-                    ? messageTranslate('newItemSecond')
-                    : messageTranslate('newItemThird')
+                ? messageTranslate('newItemFirst')
+                : responseForm.level === 'secondLevel'
+                ? messageTranslate('newItemSecond')
+                : messageTranslate('newItemThird')
             }
           />
         }
@@ -864,8 +869,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           </div>
         </div>
         {(responseForm.firstLevel && !responseForm.secondLevel) ||
-          (responseForm.type === 'new' &&
-            responseForm.level === 'secondLevel') ? (
+        (responseForm.type === 'new' &&
+          responseForm.level === 'secondLevel') ? (
           <div className="mb5">
             <Card>
               <div className=" ml4">
@@ -883,7 +888,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           <div />
         )}
         {(responseForm.firstLevel && responseForm.secondLevel) ||
-          (responseForm.type === 'new' && responseForm.level === 'thirdLevel') ? (
+        (responseForm.type === 'new' && responseForm.level === 'thirdLevel') ? (
           <div className="mb5">
             <div className="flex">
               <div className="w-50 mr4">
@@ -937,6 +942,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       label={messageTranslate('input1Form')}
                       value={name}
                       id="name"
+                      errorMessage={messageName}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         changeStyle({ id: e.target.id, value: e.target.value })
                       }
@@ -994,8 +1000,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       <>
                         {(responseForm.type === 'new' &&
                           responseForm.level === 'secondLevel') ||
-                          (responseForm.type === 'new' &&
-                            responseForm.level === 'thirdLevel') ? (
+                        (responseForm.type === 'new' &&
+                          responseForm.level === 'thirdLevel') ? (
                           <>
                             <p className="mb2">
                               {messageTranslate('input2Form')}
@@ -1069,7 +1075,9 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                   </div>
                   <div className="mb5">
                     <Input
-                      placeholder={messageTranslate('inputSellerIDsPlaceholder')}
+                      placeholder={messageTranslate(
+                        'inputSellerIDsPlaceholder'
+                      )}
                       label={messageTranslate('inputSellerIDs')}
                       value={sellerIDs}
                       id="sellerIDs"
@@ -1207,9 +1215,9 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           label: btnSave,
           onClick: () => {
             if (!name) {
-              setMessage(messageTranslate('validateName'))
+              setMessageName(messageTranslate('validateName'))
             } else if (!slug) {
-              setMessage(messageTranslate('validateSlug'))
+              setMessageSlug(messageTranslate('validateSlug'))
             } else if (responseForm.type === 'edit') {
               editItem()
             } else {
