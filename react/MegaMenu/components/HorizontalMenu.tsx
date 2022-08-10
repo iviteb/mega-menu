@@ -104,7 +104,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
               className={classNames(
                 handles.menuItem,
                 d.id === departmentActive?.id &&
-                `bg-black-05 ${handles.departmentActive}`
+                  `bg-black-05 ${handles.departmentActive}`
               )}
               key={d.id}
               onMouseEnter={() => {
@@ -184,9 +184,9 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
             style={{
               display:
                 departments.length &&
-                  departmentActive &&
-                  departmentActiveHasCategories
-                  ? 'block'
+                departmentActive &&
+                departmentActiveHasCategories
+                  ? 'flex'
                   : 'none',
             }}
           >
