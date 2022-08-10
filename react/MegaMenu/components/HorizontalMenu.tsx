@@ -187,7 +187,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
                 departments.length &&
                 departmentActive &&
                 departmentActiveHasCategories
-                  ? 'block'
+                  ? 'flex'
                   : 'none',
             }}
           >
