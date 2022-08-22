@@ -35,7 +35,6 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
     setDepartmentActive,
     openMenu,
   } = megaMenuState
-  console.log('-> departments', departments)
 
   const departmentActiveHasCategories = !!departmentActive?.menu?.length
   const navRef = useRef<HTMLDivElement>(null)

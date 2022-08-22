@@ -88,18 +88,15 @@ export const menus = async (
   const segmentData = JSON.parse(
     Buffer.from(segmentToken ?? '', 'base64').toString('utf-8')
   )
-  console.log('-> segmentData', segmentData)
 
   const regionID = Buffer.from(segmentData?.regionId ?? '', 'base64').toString(
     'utf-8'
   )
-  console.log('-> regionID', regionID)
 
   let menuItems: Menu[] = []
 
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
-    console.log('-> menuItems', menuItems)
 
     if (filterMenuItems) {
       menuItems = parseSellerIDs(menuItems, regionID)
