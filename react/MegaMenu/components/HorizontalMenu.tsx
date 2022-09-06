@@ -14,7 +14,7 @@ import { megaMenuState } from '../State'
 import styles from '../styles.css'
 import Item from './Item'
 import Submenu from './Submenu'
-import { BUTTON_ID } from './TriggerButton'
+import { BUTTON_ID, CONTAINER_ID } from './TriggerButton'
 
 const CSS_HANDLES = [
   'menuContainer',
@@ -57,11 +57,17 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
         (data: HTMLElement) => data.dataset?.id === BUTTON_ID
       )
 
-      if (
-        navRef.current &&
-        !navRef.current.contains(event.target as Node) &&
-        !isTriggerButton
-      ) {
+      const isContainer = event.target.className
+        .split(' ')
+        .includes(CONTAINER_ID)
+
+      if (isContainer || isTriggerButton) {
+        openMenu(true)
+
+        return
+      }
+
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
         openMenu(false)
       }
 
@@ -88,6 +94,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
     if (defaultDepartment) {
       setDepartmentActive(defaultDepartment)
     }
+    document.addEventListener('mouseover', handleClickOutside, true)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultDepartmentActive])

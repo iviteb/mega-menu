@@ -16,6 +16,7 @@ import styles from '../styles.css'
 const CSS_HANDLES = ['triggerContainer', 'triggerButtonIcon'] as const
 
 export const BUTTON_ID = 'mega-menu-trigger-button'
+export const CONTAINER_ID = 'vtex-mega-menu-2-x-menuContainer'
 
 const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
   const { handles } = useCssHandles(CSS_HANDLES)
