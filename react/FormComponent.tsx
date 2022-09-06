@@ -453,7 +453,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   }
 
   const insertSubMenu = (mainMenuLevel: DataMenu, subMenuLevel: DataMenu[]) => {
-    console.log('-> subMenuLevel', subMenuLevel)
     menuInput({
       variables: {
         editMenu: {
@@ -617,7 +616,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     const menu = { ...mainMenu }
 
     let tempSecond: DataMenu[] = []
-    console.log('-> responseForm.level', responseForm.level)
 
     if (responseForm.level === 'firstLevel') {
       const menuLevelTwo = menu.menu
@@ -817,7 +815,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           tempThird[0].optionalText = optionalText
         }
       }
-      console.log('-> menu', menu)
       insertSubMenu(
         {
           id: menu.id,
