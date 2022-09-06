@@ -102,7 +102,6 @@ export const menus = async (
       menuItems = parseSellerIDs(menuItems, regionID)
     }
   } catch (err) {
-    console.log('-> err', err)
     const errStr = err.toString()
 
     // If there are no menus, it is initialized empty
