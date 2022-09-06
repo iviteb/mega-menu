@@ -12,6 +12,7 @@ mutation edit($editMenu: MenuInput!) {
     slugRoot
     slugRelative
     banner
+    linkBanner
     menu {
       id
       name

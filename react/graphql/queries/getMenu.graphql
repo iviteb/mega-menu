@@ -11,6 +11,7 @@ query getMenu($id: ID!) {
     enableSty
     order
     banner
+    linkBanner
     menu {
       id
       name
@@ -37,6 +38,7 @@ query getMenu($id: ID!) {
         slugRoot
         slugRelative
         optionalText
+
       }
     }
   }
