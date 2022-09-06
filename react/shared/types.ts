@@ -14,6 +14,7 @@ export type MenuItem = {
   slugRelative?: string
   banner?: string
   optionalText?: string
+  linkBanner?: string
 }
 
 export type MenuItemSave = {
@@ -32,6 +33,7 @@ export type MenuItemSave = {
   slugRelative?: string
   banner?: string
   optionalText?: string
+  linkBanner?: string
 }
 
 export type MenusResponse = {

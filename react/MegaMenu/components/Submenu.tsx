@@ -48,6 +48,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
   const { intl, closeMenu } = props
   const { handles } = useCssHandles(CSS_HANDLES)
   const { departmentActive, config, getCategories } = megaMenuState
+  console.log('-> departmentActive', departmentActive)
   const { orientation } = config
 
   const [collapsibleStates, setCollapsibleStates] = useState<
@@ -269,11 +270,23 @@ const Submenu: FC<ItemProps> = observer((props) => {
       </div>
       {orientation === 'horizontal' && (
         <div className={handles.departmentBannerContainer}>
-          <img
-            className={handles.departmentBanner}
-            src={departmentActive?.banner}
-            alt=""
-          />
+          {departmentActive?.linkBanner !== '' && (
+            <a href={departmentActive?.linkBanner} target="_blank">
+              <img
+                className={handles.departmentBanner}
+                src={departmentActive?.banner}
+                alt=""
+              />
+            </a>
+          )}
+
+          {departmentActive?.linkBanner === '' && (
+            <img
+              className={handles.departmentBanner}
+              src={departmentActive?.banner}
+              alt=""
+            />
+          )}
         </div>
       )}
     </>
