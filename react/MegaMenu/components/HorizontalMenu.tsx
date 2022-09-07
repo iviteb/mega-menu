@@ -56,11 +56,16 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
         (data: HTMLElement) => data.dataset?.id === BUTTON_ID
       )
 
-      const isContainer = event.target.className
-        .split(' ')
-        .includes(CONTAINER_ID)
+      let isContainer
+      let isHeader
 
-      const isHeader = event.target.className.match(/headerDesktop/g)
+      try {
+        isContainer = event.target.className?.split(' ').includes(CONTAINER_ID)
+        isHeader = event.target.className.match(/headerDesktop/g)
+      } catch (e) {
+        isContainer = null
+        isHeader = null
+      }
 
       if (isContainer || isTriggerButton || isHeader) {
         openMenu(true)
