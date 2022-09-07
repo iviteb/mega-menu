@@ -51,7 +51,6 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
   }
 
   const handleClickOutside = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (event: any) => {
       const isTriggerButton = event?.path?.find(
         (data: HTMLElement) => data.dataset?.id === BUTTON_ID
@@ -61,7 +60,9 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
         .split(' ')
         .includes(CONTAINER_ID)
 
-      if (isContainer || isTriggerButton) {
+      const isHeader = event.target.className.match(/headerDesktop/g)
+
+      if (isContainer || isTriggerButton || isHeader) {
         openMenu(true)
 
         return
