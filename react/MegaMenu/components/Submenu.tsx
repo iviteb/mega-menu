@@ -269,7 +269,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
       {orientation === 'horizontal' && (
         <div className={handles.departmentBannerContainer}>
           {departmentActive?.linkBanner !== '' && (
-            <a href={departmentActive?.linkBanner} target="_blank">
+            <a href={departmentActive?.linkBanner} target="_self">
               <img
                 className={handles.departmentBanner}
                 src={departmentActive?.banner}
