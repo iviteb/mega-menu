@@ -14,6 +14,7 @@ type Menu {
   slugRelative: String
   banner: String
   optionalText: String
+  linkBanner:String
 }
 
 input MenuInput {
@@ -34,4 +35,5 @@ input MenuInput {
   slugRelative: String
   banner: String
   optionalText: String
+  linkBanner:String
 }
