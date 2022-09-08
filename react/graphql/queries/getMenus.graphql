@@ -13,6 +13,7 @@ query getMenus($filterMenuItems: Boolean) {
     slugRoot
     slugRelative
     banner
+    linkBanner
     menu {
       id
       name

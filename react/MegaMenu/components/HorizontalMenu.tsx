@@ -14,7 +14,7 @@ import { megaMenuState } from '../State'
 import styles from '../styles.css'
 import Item from './Item'
 import Submenu from './Submenu'
-import { BUTTON_ID } from './TriggerButton'
+import { BUTTON_ID, CONTAINER_ID } from './TriggerButton'
 
 const CSS_HANDLES = [
   'menuContainer',
@@ -51,17 +51,29 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
   }
 
   const handleClickOutside = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (event: any) => {
       const isTriggerButton = event?.path?.find(
         (data: HTMLElement) => data.dataset?.id === BUTTON_ID
       )
 
-      if (
-        navRef.current &&
-        !navRef.current.contains(event.target as Node) &&
-        !isTriggerButton
-      ) {
+      let isContainer
+      let isHeader
+
+      try {
+        isContainer = event.target.className?.split(' ').includes(CONTAINER_ID)
+        isHeader = event.target.className.match(/headerDesktop/g)
+      } catch (e) {
+        isContainer = null
+        isHeader = null
+      }
+
+      if (isContainer || isTriggerButton || isHeader) {
+        openMenu(true)
+
+        return
+      }
+
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
         openMenu(false)
       }
 
@@ -88,6 +100,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
     if (defaultDepartment) {
       setDepartmentActive(defaultDepartment)
     }
+    document.addEventListener('mouseover', handleClickOutside, true)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultDepartmentActive])

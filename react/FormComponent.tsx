@@ -59,6 +59,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     banner: '',
     optionalText: '',
     uploadedIcon: '',
+    linkBanner: '',
   }
 
   const { navigate } = useRuntime()
@@ -78,6 +79,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   const [alert, setAlert] = useState(false)
   const [order, setOrder] = useState(0)
   const [optionalText, setOptionalText] = useState('')
+  const [linkBanner, setLinkBanner] = useState('')
 
   const [message, setMessage] = useState('')
   const [levelInfo, setLevelInfo] = useState(Object)
@@ -174,7 +176,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }).toString()
   }
 
-  /* eslint max-params: ["error", 12] */
+  /* eslint max-params: ["error", 14] */
   /* eslint-env es9 */
   const setDataForm = (
     idenMenu: string,
@@ -189,7 +191,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     displayMenu: boolean,
     enableStyMenu: boolean,
     orderMenu: number,
-    optionalTextMenu: string
+    optionalTextMenu: string,
+    linkBannerMenu: string
   ) => {
     setIdMenu(idenMenu)
     setName(nameMenu)
@@ -204,6 +207,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     setEnableSty(enableStyMenu)
     setOrder(orderMenu)
     setOptionalText(optionalTextMenu)
+    setLinkBanner(linkBannerMenu)
   }
 
   useEffect(() => {
@@ -234,7 +238,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           dataMenu.menu.display,
           dataMenu.menu.enableSty,
           dataMenu.menu.order,
-          dataMenu.menu.optionalText ?? ''
+          dataMenu.menu.optionalText ?? '',
+          dataMenu.menu.linkBanner ?? ''
         )
       } else if (responseForm.level === 'secondLevel') {
         setLevelInfo({ firstLevel: dataMenu.menu.name })
@@ -268,7 +273,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           submenu[0].display,
           submenu[0].enableSty,
           submenu[0].order,
-          submenu[0].optionalText ?? ''
+          submenu[0].optionalText ?? '',
+          submenu[0].linkBanner ?? ''
         )
       } else {
         const tempArrayTL: DataMenu[] = []
@@ -317,7 +323,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           tempArrayTL[0].display,
           tempArrayTL[0].enableSty,
           tempArrayTL[0].order ?? 0,
-          tempArrayTL[0].optionalText ?? ''
+          tempArrayTL[0].optionalText ?? '',
+          tempArrayTL[0].linkBanner ?? ''
         )
 
         setLevelInfo({
@@ -422,6 +429,9 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
       case 'optionalText':
         setOptionalText(e.value)
         break
+      case 'linkBanner':
+        setLinkBanner(e.value)
+        break
 
       default:
         break
@@ -443,7 +453,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   }
 
   const insertSubMenu = (mainMenuLevel: DataMenu, subMenuLevel: DataMenu[]) => {
-    console.log('-> subMenuLevel', subMenuLevel)
     menuInput({
       variables: {
         editMenu: {
@@ -462,6 +471,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slugRelative: mainMenuLevel.slugRelative,
           banner: mainMenuLevel.banner,
           optionalText: mainMenuLevel.optionalText,
+          linkBanner: mainMenuLevel.linkBanner,
         },
       },
     })
@@ -486,6 +496,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
             display,
             enableSty,
             banner,
+            linkBanner,
           },
         },
       })
@@ -522,6 +533,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           order: menu.order,
           banner: menu.banner,
           uploadedIcon: menu.uploadedIcon,
+          linkBanner: menu.linkBanner,
         },
         secondMenu
       )
@@ -577,6 +589,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slugRelative: menu.slugRelative,
           banner: menu.banner,
           optionalText: menu.optionalText,
+          linkBanner: menu.linkBanner,
         },
         menu.menu ? menu.menu : []
       )
@@ -603,7 +616,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     const menu = { ...mainMenu }
 
     let tempSecond: DataMenu[] = []
-    console.log('-> responseForm.level', responseForm.level)
 
     if (responseForm.level === 'firstLevel') {
       const menuLevelTwo = menu.menu
@@ -688,6 +700,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           order,
           banner,
           optionalText,
+          linkBanner,
         },
         menuLevelTwoUpdate
       )
@@ -766,6 +779,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           enableSty: menu.enableSty,
           order: menu.order,
           banner: menu.banner,
+          linkBanner: menu.linkBanner,
         },
         menu.menu ? menu.menu : []
       )
@@ -801,7 +815,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           tempThird[0].optionalText = optionalText
         }
       }
-      console.log('-> menu', menu)
       insertSubMenu(
         {
           id: menu.id,
@@ -818,6 +831,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           order: menu.order,
           banner: menu.banner,
           optionalText: menu.optionalText,
+          linkBanner: menu.linkBanner,
         },
         menu.menu ? menu.menu : []
       )
@@ -1175,6 +1189,22 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                           onHandleImageReset={handleImageReset}
                         />
                       )}
+                    </div>
+                    <div className="mb5">
+                      <div className="flex items-center">
+                        <Input
+                          placeholder="Link on the banner"
+                          label="Link banner"
+                          value={linkBanner}
+                          id="linkBanner"
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            changeStyle({
+                              id: e.target.id,
+                              value: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
                 )}

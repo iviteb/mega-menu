@@ -48,6 +48,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
   const { intl, closeMenu } = props
   const { handles } = useCssHandles(CSS_HANDLES)
   const { departmentActive, config, getCategories } = megaMenuState
+
   const { orientation } = config
 
   const [collapsibleStates, setCollapsibleStates] = useState<
@@ -101,7 +102,6 @@ const Submenu: FC<ItemProps> = observer((props) => {
       ))
   }
 
-  console.log(getCategories())
   const items = useMemo(
     () => {
       if (departmentActive?.menu) {
@@ -122,7 +122,6 @@ const Submenu: FC<ItemProps> = observer((props) => {
           const subcategories = category.menu?.length
             ? subCategories(category.menu)
             : []
-          console.log('-> subcategories', category.name, subcategories)
 
           return (
             <div
@@ -269,11 +268,23 @@ const Submenu: FC<ItemProps> = observer((props) => {
       </div>
       {orientation === 'horizontal' && (
         <div className={handles.departmentBannerContainer}>
-          <img
-            className={handles.departmentBanner}
-            src={departmentActive?.banner}
-            alt=""
-          />
+          {departmentActive?.linkBanner !== '' && (
+            <a href={departmentActive?.linkBanner} target="_blank">
+              <img
+                className={handles.departmentBanner}
+                src={departmentActive?.banner}
+                alt=""
+              />
+            </a>
+          )}
+
+          {departmentActive?.linkBanner === '' && (
+            <img
+              className={handles.departmentBanner}
+              src={departmentActive?.banner}
+              alt=""
+            />
+          )}
         </div>
       )}
     </>
