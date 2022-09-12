@@ -80,7 +80,7 @@ export const menus = async (
   ctx: Context
 ) => {
   const {
-    clients: { vbase },
+    clients: { vbase, region },
   } = ctx
 
   const { segmentToken } = ctx.vtex
@@ -89,9 +89,8 @@ export const menus = async (
     Buffer.from(segmentToken ?? '', 'base64').toString('utf-8')
   )
 
-  const regionID = Buffer.from(segmentData?.regionId ?? '', 'base64').toString(
-    'utf-8'
-  )
+  const regionSellers = await region.getRegionSellers(segmentData?.regionId)
+  const addressSellers = regionSellers[0]?.sellers
 
   let menuItems: Menu[] = []
 
@@ -99,7 +98,13 @@ export const menus = async (
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
 
     if (filterMenuItems) {
-      menuItems = parseSellerIDs(menuItems, regionID)
+      for (let i = 0; i < addressSellers.length; i++) {
+        const newMenu = parseSellerIDs(menuItems, addressSellers[i]?.id)
+
+        if (JSON.stringify(newMenu) !== JSON.stringify(menuItems)) {
+          menuItems = newMenu
+        }
+      }
     }
   } catch (err) {
     const errStr = err.toString()
