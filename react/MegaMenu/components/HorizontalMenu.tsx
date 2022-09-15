@@ -61,7 +61,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
 
       try {
         isContainer = event.target.className?.split(' ').includes(CONTAINER_ID)
-        isHeader = event.target.className.match(/headerDesktop/g)
+        isHeader = event.target.className.match(/menuContainerNav/g)
       } catch (e) {
         isContainer = null
         isHeader = null
@@ -100,6 +100,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
     if (defaultDepartment) {
       setDepartmentActive(defaultDepartment)
     }
+
     document.addEventListener('mouseover', handleClickOutside, true)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
