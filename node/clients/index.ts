@@ -1,3 +1,9 @@
 import { IOClients } from '@vtex/api'
 
-export class Clients extends IOClients {}
+import RegionClient from './region'
+
+export class Clients extends IOClients {
+  public get region() {
+    return this.getOrSet('region', RegionClient)
+  }
+}
