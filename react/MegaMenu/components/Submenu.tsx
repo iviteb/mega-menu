@@ -268,7 +268,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
           )}
         </div>
       </div>
-      {orientation === 'horizontal' && departmentActive?.linkBanner && (
+      {orientation === 'horizontal' && departmentActive?.banner && (
         <div className={handles.departmentBannerContainer}>
           {departmentActive?.linkBanner !== '' && (
             <a
