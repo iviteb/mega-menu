@@ -172,11 +172,13 @@ const Submenu: FC<ItemProps> = observer((props) => {
                           'flex'
                         )}
                       >
-                        <img
-                          className={handles.menuItemIcon}
-                          src={category.uploadedIcon}
-                          alt=""
-                        />
+                        {category.uploadedIcon && (
+                          <img
+                            className={handles.menuItemIcon}
+                            src={category.uploadedIcon}
+                            alt=""
+                          />
+                        )}
                         <p
                           className={classNames(
                             handles.collapsibleHeaderText,
@@ -266,10 +268,14 @@ const Submenu: FC<ItemProps> = observer((props) => {
           )}
         </div>
       </div>
-      {orientation === 'horizontal' && (
+      {orientation === 'horizontal' && departmentActive?.banner && (
         <div className={handles.departmentBannerContainer}>
           {departmentActive?.linkBanner !== '' && (
-            <a href={departmentActive?.linkBanner} target="_blank">
+            <a
+              href={departmentActive?.linkBanner}
+              target="_blank"
+              rel="noreferrer"
+            >
               <img
                 className={handles.departmentBanner}
                 src={departmentActive?.banner}
