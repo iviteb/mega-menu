@@ -162,7 +162,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     <div />
                   )}
                 </>
-              ) : (
+              ) : subcategories.length ? (
                 <Collapsible
                   header={
                     <>
@@ -215,6 +215,31 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     <div />
                   )}
                 </Collapsible>
+              ) : (
+                <Link to={category.slug} style={{ textDecoration: 'none' }}>
+                  <div
+                    className={classNames(
+                      handles.submenuVerticalNameContainer,
+                      'flex'
+                    )}
+                  >
+                    {category.uploadedIcon && (
+                      <img
+                        className={handles.menuItemIcon}
+                        src={category.uploadedIcon}
+                        alt=""
+                      />
+                    )}
+                    <p
+                      className={classNames(
+                        handles.collapsibleHeaderText,
+                        collapsibleStates[category.id] && 'fw7'
+                      )}
+                    >
+                      {category.name}
+                    </p>
+                  </div>
+                </Link>
               )}
             </div>
           )
