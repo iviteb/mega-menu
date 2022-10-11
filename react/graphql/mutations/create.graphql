@@ -5,6 +5,7 @@ mutation create($menuInput: MenuInput!) {
     icon
     slug
     sellerIDs
+    isCollection
     styles
     display
     enableSty

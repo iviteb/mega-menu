@@ -52,6 +52,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     name: '',
     slug: '',
     sellerIDs: '',
+    isCollection: false,
     styles: '',
     menu: [],
     display: false,
@@ -70,6 +71,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   const [slugRoot, setSlugRoot] = useState('')
   const [slugRelative, setSlugRelative] = useState('')
   const [sellerIDs, setSellerIDs] = useState('')
+  const [isCollection, setIsCollection] = useState(false)
   const [styles, setStyles] = useState('')
   const [display, setDisplay] = useState(true)
   const [enableSty, setEnableSty] = useState(true)
@@ -186,6 +188,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     slugRootMenu: string,
     slugRelativeMenu: string,
     sellerIDsMenu: string,
+    isCollectionMenu: boolean,
     stylesMenu: string,
     subMenuData: DataMenu[],
     displayMenu: boolean,
@@ -193,6 +196,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     orderMenu: number,
     optionalTextMenu: string,
     linkBannerMenu: string
+    // eslint-disable-next-line max-params
   ) => {
     setIdMenu(idenMenu)
     setName(nameMenu)
@@ -201,6 +205,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     setSlugRoot(slugRootMenu)
     setSlugRelative(slugRelativeMenu)
     setSellerIDs(sellerIDsMenu)
+    setIsCollection(isCollectionMenu)
     setStyles(stylesMenu)
     setSubMenu(subMenuData)
     setDisplay(displayMenu)
@@ -233,6 +238,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           dataMenu.menu.slugRoot,
           dataMenu.menu.slugRelative,
           dataMenu.menu.sellerIDs,
+          dataMenu.menu.isCollection,
           dataMenu.menu.styles,
           dataMenu.menu.menu,
           dataMenu.menu.display,
@@ -268,6 +274,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           submenu[0].slugRoot ?? rootRelative[1],
           submenu[0].slugRelative ?? rootRelative[0],
           submenu[0].sellerIDs,
+          submenu[0].isCollection,
           submenu[0].styles,
           [],
           submenu[0].display,
@@ -318,6 +325,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           tempArrayTL[0].slugRoot ?? rootRelative[0],
           tempArrayTL[0].slugRelative ?? rootRelative[1],
           tempArrayTL[0].sellerIDs ?? '',
+          tempArrayTL[0].isCollection ?? false,
           tempArrayTL[0].styles,
           [],
           tempArrayTL[0].display,
@@ -356,8 +364,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
       responseForm.level === 'firstLevel'
         ? '1'
         : responseForm.level === 'secondLevel'
-        ? '2'
-        : '3'
+          ? '2'
+          : '3'
 
     navigate({
       to: `/admin/app/mega-menu/${tab}`,
@@ -410,6 +418,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         setSellerIDs(e.value)
         break
 
+      case 'isCollection':
+        setIsCollection(Boolean(e.value))
+        break
+
       case 'styles':
         setStyles(e.value)
         break
@@ -429,6 +441,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
       case 'optionalText':
         setOptionalText(e.value)
         break
+
       case 'linkBanner':
         setLinkBanner(e.value)
         break
@@ -462,6 +475,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           uploadedIcon: mainMenuLevel.uploadedIcon,
           slug: mainMenuLevel.slug,
           sellerIDs: mainMenuLevel.sellerIDs,
+          isCollection: mainMenuLevel.isCollection,
           styles: mainMenuLevel.styles,
           menu: subMenuLevel,
           display: mainMenuLevel.display,
@@ -491,6 +505,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
             slug,
             uploadedIcon,
             sellerIDs,
+            isCollection,
             styles,
             menu: subMenu,
             display,
@@ -511,6 +526,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         icon,
         slug: `${menu.slug}/${slug}`,
         sellerIDs,
+        isCollection,
         styles,
         display,
         enableSty,
@@ -527,6 +543,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           icon: menu.icon,
           slug: menu.slug,
           sellerIDs: menu.sellerIDs,
+          isCollection: menu.isCollection,
           styles: menu.styles,
           display: menu.display,
           enableSty: menu.enableSty,
@@ -552,6 +569,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         icon,
         slug: `${valueSlug}/${slug}`,
         sellerIDs,
+        isCollection,
         styles,
         display,
         enableSty,
@@ -581,6 +599,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           uploadedIcon: menu.uploadedIcon,
           slug: menu.slug,
           sellerIDs: menu.sellerIDs,
+          isCollection: menu.isCollection,
           styles: menu.styles,
           display: menu.display,
           enableSty: menu.enableSty,
@@ -632,8 +651,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           let createSlug = !item.slugRoot
             ? `${slug}/${dataPath[1]}`
             : item.slugRoot === null
-            ? `${slug}/`
-            : `${slug}/${item.slugRoot}`
+              ? `${slug}/`
+              : `${slug}/${item.slugRoot}`
 
           createSlug = createSlug.replace('undefined', '')
 
@@ -667,8 +686,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                   dataPath.length >= 3
                     ? `${slug}/${dataPath[1]}/${dataPath[2]}`
                     : itemThird.slugRoot === null
-                    ? `${itemSecond.slug}/`
-                    : `${itemSecond.slug}/${itemThird.slugRoot}`,
+                      ? `${itemSecond.slug}/`
+                      : `${itemSecond.slug}/${itemThird.slugRoot}`,
                 slugRelative:
                   dataPath.length >= 3
                     ? `${slug}/${dataPath[1]}`
@@ -694,6 +713,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           uploadedIcon,
           slug,
           sellerIDs,
+          isCollection,
           styles,
           display,
           enableSty,
@@ -718,6 +738,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         tempSecond[0].slugRoot = slugRoot
         tempSecond[0].slugRelative = slugRelative
         tempSecond[0].sellerIDs = sellerIDs
+        tempSecond[0].isCollection = isCollection
         tempSecond[0].styles = styles
         tempSecond[0].display = display
         tempSecond[0].enableSty = enableSty
@@ -743,8 +764,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
               dataPath.length >= 3
                 ? `${menuSecondSlug}/${dataPath[2]}`
                 : itemThird.slugRoot === null
-                ? `${itemSecond.slug}/`
-                : `${itemSecond.slug}/${itemThird.slugRoot}`
+                  ? `${itemSecond.slug}/`
+                  : `${itemSecond.slug}/${itemThird.slugRoot}`
 
             createSlug = createSlug.replace('undefined', '')
 
@@ -774,6 +795,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slugRoot: menu.slugRoot,
           slugRelative: menu.slugRelative,
           sellerIDs: menu.sellerIDs,
+          isCollection: menu.isCollection,
           styles: menu.styles,
           display: menu.display,
           enableSty: menu.enableSty,
@@ -808,6 +830,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           tempThird[0].slugRoot = slugRoot
           tempThird[0].slugRelative = slugRelative
           tempThird[0].sellerIDs = sellerIDs
+          tempThird[0].isCollection = isCollection
           tempThird[0].styles = styles
           tempThird[0].display = display
           tempThird[0].enableSty = enableSty
@@ -815,6 +838,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           tempThird[0].optionalText = optionalText
         }
       }
+
       insertSubMenu(
         {
           id: menu.id,
@@ -825,6 +849,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           slugRoot: menu.slugRoot,
           slugRelative: menu.slugRelative,
           sellerIDs: menu.sellerIDs,
+          isCollection: menu.isCollection,
           styles: menu.styles,
           display: menu.display,
           enableSty: menu.enableSty,
@@ -862,10 +887,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
               responseForm.type === 'edit'
                 ? messageTranslate('titleForm')
                 : responseForm.level === 'firstLevel'
-                ? messageTranslate('newItemFirst')
-                : responseForm.level === 'secondLevel'
-                ? messageTranslate('newItemSecond')
-                : messageTranslate('newItemThird')
+                  ? messageTranslate('newItemFirst')
+                  : responseForm.level === 'secondLevel'
+                    ? messageTranslate('newItemSecond')
+                    : messageTranslate('newItemThird')
             }
           />
         }
@@ -883,8 +908,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           </div>
         </div>
         {(responseForm.firstLevel && !responseForm.secondLevel) ||
-        (responseForm.type === 'new' &&
-          responseForm.level === 'secondLevel') ? (
+          (responseForm.type === 'new' &&
+            responseForm.level === 'secondLevel') ? (
           <div className="mb5">
             <Card>
               <div className=" ml4">
@@ -902,7 +927,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           <div />
         )}
         {(responseForm.firstLevel && responseForm.secondLevel) ||
-        (responseForm.type === 'new' && responseForm.level === 'thirdLevel') ? (
+          (responseForm.type === 'new' && responseForm.level === 'thirdLevel') ? (
           <div className="mb5">
             <div className="flex">
               <div className="w-50 mr4">
@@ -1014,8 +1039,8 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       <>
                         {(responseForm.type === 'new' &&
                           responseForm.level === 'secondLevel') ||
-                        (responseForm.type === 'new' &&
-                          responseForm.level === 'thirdLevel') ? (
+                          (responseForm.type === 'new' &&
+                            responseForm.level === 'thirdLevel') ? (
                           <>
                             <p className="mb2">
                               {messageTranslate('input2Form')}
@@ -1097,6 +1122,16 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       id="sellerIDs"
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         changeStyle({ id: e.target.id, value: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="mb5">
+                    <Toggle
+                      label={messageTranslate('inputIsCollection')}
+                      checked={isCollection}
+                      id="isCollection"
+                      onChange={() =>
+                        setIsCollection(!isCollection)
                       }
                     />
                   </div>

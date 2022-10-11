@@ -4,6 +4,7 @@ export interface Menu {
   icon: string
   slug: string
   sellerIDs?: string
+  isCollection?: boolean
   styles: string
   menu: Menu[]
   display: boolean

@@ -30,6 +30,7 @@
   "admin/mega-menu.items.input3Form": "Icono",
   "admin/mega-menu.items.inputSellerIDs": "IDs de vendedores, estos son los IDs de los vendedores que NO tienen esta categoría, separados con coma",
   "admin/mega-menu.items.inputSellerIDsPlaceholder": "por ejemplo: rouauchantitan01, rouauchanlocatie02",
+  "admin/mega-menu.items.inputIsCollection": "Es Colección",
   "admin/mega-menu.items.input4Form": "Estilos",
   "admin/mega-menu.items.titleSubBlock": "Apariencia",
   "admin/mega-menu.items.check1Block": "Mostrar",

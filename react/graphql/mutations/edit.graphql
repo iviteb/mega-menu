@@ -5,6 +5,7 @@ mutation edit($editMenu: MenuInput!) {
     icon
     slug
     sellerIDs
+    isCollection
     styles
     display
     enableSty
@@ -19,6 +20,7 @@ mutation edit($editMenu: MenuInput!) {
       icon
       slug
       sellerIDs
+      isCollection
       styles
       display
       enableSty
@@ -32,6 +34,7 @@ mutation edit($editMenu: MenuInput!) {
         icon
         slug
         sellerIDs
+        isCollection
         styles
         display
         enableSty

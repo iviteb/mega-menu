@@ -5,6 +5,7 @@ type Menu {
   uploadedIcon: String
   slug: String!
   sellerIDs: String
+  isCollection: Boolean
   styles: String
   menu: [Menu]
   display: Boolean!
@@ -14,7 +15,7 @@ type Menu {
   slugRelative: String
   banner: String
   optionalText: String
-  linkBanner:String
+  linkBanner: String
 }
 
 input MenuInput {
@@ -24,6 +25,7 @@ input MenuInput {
   uploadedIcon: String
   slug: String!
   sellerIDs: String
+  isCollection: Boolean
   styles: String!
   menu: [MenuInput]
   display: Boolean
@@ -35,5 +37,5 @@ input MenuInput {
   slugRelative: String
   banner: String
   optionalText: String
-  linkBanner:String
+  linkBanner: String
 }

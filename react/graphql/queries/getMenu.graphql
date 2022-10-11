@@ -6,6 +6,7 @@ query getMenu($id: ID!) {
     uploadedIcon
     slug
     sellerIDs
+    isCollection
     styles
     display
     enableSty
@@ -19,6 +20,7 @@ query getMenu($id: ID!) {
       uploadedIcon
       slug
       sellerIDs
+      isCollection
       styles
       display
       enableSty
@@ -31,6 +33,7 @@ query getMenu($id: ID!) {
         icon
         slug
         sellerIDs
+        isCollection
         styles
         display
         enableSty
@@ -38,7 +41,6 @@ query getMenu($id: ID!) {
         slugRoot
         slugRelative
         optionalText
-
       }
     }
   }

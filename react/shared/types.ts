@@ -5,6 +5,7 @@ export type MenuItem = {
   name: string
   slug: string
   sellerIDs?: string
+  isCollection?: boolean
   styles: string
   menu?: MenuItem[]
   display: boolean
@@ -24,6 +25,7 @@ export type MenuItemSave = {
   name: string
   slug: string
   sellerIDs?: string
+  isCollection?: boolean
   styles: string
   menu?: MenuItem[] | string
   display: boolean
