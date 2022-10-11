@@ -160,7 +160,7 @@ const Item: FC<ItemProps> = observer((props) => {
         )
       ) : (
         <Link
-          to={to}
+          to={`${to}`}
           {...rest}
           className={linkClassNames}
           onClick={() => {

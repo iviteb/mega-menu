@@ -113,7 +113,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
             >
               <Item
                 id={d.id}
-                to={d.slug}
+                to={`${d.slug}/c`}
                 iconId={d.icon}
                 accordion={hasCategories}
                 className={classNames('pv3 mh5')}

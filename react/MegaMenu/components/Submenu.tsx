@@ -67,7 +67,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
       )}
     >
       <Link
-        to={to ?? '#'}
+        to={to ? `${to}/c` : '#'}
         className={classNames(
           handles.seeAllLink,
           'link underline fw7 c-on-base'
@@ -87,7 +87,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
       .map((x) => (
         <div key={x.id} className={classNames(handles.submenuItem, 'mt3')}>
           <Item
-            to={x.slug}
+            to={`${x.slug}/c`}
             iconId={x.icon}
             level={3}
             style={x.styles}
@@ -143,7 +143,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
               {orientation === 'horizontal' ? (
                 <>
                   <Item
-                    to={category.slug}
+                    to={`${category.slug}/c`}
                     iconId={category.icon}
                     level={2}
                     style={category.styles}
