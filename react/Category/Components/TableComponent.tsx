@@ -67,6 +67,10 @@ const defaultcontent = {
   display: false,
   enableSty: false,
   order: 0,
+  banner: '',
+  optionalText: '',
+  linkBanner: '',
+  uploadedIcon: '',
 }
 
 const TableComponent: FC<TableComponentProps> = (props) => {
@@ -99,6 +103,9 @@ const TableComponent: FC<TableComponentProps> = (props) => {
               display: dataChangeItem.display,
               enableSty: dataChangeItem.enableSty,
               order: dataChangeItem.order,
+              linkBanner: dataChangeItem.linkBanner,
+              uploadedIcon: dataChangeItem.uploadedIcon,
+              banner: dataChangeItem.banner,
             },
           },
         })
@@ -195,6 +202,9 @@ const TableComponent: FC<TableComponentProps> = (props) => {
       display: menuEdit.display,
       enableSty: menuEdit.enableSty,
       order: menuEdit.order,
+      linkBanner: menuEdit?.linkBanner,
+      uploadedIcon: menuEdit?.uploadedIcon,
+      banner: menuEdit?.banner,
     }
   }
 
@@ -325,6 +335,9 @@ const TableComponent: FC<TableComponentProps> = (props) => {
             menu: arrayMove[indexorder].menu,
             display: arrayMove[indexorder].display,
             enableSty: arrayMove[indexorder].enableSty,
+            linkBanner: arrayMove[indexorder].linkBanner,
+            uploadedIcon: arrayMove[indexorder].uploadedIcon,
+            banner: arrayMove[indexorder].banner,
             order,
           })
         }
@@ -343,6 +356,9 @@ const TableComponent: FC<TableComponentProps> = (props) => {
           display: dataTempEdit.display,
           enableSty: dataTempEdit.enableSty,
           order: dataTempEdit.order,
+          linkBanner: dataTempEdit.linkBanner,
+          uploadedIcon: dataTempEdit.uploadedIcon,
+          banner: dataTempEdit.banner,
         },
       },
     })
