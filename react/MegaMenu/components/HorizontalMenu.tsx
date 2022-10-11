@@ -103,7 +103,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
               className={classNames(
                 handles.menuItem,
                 d.id === departmentActive?.id &&
-                  `bg-black-05 ${handles.departmentActive}`
+                `bg-black-05 ${handles.departmentActive}`
               )}
               key={d.id}
               onMouseEnter={() => {
@@ -113,7 +113,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
             >
               <Item
                 id={d.id}
-                to={`${d.slug}/c`}
+                to={d.slug}
                 iconId={d.icon}
                 accordion={hasCategories}
                 className={classNames('pv3 mh5')}
@@ -183,8 +183,8 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
             style={{
               display:
                 departments.length &&
-                departmentActive &&
-                departmentActiveHasCategories
+                  departmentActive &&
+                  departmentActiveHasCategories
                   ? 'flex'
                   : 'none',
             }}

@@ -67,7 +67,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
       )}
     >
       <Link
-        to={to ? `${to}/c` : '#'}
+        to={to}
         className={classNames(
           handles.seeAllLink,
           'link underline fw7 c-on-base'
@@ -87,7 +87,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
       .map((x) => (
         <div key={x.id} className={classNames(handles.submenuItem, 'mt3')}>
           <Item
-            to={`${x.slug}/c`}
+            to={x.slug}
             iconId={x.icon}
             level={3}
             style={x.styles}
@@ -135,7 +135,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   collapsibleStates[category.id] ? 'isOpen' : 'isClosed'
                 ),
                 orientation === 'vertical' &&
-                  'c-on-base bb b--light-gray mv0 ph5',
+                'c-on-base bb b--light-gray mv0 ph5',
                 orientation === 'vertical' && i === 0 && 'bt',
                 collapsibleStates[category.id] && 'bg-near-white'
               )}
@@ -143,7 +143,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
               {orientation === 'horizontal' ? (
                 <>
                   <Item
-                    to={`${category.slug}/c`}
+                    to={category.slug}
                     iconId={category.icon}
                     level={2}
                     style={category.styles}
@@ -199,9 +199,8 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     })
                   }
                   isOpen={collapsibleStates[category.id]}
-                  caretColor={`${
-                    collapsibleStates[category.id] ? 'base' : 'muted'
-                  }`}
+                  caretColor={`${collapsibleStates[category.id] ? 'base' : 'muted'
+                    }`}
                 >
                   {!!subcategories.length && (
                     <div className={handles.collapsibleContent}>

@@ -5,6 +5,7 @@ mutation uploadData($uploadData: [MenuInput]!) {
     icon
     slug
     sellerIDs
+    isCollection
     styles
     display
     enableSty

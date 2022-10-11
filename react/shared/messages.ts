@@ -37,6 +37,10 @@ export const messagesForm = defineMessages({
     defaultMessage: '',
     id: 'admin/mega-menu.items.inputSellerIDsPlaceholder',
   },
+  inputIsCollection: {
+    defaultMessage: '',
+    id: 'admin/mega-menu.items.inputIsCollection',
+  },
   input4Form: {
     defaultMessage: '',
     id: 'admin/mega-menu.items.input4Form',

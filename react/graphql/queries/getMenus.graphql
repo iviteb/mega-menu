@@ -6,6 +6,7 @@ query getMenus($filterMenuItems: Boolean) {
     uploadedIcon
     slug
     sellerIDs
+    isCollection
     styles
     display
     enableSty
@@ -21,6 +22,7 @@ query getMenus($filterMenuItems: Boolean) {
       uploadedIcon
       slug
       sellerIDs
+      isCollection
       styles
       display
       enableSty
@@ -33,6 +35,7 @@ query getMenus($filterMenuItems: Boolean) {
         icon
         slug
         sellerIDs
+        isCollection
         styles
         display
         enableSty
