@@ -4,7 +4,7 @@ import { Service } from '@vtex/api'
 import { resolvers } from './resolvers'
 import { Clients } from './clients'
 
-const MEDIUM_TIMEOUT_MS = 2 * 1000
+const MEDIUM_TIMEOUT_MS = 5 * 1000
 
 // Export a service that defines resolvers and clients options
 export default new Service<Clients, RecorderState, ParamsContext>({
