@@ -14,7 +14,7 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
   const { binding } = useRuntime()
 
   const { data } = useQuery<MenusResponse>(GET_MENUS, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: 'cache-and-network',
     variables: {
       bindingId: binding?.id,
     },
