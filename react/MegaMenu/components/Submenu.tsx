@@ -47,7 +47,8 @@ export type ItemProps = InjectedIntlProps & {
 const Submenu: FC<ItemProps> = observer((props) => {
   const { intl, closeMenu } = props
   const { handles } = useCssHandles(CSS_HANDLES)
-  const { departmentActive, config, getCategories } = megaMenuState
+  const { departmentActive, config, getCategories, setDepartmentActive } =
+    megaMenuState
 
   const { orientation } = config
 
@@ -73,6 +74,10 @@ const Submenu: FC<ItemProps> = observer((props) => {
           'link underline fw7 c-on-base'
         )}
         onClick={() => {
+          if (config.orientation === 'vertical') {
+            setDepartmentActive(null)
+          }
+
           if (closeMenu) closeMenu(false)
         }}
       >
@@ -135,7 +140,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   collapsibleStates[category.id] ? 'isOpen' : 'isClosed'
                 ),
                 orientation === 'vertical' &&
-                'c-on-base bb b--light-gray mv0 ph5',
+                  'c-on-base bb b--light-gray mv0 ph5',
                 orientation === 'vertical' && i === 0 && 'bt',
                 collapsibleStates[category.id] && 'bg-near-white'
               )}
@@ -199,8 +204,9 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     })
                   }
                   isOpen={collapsibleStates[category.id]}
-                  caretColor={`${collapsibleStates[category.id] ? 'base' : 'muted'
-                    }`}
+                  caretColor={`${
+                    collapsibleStates[category.id] ? 'base' : 'muted'
+                  }`}
                 >
                   {!!subcategories.length && (
                     <div className={handles.collapsibleContent}>
@@ -215,7 +221,17 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   )}
                 </Collapsible>
               ) : (
-                <Link to={category.slug} style={{ textDecoration: 'none' }}>
+                <Link
+                  to={category.slug}
+                  style={{ textDecoration: 'none' }}
+                  onClick={() => {
+                    if (config.orientation === 'vertical') {
+                      setDepartmentActive(null)
+                    }
+
+                    if (closeMenu) closeMenu(false)
+                  }}
+                >
                   <div
                     className={classNames(
                       handles.submenuVerticalNameContainer,

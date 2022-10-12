@@ -29,7 +29,7 @@ const defaultTypography: Record<number, string> = {
 
 const Item: FC<ItemProps> = observer((props) => {
   const { handles, withModifiers } = useCssHandles(CSS_HANDLES)
-  const { departmentActive } = megaMenuState
+  const { departmentActive, config, setDepartmentActive } = megaMenuState
   const {
     id,
     to,
@@ -164,6 +164,10 @@ const Item: FC<ItemProps> = observer((props) => {
           {...rest}
           className={linkClassNames}
           onClick={() => {
+            if (config.orientation === 'vertical') {
+              setDepartmentActive(null)
+            }
+
             if (closeMenu) closeMenu(false)
           }}
         >
