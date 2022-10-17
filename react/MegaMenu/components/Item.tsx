@@ -50,6 +50,7 @@ const Item: FC<ItemProps> = observer((props) => {
     closeMenu,
     uploadedIcon,
     optionalText,
+    isCollection,
     ...rest
   } = props
 
@@ -160,7 +161,7 @@ const Item: FC<ItemProps> = observer((props) => {
         )
       ) : (
         <Link
-          to={to}
+          to={isCollection ? to : `${to}/c`}
           {...rest}
           className={linkClassNames}
           onClick={() => {
@@ -199,6 +200,7 @@ export interface ItemProps {
   optionalText?: string
   style?: string
   enableStyle?: boolean
+  isCollection?: boolean
   onClick?: () => void
   closeMenu?: (open: boolean) => void
 }

@@ -74,18 +74,6 @@ const parseSellerIDs = (menuItems: Menu[], regionID: string) => {
   })
 }
 
-const addSlashC = (menuItems: Menu[]) => {
-  menuItems.forEach((item: Menu) => {
-    if (!item.isCollection) {
-      item.slug += '/c'
-    }
-
-    if (item.menu?.length > 0) {
-      addSlashC(item.menu)
-    }
-  })
-}
-
 export const menus = async (
   _: unknown,
   { filterMenuItems }: { filterMenuItems: boolean },
@@ -108,7 +96,6 @@ export const menus = async (
 
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
-    addSlashC(menuItems)
 
     if (filterMenuItems) {
       for (let i = 0; i < addressSellers.length; i++) {

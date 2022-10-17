@@ -103,7 +103,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
               className={classNames(
                 handles.menuItem,
                 d.id === departmentActive?.id &&
-                `bg-black-05 ${handles.departmentActive}`
+                  `bg-black-05 ${handles.departmentActive}`
               )}
               key={d.id}
               onMouseEnter={() => {
@@ -121,6 +121,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
                 enableStyle={d.enableSty}
                 closeMenu={openMenu}
                 uploadedIcon={d.uploadedIcon}
+                isCollection={d.isCollection}
               >
                 {d.name}
               </Item>
@@ -183,8 +184,8 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
             style={{
               display:
                 departments.length &&
-                  departmentActive &&
-                  departmentActiveHasCategories
+                departmentActive &&
+                departmentActiveHasCategories
                   ? 'flex'
                   : 'none',
             }}

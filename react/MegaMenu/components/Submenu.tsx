@@ -58,7 +58,12 @@ const Submenu: FC<ItemProps> = observer((props) => {
 
   const [showBtnCat, setShowBtnCat] = useState(false)
 
-  const seeAllLink = (to?: string, level = 1, className?: string) => (
+  const seeAllLink = (
+    to?: string,
+    level = 1,
+    className?: string,
+    isCollection?: boolean
+  ) => (
     <div
       className={classNames(
         handles.seeAllLinkContainer,
@@ -68,7 +73,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
       )}
     >
       <Link
-        to={to}
+        to={isCollection ? to : `${to}/c`}
         className={classNames(
           handles.seeAllLink,
           'link underline fw7 c-on-base'
@@ -100,6 +105,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
             closeMenu={closeMenu}
             optionalText={x.optionalText}
             uploadedIcon={x.uploadedIcon}
+            isCollection={x.isCollection}
           >
             {x.name}
           </Item>
@@ -156,13 +162,14 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     enableStyle={category.enableSty}
                     closeMenu={closeMenu}
                     uploadedIcon={category.uploadedIcon}
+                    isCollection={category.isCollection}
                   >
                     {category.name}
                   </Item>
 
                   {!!subcategories.length && subcategories}
                   {subcategories.length > 1 ? (
-                    seeAllLink(category.slug, 2)
+                    seeAllLink(category.slug, 2, '', category.isCollection)
                   ) : (
                     <div />
                   )}
@@ -215,14 +222,16 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   )}
 
                   {subcategories.length > 1 ? (
-                    seeAllLink(category.slug, 2)
+                    seeAllLink(category.slug, 2, '', category.isCollection)
                   ) : (
                     <div />
                   )}
                 </Collapsible>
               ) : (
                 <Link
-                  to={category.slug}
+                  to={
+                    category.isCollection ? category.slug : `${category.slug}/c`
+                  }
                   style={{ textDecoration: 'none' }}
                   onClick={() => {
                     if (config.orientation === 'vertical') {
@@ -284,7 +293,12 @@ const Submenu: FC<ItemProps> = observer((props) => {
           {departmentActive?.name}
           {orientation === 'horizontal' && (
             <div style={{ display: showBtnCat ? 'block' : 'none' }}>
-              {seeAllLink(departmentActive?.slug, 1, 't-small ml7')}
+              {seeAllLink(
+                departmentActive?.slug,
+                1,
+                't-small ml7',
+                departmentActive?.isCollection
+              )}
             </div>
           )}
         </h3>
@@ -303,7 +317,16 @@ const Submenu: FC<ItemProps> = observer((props) => {
           ) : (
             <>
               {items}
-              {showBtnCat ? seeAllLink(departmentActive?.slug) : <div />}
+              {showBtnCat ? (
+                seeAllLink(
+                  departmentActive?.slug,
+                  0,
+                  '',
+                  departmentActive?.isCollection
+                )
+              ) : (
+                <div />
+              )}
             </>
           )}
         </div>

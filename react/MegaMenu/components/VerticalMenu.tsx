@@ -49,6 +49,7 @@ const VerticalMenu: FC<VerticalMenuProps> = observer(({ intl }) => {
           style: d.styles,
           enableStyle: d.enableSty,
           uploadedIcon: d.uploadedIcon,
+          isCollection: d.isCollection,
           ...(!hasCategories && { to: d.slug }),
         }
 
