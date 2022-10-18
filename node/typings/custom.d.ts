@@ -11,6 +11,7 @@ export interface Menu {
   order: number
   slugRoot?: string
   slugRelative?: string
+  uploadedIcon?: string
 }
 interface Args {
   menuInput: Menu

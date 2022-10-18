@@ -11,5 +11,6 @@ mutation uploadData($uploadData: [MenuInput]!) {
     order
     slugRoot
     slugRelative
+    uploadedIcon
   }
 }
