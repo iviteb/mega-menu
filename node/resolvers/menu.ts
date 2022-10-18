@@ -60,7 +60,10 @@ const replaceStyles = (menuStyle: Menu[]) => {
 
 const parseSellerIDs = (menuItems: Menu[], regionID: string) => {
   return menuItems.filter((item) => {
-    const excludeSellerIDs = item?.sellerIDs?.trim().split(',')
+    const excludeSellerIDs = item?.sellerIDs
+      ?.trim()
+      .replace(/ /g, '')
+      .split(',')
 
     if (excludeSellerIDs?.includes(regionID) && regionID !== '') {
       return false
