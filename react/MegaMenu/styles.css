@@ -215,15 +215,25 @@
 
 .submenuItemVertical--isOpen {
   background-color: #fff;
+  display: flex !important;
+  flex-direction: column;
 }
 
 .submenuItemVertical--isOpen .seeAllLinkContainer {
-  margin-bottom: 1rem;
+  margin-bottom: unset;
   padding-left: 1.5rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.submenuItemVertical--isOpen .seeAllLink {
+  font-weight: 500;
 }
 
 .collapsibleContent {
-  padding: 1rem 1.5rem 0 1.5rem;
+  padding: 0 1.5rem;
+  order: 2;
 }
 
 .collapsibleContent .submenuItem {
@@ -297,6 +307,37 @@
   align-items: center;
 }
 
+.submenuListVertical {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1.5rem;
+}
+
+.submenuListVertical .seeAllLinkContainer {
+  order: 1;
+}
+
+.submenuListVertical > .seeAllLinkContainer {
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.submenuListVertical .submenuItemVertical {
+  order: 2;
+}
+
+.menuItemVertical .accordionIconContainer {
+  display: none;
+}
+
+.submenuItemVertical--isOpen div[role='region'] {
+  display: flex;
+  flex-direction: column;
+}
+
 /****** Media Queries ******/
 
 @media only screen and (min-width: 1026px) {
@@ -318,21 +359,22 @@
 
   .submenuItemVertical--isClosed :global(.vtex__icon-caret-down),
   .submenuItemVertical--isOpen :global(.vtex__icon-caret-up) {
-    width: 0.875rem;
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
-  .submenuItemVertical--isClosed :global(.vtex__icon-caret-down) :first-child {
-    d: path(
-      'M13.89 1.53l-.22-.22a.38.38 0 00-.54 0L7 7.44.87 1.31a.38.38 0 00-.54 0l-.22.22a.38.38 0 000 .54l6.62 6.62a.38.38 0 00.54 0l6.62-6.62a.38.38 0 000-.54z'
-    );
-    fill: #02182b;
+  .submenuItemVertical--isClosed :global(.vtex__icon-caret-down) path,
+  .submenuItemVertical--isOpen :global(.vtex__icon-caret-up) path {
+    display: none;
   }
 
-  .submenuItemVertical--isOpen :global(.vtex__icon-caret-up) :first-child {
-    d: path(
-      'M13.89 1.53l-.22-.22a.38.38 0 00-.54 0L7 7.44.87 1.31a.38.38 0 00-.54 0l-.22.22a.38.38 0 000 .54l6.62 6.62a.38.38 0 00.54 0l6.62-6.62a.38.38 0 000-.54z'
-    );
-    fill: #02182b;
+  .submenuItemVertical--isClosed :global(.vtex__icon-caret-down) {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PHBhdGggZD0iTTUuMzkgOS4xNjFhLjUyNi41MjYgMCAwMS43MzQtLjAyM0wxMiAxNC41NDJsNS44NzYtNS40MDRhLjUyNi41MjYgMCAwMS43MzQuMDIzLjUwMy41MDMgMCAwMS0uMDI0LjcybC02LjIzIDUuNzMxYS41MjcuNTI3IDAgMDEtLjcxMSAwbC02LjIzLTUuNzNhLjUwMy41MDMgMCAwMS0uMDI1LS43MjF6IiBmaWxsPSIjMDIxODJCIi8+PC9zdmc+);
+  }
+
+  .submenuItemVertical--isOpen :global(.vtex__icon-caret-up) {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PHBhdGggZD0iTTE4LjYxIDE0LjgzOWEuNTI2LjUyNiAwIDAxLS43MzQuMDIzTDEyIDkuNDU4bC01Ljg3NiA1LjQwNGEuNTI2LjUyNiAwIDAxLS43MzQtLjAyMy41MDMuNTAzIDAgMDEuMDI0LS43Mmw2LjIzLTUuNzMxYS41MjcuNTI3IDAgMDEuNzExIDBsNi4yMyA1LjczYy4yMS4xOTMuMjIuNTE2LjAyNS43MjF6IiBmaWxsPSIjMDIxODJCIi8+PC9zdmc+);
   }
 
   .seeAllLinkContainer {
@@ -343,6 +385,5 @@
     font-size: 0.9375rem;
     line-height: 1.125rem;
     color: #ed002e;
-    display: block;
   }
 }
