@@ -81,14 +81,14 @@ const VerticalMenu: FC<VerticalMenuProps> = observer(({ intl }) => {
           dn: !!departmentActive,
         })}
       >
-        <h3
+        <div
           className={classNames(
             handles.departmentsTitle,
             'f4 fw7 c-on-base mv5 lh-copy ph5'
           )}
         >
           {formatIOMessage({ id: title, intl })}
-        </h3>
+        </div>
         <ul className={classNames(handles.menuContainerVertical, 'list pa0')}>
           {departments.length ? (
             departmentItems
