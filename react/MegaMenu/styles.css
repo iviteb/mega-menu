@@ -338,6 +338,14 @@
   flex-direction: column;
 }
 
+.megaMenuSpinner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 7vh;
+  border: none;
+}
+
 /****** Media Queries ******/
 
 @media only screen and (min-width: 1026px) {

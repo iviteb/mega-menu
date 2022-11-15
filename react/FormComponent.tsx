@@ -466,7 +466,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   }
 
   const insertSubMenu = (mainMenuLevel: DataMenu, subMenuLevel: DataMenu[]) => {
-    console.log('editare 1')
     menuInput({
       variables: {
         editMenu: {
