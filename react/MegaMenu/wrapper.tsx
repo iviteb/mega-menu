@@ -19,7 +19,7 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
 
   /* "filterMenuItems" filters the menu items returned in node,
   such that the items with sellerID matching the current regionId (sellerID) are not returned */
-  const { data } = useQuery<MenusResponse>(GET_MENUS, {
+  const { data, error } = useQuery<MenusResponse>(GET_MENUS, {
     ssr: true,
     variables: {
       filterMenuItems: true,
@@ -48,12 +48,21 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
   }
 
   useEffect(() => {
-    if (data?.menus.length) {
-      setLoaded(true)
+    if (!data) {
+      return
     }
+
+    setLoaded(true)
 
     initMenu()
   }, [data])
+
+  useEffect(() => {
+    if (error) {
+      setLoaded(true)
+      console.error('Error mega menu get menus', error)
+    }
+  }, [error])
 
   if (isMobile && !loaded) {
     return (
