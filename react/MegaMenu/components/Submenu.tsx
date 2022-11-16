@@ -273,7 +273,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
           'flex flex-column w-100'
         )}
       >
-        <h3
+        <div
           className={classNames(
             handles.submenuContainerTitle,
             'f4 fw7 c-on-base lh-copy ma0 flex items-center',
@@ -287,7 +287,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
               {seeAllLink(departmentActive?.slug, 1, 't-small ml7')}
             </div>
           )}
-        </h3>
+        </div>
 
         <div
           className={classNames(
