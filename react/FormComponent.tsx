@@ -114,7 +114,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   }).toString()
 
   const handleImageDrop = async (acceptedFiles: File[]) => {
-    if (acceptedFiles && acceptedFiles[0]) {
+    if (acceptedFiles?.[0]) {
       try {
         setIsLoading(true)
         const { data } = await uploadFile({
@@ -127,13 +127,13 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           setIsLoading(false)
         }
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
   }
 
   const handleIconDrop = async (acceptedFiles: File[]) => {
-    if (acceptedFiles && acceptedFiles[0]) {
+    if (acceptedFiles?.[0]) {
       try {
         setIsLoading(true)
         const { data } = await uploadFile({
@@ -146,7 +146,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
           setIsLoading(false)
         }
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
   }
@@ -155,7 +155,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     try {
       setBanner('')
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
@@ -163,7 +163,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     try {
       setUploadedIcon('')
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
@@ -453,7 +453,6 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   }
 
   const insertSubMenu = (mainMenuLevel: DataMenu, subMenuLevel: DataMenu[]) => {
-    console.log('editare 1')
     menuInput({
       variables: {
         editMenu: {
