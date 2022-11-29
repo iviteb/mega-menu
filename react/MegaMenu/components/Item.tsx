@@ -11,6 +11,7 @@ import { megaMenuState } from '../State'
 
 const CSS_HANDLES = [
   'styledLink',
+  'styledLinkIconContainer',
   'styledLinkIcon',
   'styledLinkContainer',
   'styledLinkContent',
@@ -97,13 +98,20 @@ const Item: FC<ItemProps> = observer((props) => {
     iconProps || iconId ? (
       <span
         className={classNames(
-          handles.styledLinkIcon,
+          handles.styledLinkIconContainer,
           'flex items-center',
           iconPosition === 'left' ? 'mr3' : 'ml3'
         )}
         data-testid={iconTestId}
       >
-        <Icon {...{ ...iconProps, id: iconProps?.id ?? iconId }} />
+        <Icon
+          {...{
+            ...iconProps,
+            activeClassName: handles.styledLinkIcon,
+            size: 20,
+            id: iconProps?.id ?? iconId,
+          }}
+        />
       </span>
     ) : null
 

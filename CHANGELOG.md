@@ -2,6 +2,13 @@
 
 
 ## [Unreleased]
+### Added
+
+- Menu Item Icon Size & Class
+
+### Removed
+
+- Delay when hovering over Department
 
 ## [2.6.0] - 2022-03-11
 
