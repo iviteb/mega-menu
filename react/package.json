@@ -32,7 +32,6 @@
     "vtex.device-detector": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.device-detector@0.2.6/public/@types/vtex.device-detector",
     "vtex.file-manager": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.file-manager@0.11.0/public/_types/react",
     "vtex.file-manager-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.file-manager-graphql@0.3.0/public/@types/vtex.file-manager-graphql",
-    "vtex.mega-menu": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.mega-menu@2.6.3-hkignore.0/public/@types/vtex.mega-menu",
     "vtex.native-types": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types",
     "vtex.order-manager": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.order-manager@0.12.0/public/@types/vtex.order-manager",
     "vtex.render-runtime": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.4/public/@types/vtex.render-runtime",
