@@ -5303,10 +5303,6 @@ verror@1.10.0:
   version "0.0.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.file-manager@0.11.0/public/_types/react#fa7a0347e046eab3dd768998fc9252b2c0dd5aef"
 
-"vtex.mega-menu@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.mega-menu@2.6.3-hkignore.0/public/@types/vtex.mega-menu":
-  version "2.6.3-hkignore.0"
-  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.mega-menu@2.6.3-hkignore.0/public/@types/vtex.mega-menu#b69046bf8e069895659764141efee1b979f7c111"
-
 "vtex.native-types@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types":
   version "0.8.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.native-types@0.8.0/public/@types/vtex.native-types#4fb38349122295832408d511efefa604a0addc57"
