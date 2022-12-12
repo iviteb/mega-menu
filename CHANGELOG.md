@@ -3,6 +3,8 @@
 
 ## [Unreleased]
 
+## [0.0.5] - 2022-12-12
+
 ### Changed
 
 - Changed vendor to infinityro
