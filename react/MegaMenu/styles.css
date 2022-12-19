@@ -99,6 +99,7 @@
   padding: 0.125rem 0.3125rem;
   font-size: 0.625rem;
   font-weight: bold;
+  margin-top: 0.0625rem;
   margin-left: 0.3125rem;
   display: block;
   line-height: 1;
@@ -142,6 +143,22 @@
   align-items: flex-start;
 }
 
+.goBackButton {
+  padding: 1rem 0;
+}
+
+.goBackButtonText {
+  line-height: 1;
+}
+
+.collapsibleContent {
+  margin-bottom: 0.75rem;
+}
+
+.menuItemVertical .styledLinkText {
+  line-height: 1;
+}
+
 /****** Media Queries ******/
 
 @media only screen and (min-width: 1026px) {
@@ -162,11 +179,5 @@
   .submenuItemsContainer {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-  }
-}
-
-@media only screen and (max-width: 1025px) {
-  .goBackContainer {
-    margin-top: 1rem;
   }
 }
