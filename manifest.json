@@ -1,7 +1,7 @@
 {
   "name": "mega-menu",
   "vendor": "macromex",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "title": "Mega Menu",
   "description": "Create, personalize and manage the category tree. It's can be used in the shop as main menu",
   "mustUpdateAt": "2022-08-28",
@@ -30,6 +30,13 @@
     "vtex.render-runtime": "8.x",
     "vtex.order-manager": "0.x",
     "vtex.session-client": "1.x"
+  },
+  "billingOptions": {
+    "type": "free",
+    "support": {
+      "url": "https://support.vtex.com/hc/requests"
+    },
+    "availableCountries": ["*"]
   },
   "policies": [
     {
