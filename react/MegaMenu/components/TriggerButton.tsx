@@ -20,14 +20,6 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
   const { isActive, activeClassName, mutedClassName, homeVersion, ...rest } =
     props
 
-  console.log(
-    '🚀 ~ file: TriggerButton.tsx:21 ~ constTriggerButton:FC<TriggerButtonProps>=observer ~ homeVersion',
-    homeVersion
-  )
-  if (homeVersion) {
-    return null
-  }
-
   const iconBaseClassName = applyModifiers(
     handles.triggerButtonIcon,
     isActive ? 'active' : 'muted'
@@ -37,7 +29,7 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
     <div
       data-id={BUTTON_ID}
       className={classNames(styles.triggerContainer, 'pointer')}
-      onMouseEnter={() => openMenu((v) => !v)}
+      onMouseEnter={() => !homeVersion && openMenu((v) => !v, homeVersion)}
     >
       <Icon
         activeClassName={classNames(iconBaseClassName, activeClassName)}

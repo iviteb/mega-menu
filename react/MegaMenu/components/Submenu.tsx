@@ -44,16 +44,20 @@ const messages = defineMessages({
 
 export type ItemProps = InjectedIntlProps & {
   closeMenu?: (open: boolean) => void
+  homeVersion?: boolean
 }
 
 const Submenu: FC<ItemProps> = observer((props) => {
-  const { intl, closeMenu } = props
+  const { intl, closeMenu, homeVersion } = props
   const { handles } = useCssHandles(CSS_HANDLES)
-  const { departmentActive, config, getCategories, setDepartmentActive } =
+  const { departmentActive: activeDep,
+    departmentActiveHome: activeHomeDep, config, getCategories, setDepartmentActive } =
     megaMenuState
 
   const { orientation } = config
   const { isMobile } = useDevice()
+
+  const departmentActive = homeVersion ? activeHomeDep : activeDep
 
   const [collapsibleStates, setCollapsibleStates] = useState<
     Record<string, boolean>
@@ -78,7 +82,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
         )}
         onClick={() => {
           if (config.orientation === 'vertical') {
-            setDepartmentActive(null)
+            setDepartmentActive(null, homeVersion)
           }
 
           if (closeMenu) closeMenu(false)
@@ -122,7 +126,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
         setShowBtnCat(false)
       }
 
-      const categories = getCategories()
+      const categories = getCategories(homeVersion)
 
       return categories
         .filter((j) => j.display)
@@ -229,7 +233,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   className={`${handles.categoryLink} no-underline c-on-base`}
                   onClick={() => {
                     if (config.orientation === 'vertical') {
-                      setDepartmentActive(null)
+                      setDepartmentActive(null, homeVersion)
                     }
 
                     if (closeMenu) closeMenu(false)

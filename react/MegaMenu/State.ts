@@ -8,7 +8,9 @@ class MegaMenuState {
   public config: GlobalConfig = {}
   public departments: MenuItem[] = []
   public departmentActive: MenuItem | null = null
+  public departmentActiveHome: MenuItem | null = null
   public isOpenMenu = false
+  public isOpenMenuHome = true
 
   constructor() {
     makeAutoObservable(this)
@@ -22,23 +24,37 @@ class MegaMenuState {
     this.departments = departments
   }
 
-  public setDepartmentActive = (department: MenuItem | null) => {
-    this.departmentActive = department
+  public setDepartmentActive = (
+    department: MenuItem | null,
+    homeVersion?: boolean | null
+  ) => {
+    homeVersion
+      ? (this.departmentActiveHome = department)
+      : (this.departmentActive = department)
   }
 
-  public openMenu = (value: ChangeOpenMenu = true) => {
+  public openMenu = (
+    value: ChangeOpenMenu = true,
+    homeVersion?: boolean | null
+  ) => {
     if (typeof value === 'boolean') {
-      this.isOpenMenu = value
+      homeVersion ? (this.isOpenMenuHome = value) : (this.isOpenMenu = value)
     } else {
-      this.isOpenMenu = value(this.isOpenMenu)
+      homeVersion
+        ? (this.isOpenMenuHome = value(this.isOpenMenuHome))
+        : (this.isOpenMenu = value(this.isOpenMenu))
     }
   }
 
-  public getCategories = () => {
+  public getCategories = (homeVersion?: boolean) => {
     let categories: DataMenu[] = []
 
-    if (this.departmentActive) {
-      return this.departmentActive?.menu ?? []
+    const depActive = homeVersion
+      ? this.departmentActiveHome
+      : this.departmentActive
+
+    if (depActive) {
+      return depActive?.menu ?? []
     }
 
     this.departments.forEach((department: any) => {

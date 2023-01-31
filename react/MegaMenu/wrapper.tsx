@@ -13,8 +13,6 @@ import { megaMenuState } from './State'
 
 const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
   const { orientation, homeVersion } = props
-
-  console.log('🚀 ~ file: wrapper.tsx:16 ~ homeVersion', homeVersion)
   const [loaded, setLoaded] = useState(false)
 
   /* "filterMenuItems" filters the menu items returned in node,
@@ -26,7 +24,7 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
     },
   })
 
-  const { setDepartments, setConfig, openMenu } = megaMenuState
+  const { setDepartments, setConfig } = megaMenuState
 
   const { isMobile } = useDevice()
 
@@ -34,10 +32,6 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
     orientation ?? (isMobile ? 'vertical' : 'horizontal')
 
   const initMenu = () => {
-    if (homeVersion) {
-      openMenu(true)
-    }
-
     if (data?.menus.length) {
       setConfig({
         ...props,
@@ -77,10 +71,14 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
     )
   }
 
+  if (!canUseDOM && homeVersion) {
+    return null
+  }
+
   return (
     <>
       {currentOrientation === 'horizontal' ? (
-        <HorizontalMenu />
+        <HorizontalMenu homeVersion={homeVersion} />
       ) : (
         <VerticalMenu />
       )}
