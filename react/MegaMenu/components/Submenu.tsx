@@ -6,6 +6,7 @@ import React, { useMemo, useState } from 'react'
 import type { InjectedIntlProps } from 'react-intl'
 import { defineMessages, injectIntl } from 'react-intl'
 import { applyModifiers, useCssHandles } from 'vtex.css-handles'
+import { useDevice } from 'vtex.device-detector'
 import { formatIOMessage } from 'vtex.native-types'
 import { ExtensionPoint, Link } from 'vtex.render-runtime'
 import { Collapsible } from 'vtex.styleguide'
@@ -52,6 +53,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
     megaMenuState
 
   const { orientation } = config
+  const { isMobile } = useDevice()
 
   const [collapsibleStates, setCollapsibleStates] = useState<
     Record<string, boolean>
@@ -125,7 +127,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
       return categories
         .filter((j) => j.display)
         .map((category, i) => {
-          const subcategories = category.menu?.length
+          const subcategories = !isMobile && category.menu?.length
             ? subCategories(category.menu)
             : []
 
@@ -141,7 +143,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   collapsibleStates[category.id] ? 'isOpen' : 'isClosed'
                 ),
                 orientation === 'vertical' &&
-                  'c-on-base bb b--light-gray mv0 ph5',
+                'c-on-base bb b--light-gray mv0 ph5',
                 orientation === 'vertical' && i === 0 && 'bt',
                 collapsibleStates[category.id] && 'bg-near-white'
               )}
@@ -206,9 +208,8 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     })
                   }
                   isOpen={collapsibleStates[category.id]}
-                  caretColor={`${
-                    collapsibleStates[category.id] ? 'base' : 'muted'
-                  }`}
+                  caretColor={`${collapsibleStates[category.id] ? 'base' : 'muted'
+                    }`}
                 >
                   {!!subcategories.length && (
                     <div className={handles.collapsibleContent}>

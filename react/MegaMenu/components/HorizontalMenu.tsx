@@ -1,18 +1,19 @@
 import classNames from 'classnames'
+// import { debounce } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import type { FC } from 'react'
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import type { InjectedIntlProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import Skeleton from 'react-loading-skeleton'
 import { useCssHandles } from 'vtex.css-handles'
 import { formatIOMessage } from 'vtex.native-types'
 
+// import useOnScreen from '../../hooks/useOnScreen'
 import { megaMenuState } from '../State'
 import styles from '../styles.css'
 import Item from './Item'
 import Submenu from './Submenu'
-import { BUTTON_ID } from './TriggerButton'
 
 const CSS_HANDLES = [
   'menuContainer',
@@ -21,6 +22,9 @@ const CSS_HANDLES = [
   'submenuContainer',
   'departmentsTitle',
   'departmentActive',
+  'widthAuto',
+  'darkBackground',
+  'backgroundShadow',
 ] as const
 
 const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
@@ -36,34 +40,32 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
 
   const departmentActiveHasCategories = !!departmentActive?.menu?.length
   const navRef = useRef<HTMLDivElement>(null)
+  // const isVisible = useOnScreen(navRef)
 
-  const handleClickOutside = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (event: any) => {
-      const isTriggerButton = event?.path?.find(
-        (data: HTMLElement) => data.dataset?.id === BUTTON_ID
-      )
+  // useEffect(() => {
+  //   console.log(
+  //     '🚀 ~ file: HorizontalMenu.tsx:44 ~ constHorizontalMenu:FC<InjectedIntlProps>=observer ~ isVisible',
+  //     isVisible
+  //   )
+  // }, [isVisible])
 
-      if (
-        navRef.current &&
-        !navRef.current.contains(event.target as Node) &&
-        !isTriggerButton
-      ) {
-        openMenu(false)
-      }
+  // const handleScroll = () => {
+  //   const position = window.pageYOffset
 
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    [openMenu]
-  )
+  //   console.log('pos', position)
+  // }
 
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true)
+  // useEffect(() => {
+  //   window.addEventListener(
+  //     'scroll',
+  //     debounce(() => handleScroll(), 50),
+  //     { passive: true }
+  //   )
 
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true)
-    }
-  }, [])
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll)
+  //   }
+  // }, [])
 
   useEffect(() => {
     const defaultDepartment = departments.find(
@@ -90,7 +92,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
               className={classNames(
                 handles.menuItem,
                 d.id === departmentActive?.id &&
-                  `bg-black-05 ${handles.departmentActive}`
+                `bg-black-05 ${handles.departmentActive}`
               )}
               key={d.id}
               onMouseEnter={() => {
@@ -133,10 +135,17 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
   }, [])
 
   return departmentItems?.length > 0 ? (
-    <div style={{ display: isOpenMenu ? 'block' : 'none' }}>
+    <div
+      style={{ display: isOpenMenu ? 'block' : 'none' }}
+      onMouseLeave={() => {
+        setDepartmentActive(null)
+      }}
+    >
       <nav
         className={classNames(
           handles.menuContainerNav,
+          !departmentActive?.id && handles.widthAuto,
+          departmentActive?.id && handles.backgroundShadow,
           'absolute left-0 bg-white bw1 bb b--muted-3 flex'
         )}
         ref={navRef}
@@ -144,6 +153,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
         <ul
           className={classNames(
             styles.menuContainer,
+            departmentActive?.id && handles.darkBackground,
             'list ma0 pa0 pb3 br b--muted-4'
           )}
         >
@@ -169,8 +179,8 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
             style={{
               display:
                 departments.length &&
-                departmentActive &&
-                departmentActiveHasCategories
+                  departmentActive &&
+                  departmentActiveHasCategories
                   ? 'flex'
                   : 'none',
             }}

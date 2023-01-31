@@ -17,17 +17,27 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
   const { handles } = useCssHandles(CSS_HANDLES)
   const { openMenu } = megaMenuState
 
-  const { isActive, activeClassName, mutedClassName, ...rest } = props
+  const { isActive, activeClassName, mutedClassName, homeVersion, ...rest } =
+    props
+
+  console.log(
+    '🚀 ~ file: TriggerButton.tsx:21 ~ constTriggerButton:FC<TriggerButtonProps>=observer ~ homeVersion',
+    homeVersion
+  )
+  if (homeVersion) {
+    return null
+  }
+
   const iconBaseClassName = applyModifiers(
     handles.triggerButtonIcon,
     isActive ? 'active' : 'muted'
   )
 
   return (
-    <button
+    <div
       data-id={BUTTON_ID}
       className={classNames(styles.triggerContainer, 'pointer')}
-      onClick={() => openMenu((v) => !v)}
+      onMouseEnter={() => openMenu((v) => !v)}
     >
       <Icon
         activeClassName={classNames(iconBaseClassName, activeClassName)}
@@ -35,7 +45,7 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
         isActive={isActive}
         {...rest}
       />
-    </button>
+    </div>
   )
 })
 
@@ -44,6 +54,7 @@ export type TriggerButtonProps = IconProps
 TriggerButton.defaultProps = {
   id: 'hpa-hamburguer-menu',
   isActive: true,
+  homeVersion: false,
 }
 
 export default TriggerButton
