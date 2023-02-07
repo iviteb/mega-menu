@@ -149,7 +149,10 @@ const HorizontalMenu: FC<HorizontalMenuProps> = observer(
         <nav
           className={classNames(
             handles.menuContainerNav,
-            !departmentActive?.id && handles.widthAuto,
+            (!departmentActive?.id ||
+              !departmentActive?.menu?.length ||
+              departmentActive?.menu?.length < 1) &&
+            handles.widthAuto,
             departmentActive?.id && handles.backgroundShadow,
             'absolute left-0 bg-white bw1 bb b--muted-3 flex'
           )}
