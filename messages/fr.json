@@ -1,6 +1,7 @@
 {
   "admin/mega-menu.navigation.label-group": "Menu Mega",
   "store/mega-menu.submenu.seeAllButton.title": "Tout afficher",
+  "store/mega-menu.submenu.seeAllProducts.title": "See all products",
   "store/mega-menu.goBackButton.title": "Retour",
   "admin/mega-menu.tabs.first": "Premier niveau",
   "admin/mega-menu.tabs.second": "Second niveau",

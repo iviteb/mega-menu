@@ -45,7 +45,7 @@ const VerticalMenu: FC<VerticalMenuProps> = observer(({ intl }) => {
   const { title } = config
 
   const seeAllLink = (to?: string) => (
-    <div className={classNames(handles.seeAllLinkContainer, 'mt4 mb6 t-body')}>
+    <div className={classNames(handles.seeAllLinkContainer, 'mv5 t-body')}>
       <Link
         to={to ?? '#'}
         className={classNames(handles.seeAllLink, 'link fw7 c-on-base')}
