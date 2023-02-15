@@ -77,17 +77,44 @@ const VerticalMenu: FC<VerticalMenuProps> = observer(({ intl }) => {
 
   const departmentItems = useMemo(
     () => {
-      return departments.map((d, i) => {
-        const itemProps: ItemProps = {
-          id: d.id,
-          iconId: d.icon,
-          tabIndex: i,
-          style: d.styles,
-          enableStyle: d.enableSty,
-          uploadedIcon: d.uploadedIcon,
-        }
+      return departments
+        .filter((j) => j.display)
+        .map((d, i) => {
+          const itemProps: ItemProps = {
+            id: d.id,
+            iconId: d.icon,
+            tabIndex: i,
+            style: d.styles,
+            enableStyle: d.enableSty,
+            uploadedIcon: d.uploadedIcon,
+          }
 
-        if (!d.menu?.length || d.menu?.length < 1) {
+          if (!d.menu?.length || d.menu?.length < 1) {
+            return (
+              <li
+                className={classNames(
+                  handles.menuItemVertical,
+                  'bb b--light-gray',
+                  {
+                    bt: i === 0,
+                  }
+                )}
+                key={d.id}
+              >
+                <Link
+                  to={d.slug ?? '#'}
+                  className={classNames('link c-on-base')}
+                >
+                  <Item className={classNames('pv5 mh5')} {...itemProps}>
+                    {d.name}
+                  </Item>
+                </Link>
+              </li>
+            )
+          }
+
+          const parsedCategories = parseCategories(d.menu)
+
           return (
             <li
               className={classNames(
@@ -99,55 +126,33 @@ const VerticalMenu: FC<VerticalMenuProps> = observer(({ intl }) => {
               )}
               key={d.id}
             >
-              <Link to={d.slug ?? '#'} className={classNames('link c-on-base')}>
-                <Item className={classNames('pv5 mh5')} {...itemProps}>
-                  {d.name}
-                </Item>
-              </Link>
+              <Collapsible
+                header={
+                  <Item className={classNames('pv5 mh5')} {...itemProps}>
+                    {d.name}
+                  </Item>
+                }
+                align="right"
+                onClick={(e: any) =>
+                  setCollapsibleStates({
+                    ...collapsibleStates,
+                    [d.id]: e.target.isOpen,
+                  })
+                }
+                isOpen={collapsibleStates[d.id]}
+                caretColor={`${collapsibleStates[d.id] ? 'base' : 'muted'}`}
+              >
+                {!!parsedCategories.length && (
+                  <div className={handles.collapsibleContent}>
+                    {parsedCategories}
+                  </div>
+                )}
+
+                {parsedCategories.length >= 1 ? seeAllLink(d.slug) : <div />}
+              </Collapsible>
             </li>
           )
-        }
-
-        const parsedCategories = parseCategories(d.menu)
-
-        return (
-          <li
-            className={classNames(
-              handles.menuItemVertical,
-              'bb b--light-gray',
-              {
-                bt: i === 0,
-              }
-            )}
-            key={d.id}
-          >
-            <Collapsible
-              header={
-                <Item className={classNames('pv5 mh5')} {...itemProps}>
-                  {d.name}
-                </Item>
-              }
-              align="right"
-              onClick={(e: any) =>
-                setCollapsibleStates({
-                  ...collapsibleStates,
-                  [d.id]: e.target.isOpen,
-                })
-              }
-              isOpen={collapsibleStates[d.id]}
-              caretColor={`${collapsibleStates[d.id] ? 'base' : 'muted'}`}
-            >
-              {!!parsedCategories.length && (
-                <div className={handles.collapsibleContent}>
-                  {parsedCategories}
-                </div>
-              )}
-
-              {parsedCategories.length >= 1 ? seeAllLink(d.slug) : <div />}
-            </Collapsible>
-          </li>
-        )
-      })
+        })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [departments, collapsibleStates]
