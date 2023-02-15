@@ -26,6 +26,7 @@
 .triggerButtonIcon {
   margin-right: 0.5rem;
   display: block;
+  min-width: 1rem;
 }
 
 .menuContainerNav {
@@ -36,6 +37,10 @@
   overflow: hidden;
   height: 33.75rem;
   z-index: 100;
+}
+
+.menuContainerNav--hpVisible {
+  border-bottom-right-radius: unset;
 }
 
 .menuContainer {
@@ -87,7 +92,7 @@
 }
 
 .menuItemIcon {
-  max-width: 1.25rem;
+  width: 1.25rem;
   max-height: 1.25rem;
   margin-right: 0.5rem;
   display: block;
