@@ -15,7 +15,7 @@ export const BUTTON_ID = 'mega-menu-trigger-button'
 
 const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
   const { handles } = useCssHandles(CSS_HANDLES)
-  const { openMenu } = megaMenuState
+  const { openMenu, isOpenMenu } = megaMenuState
 
   const { isActive, activeClassName, mutedClassName, homeVersion, ...rest } =
     props
@@ -29,7 +29,9 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
     <div
       data-id={BUTTON_ID}
       className={classNames(styles.triggerContainer, 'pointer')}
-      onMouseEnter={() => !homeVersion && openMenu((v) => !v, homeVersion)}
+      onMouseEnter={() =>
+        !homeVersion && !isOpenMenu && openMenu(true, homeVersion)
+      }
     >
       <Icon
         activeClassName={classNames(iconBaseClassName, activeClassName)}

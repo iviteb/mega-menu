@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import { debounce } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import type { FC } from 'react'
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import type { InjectedIntlProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import Skeleton from 'react-loading-skeleton'
@@ -13,6 +13,7 @@ import { megaMenuState } from '../State'
 import styles from '../styles.css'
 import Item from './Item'
 import Submenu from './Submenu'
+import { BUTTON_ID } from './TriggerButton'
 
 const CSS_HANDLES = [
   'menuContainer',
@@ -58,15 +59,37 @@ const HorizontalMenu: FC<HorizontalMenuProps> = observer(
       }
     }
 
+    const handleClickOutside = useCallback(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (event: any) => {
+        const isTriggerButton = event?.path?.find(
+          (data: HTMLElement) => data.dataset?.id === BUTTON_ID
+        )
+
+        if (
+          navRef.current &&
+          !navRef.current.contains(event.target as Node) &&
+          !isTriggerButton
+        ) {
+          openMenu(false)
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      },
+      [openMenu]
+    )
+
     useEffect(() => {
       window.addEventListener(
         'scroll',
         debounce(() => handleScroll(), 100),
         { passive: true }
       )
+      document.addEventListener('click', handleClickOutside, true)
 
       return () => {
         window.removeEventListener('scroll', handleScroll)
+        document.removeEventListener('click', handleClickOutside, true)
       }
     }, [])
 
@@ -156,7 +179,7 @@ const HorizontalMenu: FC<HorizontalMenuProps> = observer(
             departmentActive?.id && handles.backgroundShadow,
             'absolute left-0 bg-white bw1 bb b--muted-3 flex'
           )}
-          ref={navRef}
+          ref={!homeVersion ? navRef : null}
         >
           <ul
             className={classNames(
