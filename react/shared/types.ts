@@ -65,6 +65,7 @@ export interface GlobalConfig {
   title?: string
   orientation?: Orientation
   defaultDepartmentActive?: string
+  homeVersion?: boolean
 }
 
 export interface IconProps {
@@ -74,4 +75,5 @@ export interface IconProps {
   viewBox?: string
   activeClassName?: string
   mutedClassName?: string
+  homeVersion?: boolean
 }

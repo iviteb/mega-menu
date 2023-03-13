@@ -1,76 +1,161 @@
 import classNames from 'classnames'
 import { observer } from 'mobx-react-lite'
 import type { FC } from 'react'
-import React, { useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import type { InjectedIntlProps } from 'react-intl'
-import { injectIntl } from 'react-intl'
+import { defineMessages, injectIntl } from 'react-intl'
 import Skeleton from 'react-loading-skeleton'
 import { useCssHandles } from 'vtex.css-handles'
 import { formatIOMessage } from 'vtex.native-types'
+import { Link } from 'vtex.render-runtime'
+import { Collapsible } from 'vtex.styleguide'
 
+import type { MenuItem } from '../../shared'
 import { megaMenuState } from '../State'
 import type { ItemProps } from './Item'
 import Item from './Item'
-import Submenu from './Submenu'
 
 const CSS_HANDLES = [
   'menuContainerVertical',
   'departmentsContainer',
   'menuContainerNavVertical',
   'menuItemVertical',
-  'submenuContainerVertical',
   'departmentsTitle',
+  'seeAllLinkContainer',
+  'seeAllLink',
+  'collapsibleContent',
+  'submenuItem',
 ] as const
+
+const messages = defineMessages({
+  seeAllProducts: {
+    defaultMessage: '',
+    id: 'store/mega-menu.submenu.seeAllProducts.title',
+  },
+})
 
 const VerticalMenu: FC<VerticalMenuProps> = observer(({ intl }) => {
   const { handles } = useCssHandles(CSS_HANDLES)
-  const { departments, departmentActive, config, setDepartmentActive } =
-    megaMenuState
+  const { departments, departmentActive, config } = megaMenuState
 
-  const departmentActiveHasCategories = !!departmentActive?.menu?.length
+  const [collapsibleStates, setCollapsibleStates] = useState<
+    Record<string, boolean>
+  >({})
 
   const { title } = config
 
-  const departmentItems = useMemo(
-    () =>
-      departments.map((d, i) => {
-        const hasCategories = !!d.menu?.length
+  const seeAllLink = (to?: string) => (
+    <div className={classNames(handles.seeAllLinkContainer, 'mv5 t-body')}>
+      <Link
+        to={to ?? '#'}
+        className={classNames(handles.seeAllLink, 'link fw7 c-on-base')}
+      >
+        {formatIOMessage({ id: messages.seeAllProducts.id, intl })}
+      </Link>
+    </div>
+  )
 
-        const openDepartment = () => {
-          setDepartmentActive(d)
-        }
-
-        const itemProps: ItemProps = {
-          id: d.id,
-          iconId: d.icon,
-          accordion: hasCategories,
-          tabIndex: i,
-          onClick: openDepartment,
-          style: d.styles,
-          enableStyle: d.enableSty,
-          uploadedIcon: d.uploadedIcon,
-          ...(!hasCategories && { to: d.slug }),
-        }
-
-        return (
-          <li
-            className={classNames(
-              handles.menuItemVertical,
-              'bb b--light-gray',
-              {
-                bt: i === 0,
-              }
-            )}
-            key={d.id}
+  const parseCategories = (items: MenuItem[]) => {
+    return items
+      .filter((v) => v.display)
+      .map((x) => (
+        <div key={x.id} className={classNames(handles.submenuItem, 'mt3')}>
+          <Item
+            to={x.slug}
+            iconId={x.icon}
+            level={2}
+            style={x.styles}
+            enableStyle={x.enableSty}
+            optionalText={x.optionalText}
+            uploadedIcon={x.uploadedIcon}
           >
-            <Item className={classNames('pv5 mh5')} {...itemProps}>
-              {d.name}
-            </Item>
-          </li>
-        )
-      }),
+            {x.name}
+          </Item>
+        </div>
+      ))
+  }
+
+  const departmentItems = useMemo(
+    () => {
+      return departments
+        .filter((j) => j.display)
+        .map((d, i) => {
+          const itemProps: ItemProps = {
+            id: d.id,
+            iconId: d.icon,
+            tabIndex: i,
+            style: d.styles,
+            enableStyle: d.enableSty,
+            uploadedIcon: d.uploadedIcon,
+          }
+
+          if (!d.menu?.length || d.menu?.length < 1) {
+            return (
+              <li
+                className={classNames(
+                  handles.menuItemVertical,
+                  'bb b--light-gray',
+                  {
+                    bt: i === 0,
+                  }
+                )}
+                key={d.id}
+              >
+                <Link
+                  to={d.slug ?? '#'}
+                  className={classNames('link c-on-base')}
+                >
+                  <Item className={classNames('pv5 mh5')} {...itemProps}>
+                    {d.name}
+                  </Item>
+                </Link>
+              </li>
+            )
+          }
+
+          const parsedCategories = parseCategories(d.menu)
+
+          return (
+            <li
+              className={classNames(
+                handles.menuItemVertical,
+                'bb b--light-gray',
+                {
+                  bt: i === 0,
+                }
+              )}
+              key={d.id}
+            >
+              <Collapsible
+                header={
+                  <Item className={classNames('pv5 mh5')} {...itemProps}>
+                    {d.name}
+                  </Item>
+                }
+                align="right"
+                onClick={(e: any) =>
+                  setCollapsibleStates({
+                    ...collapsibleStates,
+                    [d.id]: e.target.isOpen,
+                  })
+                }
+                isOpen={collapsibleStates[d.id]}
+                caretColor={`${collapsibleStates[d.id] ? 'base' : 'muted'}`}
+              >
+                {!!parsedCategories.length && (
+                  <div className={handles.collapsibleContent}>
+                    {parsedCategories}
+                  </div>
+                )}
+
+                {parsedCategories.length >= 1 ? seeAllLink(d.slug) : <div />}
+              </Collapsible>
+            </li>
+          )
+        })
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [departments]
+    [departments, collapsibleStates]
   )
 
   return departmentItems?.length > 0 ? (
@@ -97,20 +182,6 @@ const VerticalMenu: FC<VerticalMenuProps> = observer(({ intl }) => {
             </div>
           )}
         </ul>
-      </div>
-      <div
-        className={classNames(
-          handles.submenuContainerVertical,
-          'bg-base w-100'
-        )}
-        style={{
-          display:
-            departmentActive && departmentActiveHasCategories
-              ? 'block'
-              : 'none',
-        }}
-      >
-        <Submenu />
       </div>
     </nav>
   ) : null

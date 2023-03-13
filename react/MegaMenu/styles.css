@@ -13,7 +13,9 @@
 .triggerContainer {
   display: flex;
   align-items: center;
-  padding: unset;
+  padding-left: 1.125rem;
+  height: 100%;
+  box-shadow: -0.375rem 0 0.75rem -0.375rem rgb(0 0 0 / 15%);
 }
 
 .triggerContainer::after {
@@ -25,16 +27,21 @@
 .triggerButtonIcon {
   margin-right: 0.5rem;
   display: block;
+  min-width: 1rem;
 }
 
 .menuContainerNav {
-  box-shadow: 0px 2000px 0px 2000px rgba(0, 0, 0, 0.25);
   border: none;
-  border-radius: 0 0 0.25rem 0.25rem;
+  border-radius: 0 0 0.5em 0.5em;
   background-color: #fff;
   width: 100%;
   overflow: hidden;
   height: 33.75rem;
+  z-index: 100;
+}
+
+.widthAuto--hpVisible {
+  border-bottom-right-radius: unset;
 }
 
 .menuContainer {
@@ -42,7 +49,6 @@
   min-width: 15rem;
   max-width: 15rem;
   padding-bottom: 0;
-  background-color: rgb(0 0 0 / 10%);
   border: unset;
 }
 
@@ -76,12 +82,18 @@
   display: flex;
 }
 
+.styledLinkContent {
+  width: 100%;
+}
+
 .menuItem .styledLinkText {
   line-height: 1;
+  width: 100%;
+  justify-content: flex-start;
 }
 
 .menuItemIcon {
-  max-width: 1.25rem;
+  width: 1.25rem;
   max-height: 1.25rem;
   margin-right: 0.5rem;
   display: block;
@@ -105,10 +117,6 @@
   line-height: 1;
 }
 
-.styledLink {
-  font-size: 0.8125rem;
-}
-
 .departmentActive .styledLink,
 .departmentActive .styledLink:hover {
   font-weight: bold;
@@ -121,6 +129,10 @@
 .submenuItem--isClosed .styledLinkContainer .styledLink:first-child:hover {
   text-decoration: underline;
   color: #fcb116;
+}
+
+.submenuItem .styledLinkIconContainer {
+  display: none;
 }
 
 .seeAllLink:hover {
@@ -151,12 +163,31 @@
   line-height: 1;
 }
 
-.collapsibleContent {
-  margin-bottom: 0.75rem;
+.menuItemVertical {
+  border: unset;
 }
 
 .menuItemVertical .styledLinkText {
   line-height: 1;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.widthAuto {
+  width: auto;
+  box-shadow: 0px 4px 10px -2px rgb(0 0 0 / 15%);
+}
+
+.darkBackground {
+  background-color: rgb(0 0 0 / 10%);
+}
+
+.backgroundShadow {
+  box-shadow: 0px 2000px 0px 2000px rgba(0, 0, 0, 0.25);
+}
+
+:global(.vtex-flex-layout-0-x-flexColChild--megamenuTrigger) {
+  height: 100% !important;
 }
 
 /****** Media Queries ******/
@@ -179,5 +210,86 @@
   .submenuItemsContainer {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+
+  .styledLink {
+    font-size: 0.8125rem;
+  }
+}
+
+@media only screen and (max-width: 1025px) {
+  .menuContainerVertical {
+    margin: unset;
+  }
+
+  .styledLinkContainer {
+    margin: unset;
+  }
+
+  .menuItemVertical
+    .styledLinkContainer:not(.submenuItem .styledLinkContainer) {
+    padding-left: 1rem;
+  }
+
+  .menuItemVertical
+    :global(.vtex-styleguide-9-x-jsFocusVisible)
+    > div:first-child {
+    padding-right: 1rem;
+  }
+
+  .menuItemVertical
+    :global(.vtex-styleguide-9-x-jsFocusVisible)
+    > div:last-child {
+    padding: 0 1rem 0 3rem;
+    background-color: #f7f9fa;
+  }
+
+  .menuItemVertical [aria-expanded='true'] .styledLinkText {
+    font-weight: bold;
+  }
+
+  .menuItemVertical :global(.vtex__icon-caret-down),
+  .menuItemVertical :global(.vtex__icon-caret-up) {
+    display: block;
+    height: 0.625rem !important;
+  }
+
+  .menuItemVertical :global(.vtex__icon-caret-down) path,
+  .menuItemVertical :global(.vtex__icon-caret-up) path {
+    display: none;
+  }
+
+  .menuItemVertical :global(.vtex__icon-caret-down) {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE0IDFhLjk5Ljk5IDAgMDAtLjcxOS4yODFMOCA2LjU2MyAyLjY4NyAxLjI4YS45NjQuOTY0IDAgMDAtMS40MDYgMCAuOTY0Ljk2NCAwIDAwMCAxLjQwN2w2IDZhLjk2NC45NjQgMCAwMDEuNDA3IDBsNi02YS45NjQuOTY0IDAgMDAwLTEuNDA3QS45Ny45NyAwIDAwMTQgMXoiIGZpbGw9IiNDQUNCQ0MiLz48L3N2Zz4=);
+  }
+
+  .menuItemVertical :global(.vtex__icon-caret-up) {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE0IDlhLjk5Ljk5IDAgMDEtLjcxOS0uMjgxTDggMy40MzhsLTUuMzEzIDUuMjhhLjk2NC45NjQgMCAwMS0xLjQwNiAwIC45NjQuOTY0IDAgMDEwLTEuNDA1bDYtNmEuOTY0Ljk2NCAwIDAxMS40MDcgMGw2IDZhLjk2NC45NjQgMCAwMTAgMS40MDZBLjk3Ljk3IDAgMDExNCA5eiIgZmlsbD0iIzNGM0Y0MCIvPjwvc3ZnPg==);
+  }
+
+  .styledLinkIconContainer,
+  .menuItemIcon {
+    margin-right: 0.75rem;
+  }
+
+  .submenuItem {
+    margin-top: 0.75rem;
+  }
+
+  .submenuItem:first-child {
+    margin-top: unset;
+  }
+
+  .submenuItem .styledLinkText {
+    line-height: 1.25;
+  }
+
+  .collapsibleContent {
+    margin: 1rem 0;
+  }
+
+  .seeAllLink {
+    display: block;
+    line-height: 1.25;
   }
 }

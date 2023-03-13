@@ -6,6 +6,7 @@ import React, { useMemo, useState } from 'react'
 import type { InjectedIntlProps } from 'react-intl'
 import { defineMessages, injectIntl } from 'react-intl'
 import { applyModifiers, useCssHandles } from 'vtex.css-handles'
+import { useDevice } from 'vtex.device-detector'
 import { formatIOMessage } from 'vtex.native-types'
 import { ExtensionPoint, Link } from 'vtex.render-runtime'
 import { Collapsible } from 'vtex.styleguide'
@@ -43,15 +44,20 @@ const messages = defineMessages({
 
 export type ItemProps = InjectedIntlProps & {
   closeMenu?: (open: boolean) => void
+  homeVersion?: boolean
 }
 
 const Submenu: FC<ItemProps> = observer((props) => {
-  const { intl, closeMenu } = props
+  const { intl, closeMenu, homeVersion } = props
   const { handles } = useCssHandles(CSS_HANDLES)
-  const { departmentActive, config, getCategories, setDepartmentActive } =
+  const { departmentActive: activeDep,
+    departmentActiveHome: activeHomeDep, config, getCategories, setDepartmentActive } =
     megaMenuState
 
   const { orientation } = config
+  const { isMobile } = useDevice()
+
+  const departmentActive = homeVersion ? activeHomeDep : activeDep
 
   const [collapsibleStates, setCollapsibleStates] = useState<
     Record<string, boolean>
@@ -76,7 +82,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
         )}
         onClick={() => {
           if (config.orientation === 'vertical') {
-            setDepartmentActive(null)
+            setDepartmentActive(null, homeVersion)
           }
 
           if (closeMenu) closeMenu(false)
@@ -120,12 +126,12 @@ const Submenu: FC<ItemProps> = observer((props) => {
         setShowBtnCat(false)
       }
 
-      const categories = getCategories()
+      const categories = getCategories(homeVersion)
 
       return categories
         .filter((j) => j.display)
         .map((category, i) => {
-          const subcategories = category.menu?.length
+          const subcategories = !isMobile && category.menu?.length
             ? subCategories(category.menu)
             : []
 
@@ -141,7 +147,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   collapsibleStates[category.id] ? 'isOpen' : 'isClosed'
                 ),
                 orientation === 'vertical' &&
-                  'c-on-base bb b--light-gray mv0 ph5',
+                'c-on-base bb b--light-gray mv0 ph5',
                 orientation === 'vertical' && i === 0 && 'bt',
                 collapsibleStates[category.id] && 'bg-near-white'
               )}
@@ -206,9 +212,8 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     })
                   }
                   isOpen={collapsibleStates[category.id]}
-                  caretColor={`${
-                    collapsibleStates[category.id] ? 'base' : 'muted'
-                  }`}
+                  caretColor={`${collapsibleStates[category.id] ? 'base' : 'muted'
+                    }`}
                 >
                   {!!subcategories.length && (
                     <div className={handles.collapsibleContent}>
@@ -228,7 +233,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   className={`${handles.categoryLink} no-underline c-on-base`}
                   onClick={() => {
                     if (config.orientation === 'vertical') {
-                      setDepartmentActive(null)
+                      setDepartmentActive(null, homeVersion)
                     }
 
                     if (closeMenu) closeMenu(false)

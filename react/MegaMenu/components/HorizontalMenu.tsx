@@ -1,4 +1,5 @@
 import classNames from 'classnames'
+import { debounce } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import type { FC } from 'react'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
@@ -21,175 +22,216 @@ const CSS_HANDLES = [
   'submenuContainer',
   'departmentsTitle',
   'departmentActive',
+  'widthAuto',
+  'darkBackground',
+  'backgroundShadow',
 ] as const
 
-const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
-  const { handles } = useCssHandles(CSS_HANDLES)
-  const {
-    isOpenMenu,
-    departments,
-    departmentActive,
-    config: { title, defaultDepartmentActive },
-    setDepartmentActive,
-    openMenu,
-  } = megaMenuState
+type HorizontalMenuProps = InjectedIntlProps & {
+  homeVersion?: boolean
+}
 
-  const departmentActiveHasCategories = !!departmentActive?.menu?.length
-  const navRef = useRef<HTMLDivElement>(null)
+const HorizontalMenu: FC<HorizontalMenuProps> = observer(
+  ({ intl, homeVersion }) => {
+    const { handles } = useCssHandles(CSS_HANDLES)
+    const {
+      isOpenMenu: menuOpen,
+      isOpenMenuHome: menuHomeOpen,
+      departments,
+      departmentActive: activeDep,
+      departmentActiveHome: activeHomeDep,
+      config: { title, defaultDepartmentActive },
+      setDepartmentActive,
+      openMenu,
+    } = megaMenuState
 
-  const handleClickOutside = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (event: any) => {
-      const isTriggerButton = event?.path?.find(
-        (data: HTMLElement) => data.dataset?.id === BUTTON_ID
-      )
+    const departmentActive = homeVersion ? activeHomeDep : activeDep
+    const isOpenMenu = homeVersion ? menuHomeOpen : menuOpen
 
-      if (
-        navRef.current &&
-        !navRef.current.contains(event.target as Node) &&
-        !isTriggerButton
-      ) {
+    const departmentActiveHasCategories = !!departmentActive?.menu?.length
+    const navRef = useRef<HTMLDivElement>(null)
+
+    const handleScroll = () => {
+      const position = window.pageYOffset
+
+      if (position < 640) {
         openMenu(false)
       }
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    [openMenu]
-  )
-
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true)
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true)
     }
-  }, [])
 
-  useEffect(() => {
-    const defaultDepartment = departments.find(
-      (x) =>
-        x.name.toLowerCase().trim() ===
-        defaultDepartmentActive?.toLowerCase().trim()
+    const handleClickOutside = useCallback(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (event: any) => {
+        const isTriggerButton = event?.path?.find(
+          (data: HTMLElement) => data.dataset?.id === BUTTON_ID
+        )
+
+        if (
+          navRef.current &&
+          !navRef.current.contains(event.target as Node) &&
+          !isTriggerButton
+        ) {
+          openMenu(false)
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      },
+      [openMenu]
     )
 
-    if (defaultDepartment) {
-      setDepartmentActive(defaultDepartment)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultDepartmentActive])
-
-  const departmentItems = useMemo(
-    () =>
-      departments
-        .filter((j) => j.display)
-        .map((d) => {
-          const hasCategories = !!d.menu?.length
-
-          return (
-            <li
-              className={classNames(
-                handles.menuItem,
-                d.id === departmentActive?.id &&
-                  `bg-black-05 ${handles.departmentActive}`
-              )}
-              key={d.id}
-              onMouseEnter={() => {
-                setDepartmentActive(d)
-              }}
-            >
-              <Item
-                id={d.id}
-                to={d.slug}
-                iconId={d.icon}
-                accordion={hasCategories}
-                className={classNames('pv3 mh5')}
-                style={d.styles}
-                enableStyle={d.enableSty}
-                closeMenu={openMenu}
-                uploadedIcon={d.uploadedIcon}
-              >
-                {d.name}
-              </Item>
-            </li>
-          )
-        }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [departments, departmentActive]
-  )
-
-  const loaderBlocks = useMemo(() => {
-    const blocks: JSX.Element[] = []
-
-    for (let index = 1; index <= 4; index++) {
-      blocks.push(
-        <div className="lh-copy">
-          <Skeleton height={20} />
-          <Skeleton height={80} />
-        </div>
+    useEffect(() => {
+      window.addEventListener(
+        'scroll',
+        debounce(() => handleScroll(), 100),
+        { passive: true }
       )
-    }
+      document.addEventListener('click', handleClickOutside, true)
 
-    return blocks
-  }, [])
+      return () => {
+        window.removeEventListener('scroll', handleScroll)
+        document.removeEventListener('click', handleClickOutside, true)
+      }
+    }, [])
 
-  return departmentItems?.length > 0 ? (
-    <div style={{ display: isOpenMenu ? 'block' : 'none' }}>
-      <nav
-        className={classNames(
-          handles.menuContainerNav,
-          'absolute left-0 bg-white bw1 bb b--muted-3 flex'
-        )}
-        ref={navRef}
+    useEffect(() => {
+      const defaultDepartment = departments.find(
+        (x) =>
+          x.name.toLowerCase().trim() ===
+          defaultDepartmentActive?.toLowerCase().trim()
+      )
+
+      if (defaultDepartment) {
+        setDepartmentActive(defaultDepartment, homeVersion)
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultDepartmentActive])
+
+    const departmentItems = useMemo(
+      () =>
+        departments
+          .filter((j) => j.display)
+          .map((d) => {
+            const hasCategories = !!d.menu?.length
+
+            return (
+              <li
+                className={classNames(
+                  handles.menuItem,
+                  d.id === departmentActive?.id &&
+                  `bg-black-05 ${handles.departmentActive}`
+                )}
+                key={d.id}
+                onMouseEnter={() => {
+                  setDepartmentActive(d, homeVersion)
+                }}
+              >
+                <Item
+                  id={d.id}
+                  to={d.slug}
+                  iconId={d.icon}
+                  accordion={hasCategories}
+                  className={classNames('pv3 mh5')}
+                  style={d.styles}
+                  enableStyle={d.enableSty}
+                  closeMenu={openMenu}
+                  uploadedIcon={d.uploadedIcon}
+                >
+                  {d.name}
+                </Item>
+              </li>
+            )
+          }),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [departments, departmentActive]
+    )
+
+    const loaderBlocks = useMemo(() => {
+      const blocks: JSX.Element[] = []
+
+      for (let index = 1; index <= 4; index++) {
+        blocks.push(
+          <div className="lh-copy">
+            <Skeleton height={20} />
+            <Skeleton height={80} />
+          </div>
+        )
+      }
+
+      return blocks
+    }, [])
+
+    return departmentItems?.length > 0 ? (
+      <div
+        style={{
+          display: isOpenMenu ? 'block' : 'none',
+        }}
+        onMouseLeave={() => {
+          setDepartmentActive(null, homeVersion)
+        }}
       >
-        <ul
+        <nav
           className={classNames(
-            styles.menuContainer,
-            'list ma0 pa0 pb3 br b--muted-4'
+            handles.menuContainerNav,
+            (!departmentActive?.id ||
+              !departmentActive?.menu?.length ||
+              departmentActive?.menu?.length < 1) &&
+            handles.widthAuto,
+            departmentActive?.id && handles.backgroundShadow,
+            'absolute left-0 bg-white bw1 bb b--muted-3 flex'
           )}
+          ref={!homeVersion ? navRef : null}
         >
-          <div
+          <ul
             className={classNames(
-              handles.departmentsTitle,
-              'f4 fw7 c-on-base lh-copy ma0 pv5 ph5'
+              styles.menuContainer,
+              departmentActive?.id && handles.darkBackground,
+              'list ma0 pa0 pb3 br b--muted-4'
             )}
           >
-            {formatIOMessage({ id: title, intl })}
-          </div>
+            <div
+              className={classNames(
+                handles.departmentsTitle,
+                'f4 fw7 c-on-base lh-copy ma0 pv5 ph5'
+              )}
+            >
+              {formatIOMessage({ id: title, intl })}
+            </div>
+            {departments.length ? (
+              departmentItems
+            ) : (
+              <div className="flex flex-column justify-center ph5 lh-copy">
+                <Skeleton count={3} height={30} />
+              </div>
+            )}
+          </ul>
           {departments.length ? (
-            departmentItems
+            <div
+              className={classNames(styles.submenuContainer, 'pa5 w-100')}
+              style={{
+                display:
+                  departments.length &&
+                    departmentActive &&
+                    departmentActiveHasCategories
+                    ? 'flex'
+                    : 'none',
+              }}
+            >
+              <Submenu closeMenu={openMenu} homeVersion={homeVersion} />
+            </div>
           ) : (
-            <div className="flex flex-column justify-center ph5 lh-copy">
-              <Skeleton count={3} height={30} />
+            <div className="w-100" style={{ overflow: 'auto' }}>
+              <div className="w-30 mb4 ml4 mt5">
+                <Skeleton height={30} />
+              </div>
+              <div className={classNames(styles.submenuList, 'mh4 mb5')}>
+                {loaderBlocks}
+              </div>
             </div>
           )}
-        </ul>
-        {departments.length ? (
-          <div
-            className={classNames(styles.submenuContainer, 'pa5 w-100')}
-            style={{
-              display:
-                departments.length &&
-                departmentActive &&
-                departmentActiveHasCategories
-                  ? 'flex'
-                  : 'none',
-            }}
-          >
-            <Submenu closeMenu={openMenu} />
-          </div>
-        ) : (
-          <div className="w-100" style={{ overflow: 'auto' }}>
-            <div className="w-30 mb4 ml4 mt5">
-              <Skeleton height={30} />
-            </div>
-            <div className={classNames(styles.submenuList, 'mh4 mb5')}>
-              {loaderBlocks}
-            </div>
-          </div>
-        )}
-      </nav>
-    </div>
-  ) : null
-})
+        </nav>
+      </div>
+    ) : null
+  }
+)
 
 export default injectIntl(HorizontalMenu)
