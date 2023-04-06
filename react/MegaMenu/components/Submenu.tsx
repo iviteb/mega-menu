@@ -31,6 +31,7 @@ const CSS_HANDLES = [
   'departmentBanner',
   'submenuVerticalNameContainer',
   'menuItemIcon',
+  'categoryLink',
 ] as const
 
 const messages = defineMessages({
@@ -187,6 +188,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                         <p
                           className={classNames(
                             handles.collapsibleHeaderText,
+                            'lh-title',
                             collapsibleStates[category.id] && 'fw7'
                           )}
                         >
@@ -214,7 +216,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     </div>
                   )}
 
-                  {subcategories.length > 1 ? (
+                  {subcategories.length >= 1 ? (
                     seeAllLink(category.slug, 2)
                   ) : (
                     <div />
@@ -223,7 +225,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
               ) : (
                 <Link
                   to={category.slug}
-                  style={{ textDecoration: 'none' }}
+                  className={`${handles.categoryLink} no-underline c-on-base`}
                   onClick={() => {
                     if (config.orientation === 'vertical') {
                       setDepartmentActive(null)
@@ -248,6 +250,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     <p
                       className={classNames(
                         handles.collapsibleHeaderText,
+                        'lh-title',
                         collapsibleStates[category.id] && 'fw7'
                       )}
                     >
