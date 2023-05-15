@@ -1,5 +1,7 @@
 type Query {
   menus(isMobile: Boolean): [Menu]
+    @cacheControl(scope: SEGMENT, maxAge: MEDIUM)
+    @withSegment
   menu(id: ID!): Menu
   settings: [Settings]
   setting(id: ID!): Settings
