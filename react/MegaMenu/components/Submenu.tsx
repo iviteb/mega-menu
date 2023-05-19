@@ -53,7 +53,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
 
   const [showBtnCat, setShowBtnCat] = useState(false)
 
-  const seeAllLink = (to: string, level = 1, className?: string) => {
+  const seeAllLink = (to?: string, level = 1, className?: string) => {
     return (
       <div
         className={classNames(
@@ -64,7 +64,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
         )}
       >
         <Link
-          to={to}
+          to={to ?? '#'}
           className={classNames(
             handles.seeAllLink,
             'link underline fw7 c-on-base'
@@ -100,10 +100,8 @@ const Submenu: FC<ItemProps> = observer((props) => {
 
   const items = useMemo(
     () => {
-      if (!departmentActive) return
-
-      if (departmentActive.menu) {
-        if (departmentActive.menu.length > 1) {
+      if (departmentActive?.menu) {
+        if (departmentActive?.menu.length > 1) {
           setShowBtnCat(true)
         } else {
           setShowBtnCat(false)
@@ -124,6 +122,12 @@ const Submenu: FC<ItemProps> = observer((props) => {
           return (
             <div
               key={category.id}
+              style={{
+                display:
+                  departmentActive && (departmentActive?.menu ?? []).length > 0
+                    ? 'block'
+                    : 'none',
+              }}
               className={classNames(
                 applyModifiers(
                   orientation === 'horizontal' && openOnly === 'horizontal'
@@ -131,11 +135,11 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     : handles.submenuItemVertical,
                   collapsibleStates[category.id] ? 'isOpen' : 'isClosed'
                 ),
+                (orientation === 'vertical') &&
+                'c-on-base bb b--light-gray mv0 ph5',
                 (orientation === 'vertical' || openOnly === 'vertical') &&
-                  'c-on-base bb b--light-gray mv0 ph5',
-                (orientation === 'vertical' || openOnly === 'vertical') &&
-                  i === 0 &&
-                  'bt',
+                i === 0 &&
+                'bt',
                 collapsibleStates[category.id] && 'bg-near-white'
               )}
             >
@@ -191,9 +195,8 @@ const Submenu: FC<ItemProps> = observer((props) => {
                       }
                     }}
                     isOpen={collapsibleStates[category.id]}
-                    caretColor={`${
-                      collapsibleStates[category.id] ? 'base' : 'muted'
-                    }`}
+                    caretColor={`${collapsibleStates[category.id] ? 'base' : 'muted'
+                      }`}
                   >
                     {!!subcategories.length && (
                       <div className={handles.collapsibleContent}>
@@ -219,54 +222,46 @@ const Submenu: FC<ItemProps> = observer((props) => {
   )
 
   return (
-    <>
-      {departmentActive && (
-        <>
-          <h3
-            className={classNames(
-              handles.submenuContainerTitle,
-              'f4 fw7 c-on-base lh-copy ma0 flex items-center',
-              orientation === 'horizontal' &&
-                openOnly === 'horizontal' &&
-                'mb6',
-              (orientation === 'vertical' || openOnly === 'vertical') &&
-                'pv5 ph5'
-            )}
-          >
-            {departmentActive.name}
-            {orientation === 'horizontal' &&
-            openOnly === 'horizontal' &&
-            showBtnCat ? (
-              seeAllLink(departmentActive.slug, 1, 't-small ml7')
-            ) : (
-              <div />
-            )}
-          </h3>
-
-          <div
-            className={classNames(
-              orientation === 'horizontal' &&
-                openOnly === 'horizontal' &&
-                styles.submenuList,
-              (orientation === 'vertical' || openOnly === 'vertical') &&
-                handles.submenuListVertical
-            )}
-          >
-            {orientation === 'horizontal' && openOnly === 'horizontal' ? (
-              <>
-                <ExtensionPoint id="before-menu" /> {items}{' '}
-                <ExtensionPoint id="after-menu" />
-              </>
-            ) : (
-              <>
-                {items}
-                {/* showBtnCat ? seeAllLink(departmentActive.slug) : <div /> */}
-              </>
-            )}
+    <div style={{ display: departmentActive ? 'block' : 'none' }}>
+      <h3
+        className={classNames(
+          handles.submenuContainerTitle,
+          'f4 fw7 c-on-base lh-copy ma0 flex items-center',
+          orientation === 'horizontal' &&
+          'mb6',
+          orientation === 'vertical' &&
+          'pv5 ph5'
+        )}
+      >
+        {departmentActive?.name}
+        {orientation === 'horizontal' && (
+          <div style={{ display: showBtnCat ? 'block' : 'none' }}>
+            {seeAllLink(departmentActive?.slug, 1, 't-small ml7')}
           </div>
-        </>
-      )}
-    </>
+        )}
+      </h3>
+
+      <div
+        className={classNames(
+          orientation === 'horizontal' &&
+          styles.submenuList,
+          orientation === 'vertical' &&
+          handles.submenuListVertical
+        )}
+      >
+        {orientation === 'horizontal' ? (
+          <>
+            <ExtensionPoint id="before-menu" /> {items}{' '}
+            <ExtensionPoint id="after-menu" />
+          </>
+        ) : (
+          <>
+            {items}
+            {showBtnCat ? seeAllLink(departmentActive?.slug) : <div />}
+          </>
+        )}
+      </div>
+    </div>
   )
 })
 
