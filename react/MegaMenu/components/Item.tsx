@@ -143,7 +143,7 @@ const Item: FC<ItemProps> = observer((props) => {
           <span className={linkClassNames}>{content}</span>
         )
       ) : (
-        <a className={linkClassNames} href={`//${binding?.canonicalBaseAddress}${to}`}>
+        <a className={linkClassNames} href={`https://${binding?.canonicalBaseAddress}${to}`}>
           {content}
         </a>
       )}
