@@ -37,8 +37,8 @@ class MegaMenuState {
   public getCategories = () => {
     let categories: DataMenu[] = []
 
-    if (this.departmentActive) {
-      return this.departmentActive?.menu ?? []
+    if (this.departmentActive?.menu?.length) {
+      return this.departmentActive?.menu
     }
 
     this.departments.forEach((department: any) => {

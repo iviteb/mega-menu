@@ -16,7 +16,13 @@ export const BUTTON_ID = 'mega-menu-trigger-button'
 
 const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
   const { handles } = useCssHandles(CSS_HANDLES)
-  const { openMenu } = megaMenuState
+  const {
+    openMenu,
+    departmentActive,
+    departments,
+    config: { defaultDepartmentActive },
+    setDepartmentActive,
+  } = megaMenuState
 
   const { isActive, activeClassName, mutedClassName, ...rest } = props
   const iconBaseClassName = applyModifiers(
@@ -24,11 +30,27 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
     isActive ? 'active' : 'muted'
   )
 
+  const openMenuOnTrigger = () => {
+    if (!departmentActive) {
+      const defaultDepartment = departments.find(
+        (x) =>
+          x.name.toLowerCase().trim() ===
+          defaultDepartmentActive?.toLowerCase().trim()
+      )
+
+      if (defaultDepartment) {
+        setDepartmentActive(defaultDepartment)
+      }
+    }
+
+    openMenu((v) => !v)
+  }
+
   return (
     <button
       data-id={BUTTON_ID}
       className={classNames(styles.triggerContainer, 'pointer')}
-      onClick={() => openMenu((v) => !v)}
+      onClick={() => openMenuOnTrigger()}
     >
       <Icon
         activeClassName={classNames(iconBaseClassName, activeClassName)}

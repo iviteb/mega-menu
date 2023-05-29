@@ -29,7 +29,7 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
     isOpenMenu,
     departments,
     departmentActive,
-    config: { title, defaultDepartmentActive },
+    config: { title },
     setDepartmentActive,
     openMenu,
   } = megaMenuState
@@ -64,19 +64,6 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
       document.removeEventListener('click', handleClickOutside, true)
     }
   }, [])
-
-  useEffect(() => {
-    const defaultDepartment = departments.find(
-      (x) =>
-        x.name.toLowerCase().trim() ===
-        defaultDepartmentActive?.toLowerCase().trim()
-    )
-
-    if (defaultDepartment) {
-      setDepartmentActive(defaultDepartment)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultDepartmentActive])
 
   const departmentItems = useMemo(
     () =>
