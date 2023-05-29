@@ -4,6 +4,7 @@ import React, { useMemo } from 'react'
 import type { FC } from 'react'
 import { useCssHandles } from 'vtex.css-handles'
 import { Icon, IconCaret } from 'vtex.store-icons'
+import { useRuntime } from 'vtex.render-runtime'
 
 import type { IconProps } from '../../shared'
 import { megaMenuState } from '../State'
@@ -25,6 +26,7 @@ const defaultTypography: Record<number, string> = {
 }
 
 const Item: FC<ItemProps> = observer((props) => {
+  const { binding } = useRuntime()
   const { handles, withModifiers } = useCssHandles(CSS_HANDLES)
   const { departmentActive } = megaMenuState
   const {
@@ -141,7 +143,7 @@ const Item: FC<ItemProps> = observer((props) => {
           <span className={linkClassNames}>{content}</span>
         )
       ) : (
-        <a className={linkClassNames} href={`${window?.location?.origin}/${to}`}>
+        <a className={linkClassNames} href={`https://${binding?.canonicalBaseAddress}${to}`}>
           {content}
         </a>
       )}

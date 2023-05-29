@@ -32,7 +32,7 @@ const HorizontalMenu: FC<
     isOpenMenu,
     departments,
     departmentActive,
-    config: { title, defaultDepartmentActive },
+    config: { title },
     setDepartmentActive,
     openMenu,
   } = megaMenuState
@@ -72,19 +72,6 @@ const HorizontalMenu: FC<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    const defaultDepartment = departments.find(
-      (x) =>
-        x.name.toLowerCase().trim() ===
-        defaultDepartmentActive?.toLowerCase().trim()
-    )
-
-    if (defaultDepartment) {
-      setDepartmentActive(defaultDepartment)
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultDepartmentActive])
 
   const departmentItems = useMemo(
     () =>

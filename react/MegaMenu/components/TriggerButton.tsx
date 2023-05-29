@@ -19,7 +19,7 @@ export const BUTTON_ID = 'mega-menu-trigger-button'
 
 const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
   const { handles } = useCssHandles(CSS_HANDLES)
-  const { openMenu, isOpenMenu } = megaMenuState
+  const { openMenu, isOpenMenu, departmentActive, departments, config: { defaultDepartmentActive }, setDepartmentActive } = megaMenuState
   const [orientationMenu, setOrientationMenu] = useState('')
   const { isMobile } = useDevice()
 
@@ -43,6 +43,21 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
     }
   }, [data])
 
+  const openMenuOnTrigger = () => {
+    if (!departmentActive) {
+      const defaultDepartment = departments.find(
+        (x) =>
+          x.name.toLowerCase().trim() ===
+          defaultDepartmentActive?.toLowerCase().trim()
+      )
+
+      if (defaultDepartment) {
+        setDepartmentActive(defaultDepartment)
+      }
+    }
+    openMenu((v) => !v)
+  }
+
   return orientationMenu === 'vertical' || isMobile ? (
     // eslint-disable-next-line jsx-a11y/interactive-supports-focus
     <div
@@ -63,7 +78,7 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
     <button
       data-id={BUTTON_ID}
       className={classNames(styles.triggerContainer, 'pointer')}
-      onMouseOver={() => openMenu((v) => !v)}
+      onMouseOver={() => openMenuOnTrigger()}
       onFocus={() => null}
     >
       <Icon
