@@ -1,6 +1,0 @@
-query getsettings {
-  settings {
-    idMenu
-    orientation
-  }
-}

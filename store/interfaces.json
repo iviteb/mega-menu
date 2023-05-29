@@ -1,7 +1,7 @@
 {
   "mega-menu": {
     "component": "MegaMenu",
-    "allowed": ["before-menu", "after-menu", "drawer"]
+    "allowed": ["before-menu", "after-menu"]
   },
   "before-menu": {
     "component": "Extension",
