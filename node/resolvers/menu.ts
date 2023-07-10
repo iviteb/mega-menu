@@ -86,21 +86,27 @@ export const menus = async (
     clients: { vbase, region },
   } = ctx
 
-  const { segmentToken } = ctx.vtex
+  const { segmentToken } = ctx.vtex ?? {}
+  let addressSellers = []
 
-  const segmentData = JSON.parse(
-    Buffer.from(segmentToken ?? '', 'base64').toString('utf-8')
-  )
+  try {
+    const segmentData = JSON.parse(
+      Buffer.from(segmentToken ?? '', 'base64').toString('utf-8')
+    )
 
-  const regionSellers = await region.getRegionSellers(segmentData?.regionId)
-  const addressSellers = regionSellers[0]?.sellers
+    const regionSellers = await region.getRegionSellers(segmentData?.regionId)
+    addressSellers = regionSellers[0]?.sellers
+  } catch (err) {
+    // Do nothing for the moment, just return the default menu
+  }
+
 
   let menuItems: Menu[] = []
 
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
 
-    if (filterMenuItems) {
+    if (filterMenuItems && addressSellers?.length) {
       for (let i = 0; i < addressSellers.length; i++) {
         const newMenu = parseSellerIDs(menuItems, addressSellers[i]?.id)
 
