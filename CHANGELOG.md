@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Fixed
+- Missing segmentToken error check
+
 ## [1.0.3] - 2023-06-16
 
 ### Fixed
