@@ -23,6 +23,7 @@ const CSS_HANDLES = [
   'submenuContainer',
   'departmentsTitle',
   'departmentActive',
+  'emptyDepartment',
 ] as const
 
 const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
@@ -152,6 +153,10 @@ const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
       <nav
         className={classNames(
           handles.menuContainerNav,
+          (!departmentActive?.id ||
+            !departmentActive?.menu?.length ||
+            departmentActive?.menu?.length < 1) &&
+            handles.emptyDepartment,
           'absolute left-0 bg-white bw1 bb b--muted-3 flex'
         )}
         ref={navRef}
