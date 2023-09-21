@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.0.2] - 2023-09-21
+
+### Changed
+
+- Changed client to hipestore
+
 ## [0.0.2] - 2023-07-04
 
 ## [0.0.1] - 2023-04-06
