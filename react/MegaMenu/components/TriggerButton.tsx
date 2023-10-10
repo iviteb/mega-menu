@@ -32,6 +32,14 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
       onMouseEnter={() =>
         !homeVersion && !isOpenMenu && openMenu(true, homeVersion)
       }
+      onClick={() =>
+        !homeVersion && !isOpenMenu && openMenu(!isOpenMenu, homeVersion)
+      }
+      onKeyPress={() =>
+        !homeVersion && !isOpenMenu && openMenu(!isOpenMenu, homeVersion)
+      }
+      role="button"
+      tabIndex={0}
     >
       <Icon
         activeClassName={classNames(iconBaseClassName, activeClassName)}
