@@ -3,5 +3,11 @@
   "ttl": 10,
   "timeout": 1,
   "minReplicas": 2,
-  "maxReplicas": 5
+  "maxReplicas": 5,
+  "routes": {
+    "keepAlive": {
+      "path": "/_v/private/mega-menu/keep-alive",
+      "public": true
+    }
+  }
 }
