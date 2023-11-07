@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Keep Alive route for cron.
+
 ## [0.0.2] - 2023-09-21
 
 ### Changed

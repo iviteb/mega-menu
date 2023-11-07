@@ -1,8 +1,9 @@
 import type { ParamsContext, RecorderState } from '@vtex/api'
-import { Service } from '@vtex/api'
+import { Service, method } from '@vtex/api'
 
 import { resolvers } from './resolvers'
 import { Clients } from './clients'
+import { keepAlive } from './middlewares/keepAlive'
 
 const MEDIUM_TIMEOUT_MS = 2 * 1000
 
@@ -18,5 +19,10 @@ export default new Service<Clients, RecorderState, ParamsContext>({
   },
   graphql: {
     resolvers,
+  },
+  routes: {
+    keepAlive: method({
+      GET: [keepAlive],
+    }),
   },
 })
