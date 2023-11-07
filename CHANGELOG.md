@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Fixed path for menu items for production environment.
+
 ## [0.0.2] - 2023-09-21
 
 ### Changed

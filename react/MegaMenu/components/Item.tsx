@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import type { FC } from 'react'
 import { useCssHandles } from 'vtex.css-handles'
-import { useRuntime, Link } from 'vtex.render-runtime'
+import { Link } from 'vtex.render-runtime'
 import { Icon, IconCaret } from 'vtex.store-icons'
 
 import type { IconProps } from '../../shared'
@@ -29,7 +29,6 @@ const defaultTypography: Record<number, string> = {
 }
 
 const Item: FC<ItemProps> = observer((props) => {
-  const { binding } = useRuntime()
   const { handles, withModifiers } = useCssHandles(CSS_HANDLES)
   const { departmentActive, config, setDepartmentActive } = megaMenuState
   const {
@@ -169,7 +168,7 @@ const Item: FC<ItemProps> = observer((props) => {
         )
       ) : (
         <Link
-          to={`https://${binding?.canonicalBaseAddress}${to}`}
+          to={`/${to}`}
           {...rest}
           className={linkClassNames}
           onClick={() => {
