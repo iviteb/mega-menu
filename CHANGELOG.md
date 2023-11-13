@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.0.3] - 2023-11-13 - miniprix
+
+### Changed
+
+- Changed client to miniprix
+
 ## [0.0.3] - 2023-11-07
 
 ### Added
