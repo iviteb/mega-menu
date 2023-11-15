@@ -7,7 +7,7 @@ import type { InjectedIntlProps } from 'react-intl'
 import { defineMessages, injectIntl } from 'react-intl'
 import { applyModifiers, useCssHandles } from 'vtex.css-handles'
 import { formatIOMessage } from 'vtex.native-types'
-import { ExtensionPoint, Link } from 'vtex.render-runtime'
+import { ExtensionPoint, Link, useRuntime } from 'vtex.render-runtime'
 import { Collapsible } from 'vtex.styleguide'
 
 import type { MenuItem } from '../../shared'
@@ -48,6 +48,8 @@ export type ItemProps = InjectedIntlProps & {
 const Submenu: FC<ItemProps> = observer((props) => {
   const { intl, closeMenu } = props
   const { handles } = useCssHandles(CSS_HANDLES)
+  const { binding } = useRuntime()
+
   const { departmentActive, config, getCategories, setDepartmentActive } =
     megaMenuState
 
@@ -69,7 +71,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
       )}
     >
       <Link
-        to={to ?? '#'}
+        to={`https://${binding?.canonicalBaseAddress}${to ?? '#'}`}
         className={classNames(
           handles.seeAllLink,
           'link underline fw7 c-on-base'
@@ -224,7 +226,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                 </Collapsible>
               ) : (
                 <Link
-                  to={category.slug}
+                  to={`https://${binding?.canonicalBaseAddress}${category.slug}`}
                   className={`${handles.categoryLink} no-underline c-on-base`}
                   onClick={() => {
                     if (config.orientation === 'vertical') {

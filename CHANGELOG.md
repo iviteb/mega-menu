@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Changed Link paths in Submenu, fixed some translations
+
 ## [0.0.3] - 2023-11-07
 
 ### Added
