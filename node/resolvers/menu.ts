@@ -1,3 +1,5 @@
+import atob from 'atob'
+
 import type { Menu, Args, ArgsUpload } from '../typings/custom'
 
 const sortMenusByOrder = (menus: Menu[]) => {
@@ -83,14 +85,13 @@ export const menus = async (
   ctx: Context
 ) => {
   const {
-    clients: { vbase, region },
+    vtex: { segmentToken },
+    clients: { vbase, region, segment },
   } = ctx
 
-  const { segmentToken } = ctx.vtex
-
-  const segmentData = JSON.parse(
-    Buffer.from(segmentToken ?? '', 'base64').toString('utf-8')
-  )
+  const segmentData = segmentToken
+    ? JSON.parse(atob(segmentToken))
+    : await segment.getSegment()
 
   const regionSellers = await region.getRegionSellers(segmentData?.regionId)
   const addressSellers = regionSellers[0]?.sellers
@@ -100,7 +101,7 @@ export const menus = async (
   try {
     menuItems = await vbase.getJSON<Menu[]>('menu', 'menuItems')
 
-    if (filterMenuItems) {
+    if (filterMenuItems && addressSellers?.length > 0) {
       for (let i = 0; i < addressSellers.length; i++) {
         const newMenu = parseSellerIDs(menuItems, addressSellers[i]?.id)
 
@@ -122,7 +123,9 @@ export const menus = async (
 
   replaceStyles(menuItems)
 
-  return orderArray(menuItems)
+  const ordered = orderArray(menuItems)
+
+  return ordered
 }
 
 export const menu = async (

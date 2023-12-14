@@ -3,6 +3,8 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
+    "@types/atob": "^2.1.4",
+    "atob": "^2.1.2",
     "cookie": "^0.5.0"
   },
   "scripts": {
