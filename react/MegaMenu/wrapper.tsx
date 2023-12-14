@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useQuery } from 'react-apollo'
 import { useDevice } from 'vtex.device-detector'
 import { canUseDOM } from 'vtex.render-runtime'
@@ -13,12 +13,11 @@ import { megaMenuState } from './State'
 
 const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
   const { orientation } = props
-  const [loaded, setLoaded] = useState(false)
 
   /* "filterMenuItems" filters the menu items returned in node,
   such that the items with sellerID matching the current regionId (sellerID) are not returned */
-  const { data, error } = useQuery<MenusResponse>(GET_MENUS, {
-    ssr: true,
+  const { data, error, loading } = useQuery<MenusResponse>(GET_MENUS, {
+    ssr: false,
     variables: {
       filterMenuItems: true,
     },
@@ -50,19 +49,14 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
       return
     }
 
-    setLoaded(true)
-
     initMenu()
   }, [data])
 
-  useEffect(() => {
-    if (error) {
-      setLoaded(true)
-      console.error('Error mega menu get menus', error)
-    }
-  }, [error])
+  if (error) {
+    console.error('Error mega menu get menus', error)
+  }
 
-  if (isMobile && !loaded) {
+  if (isMobile && loading) {
     return (
       <div className="w-100 h-auto flex justify-center items-center pa6 c-action-primary">
         <Spinner color="currentColor" size={30} />
