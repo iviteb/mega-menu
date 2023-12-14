@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.0.4] - 2023-12-14
+
 ### Fixed
 
 - Bug when loading menu on mobile
