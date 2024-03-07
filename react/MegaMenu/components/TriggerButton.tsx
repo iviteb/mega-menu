@@ -29,6 +29,7 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
       className={classNames(styles.triggerContainer, 'pointer')}
       onClick={() => openMenu((v) => !v)}
       onMouseEnter={() => openMenu((v) => !v)}
+      aria-label="Toate produsele"
     >
       <Icon
         activeClassName={classNames(iconBaseClassName, activeClassName)}
