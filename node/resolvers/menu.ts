@@ -112,6 +112,17 @@ export const menus = async (
   replaceStyles(menuItems)
   orderArray(menuItems)
 
+  // Old configurations of mega menu do not have desktop and mobile fields, so they wouldn't be shown
+  menuItems.map((item: Menu) =>
+    typeof item.desktop === 'undefined' && typeof item.mobile === 'undefined'
+      ? {
+          ...item,
+          desktop: true,
+          mobile: true,
+        }
+      : item
+  )
+
   if (isMobile !== undefined) {
     if (isMobile) menuItems = filterDataDevice('mobile', menuItems)
     else menuItems = filterDataDevice('desktop', menuItems)

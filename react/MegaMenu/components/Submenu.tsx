@@ -27,6 +27,10 @@ const CSS_HANDLES = [
   'seeAllLink',
   'submenuContainerTitle',
   'hideArrow',
+  'submenuVerticalNameContainer',
+  'menuItemIcon',
+  'departmentBannerContainer',
+  'departmentBanner',
 ] as const
 
 const messages = defineMessages({
@@ -91,6 +95,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
             style={x.styles}
             enableStyle={x.enableSty}
             closeMenu={closeMenu}
+            uploadedIcon={x.uploadedIcon}
           >
             {x.name}
           </Item>
@@ -149,6 +154,7 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     isTitle
                     enableStyle={category.enableSty}
                     closeMenu={closeMenu}
+                    uploadedIcon={category.uploadedIcon}
                   >
                     {category.name}
                   </Item>
@@ -168,14 +174,30 @@ const Submenu: FC<ItemProps> = observer((props) => {
                 >
                   <Collapsible
                     header={
-                      <p
-                        className={classNames(
-                          handles.collapsibleHeaderText,
-                          collapsibleStates[category.id] && 'fw7'
-                        )}
-                      >
-                        {category.name}
-                      </p>
+                      <>
+                        <div
+                          className={classNames(
+                            handles.submenuVerticalNameContainer,
+                            'flex'
+                          )}
+                        >
+                          {category.uploadedIcon && (
+                            <img
+                              className={handles.menuItemIcon}
+                              src={category.uploadedIcon}
+                              alt=""
+                            />
+                          )}
+                          <p
+                            className={classNames(
+                              handles.collapsibleHeaderText,
+                              collapsibleStates[category.id] && 'fw7'
+                            )}
+                          >
+                            {category.name}
+                          </p>
+                        </div>
+                      </>
                     }
                     align="right"
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -265,6 +287,31 @@ const Submenu: FC<ItemProps> = observer((props) => {
             )}
           </div>
         </>
+      )}
+      {orientation === 'horizontal' && departmentActive?.banner && (
+        <div className={handles.departmentBannerContainer}>
+          {departmentActive?.linkBanner !== '' && (
+            <a
+              href={departmentActive?.linkBanner}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                className={handles.departmentBanner}
+                src={departmentActive?.banner}
+                alt=""
+              />
+            </a>
+          )}
+
+          {departmentActive?.linkBanner === '' && (
+            <img
+              className={handles.departmentBanner}
+              src={departmentActive?.banner}
+              alt=""
+            />
+          )}
+        </div>
       )}
     </>
   )

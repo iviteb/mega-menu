@@ -12,6 +12,9 @@ type Menu {
   slugRelative: String
   mobile: Boolean
   desktop: Boolean
+  uploadedIcon: String
+  banner: String
+  linkBanner: String
 }
 
 input MenuInput {
@@ -30,4 +33,7 @@ input MenuInput {
   slugRelative: String
   mobile: Boolean
   desktop: Boolean
+  uploadedIcon: String
+  banner: String
+  linkBanner: String
 }

@@ -11,5 +11,6 @@ mutation uploadData($uploadData: [MenuInput]!) {
     slugRoot
     slugRelative
     mobile
+    uploadedIcon
   }
 }

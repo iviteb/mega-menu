@@ -12,5 +12,8 @@ mutation create($menuInput: MenuInput!) {
     slugRelative
     mobile
     desktop
+    banner
+    linkBanner
+    uploadedIcon
   }
 }

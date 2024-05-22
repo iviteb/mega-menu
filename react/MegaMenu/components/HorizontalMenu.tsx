@@ -113,6 +113,7 @@ const HorizontalMenu: FC<
                 style={d.styles}
                 enableStyle={d.enableSty}
                 closeMenu={openMenu}
+                uploadedIcon={d.uploadedIcon}
               >
                 {d.name}
               </Item>

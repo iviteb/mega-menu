@@ -17,6 +17,7 @@ const CSS_HANDLES = [
   'styledLinkText',
   'accordionIconContainer',
   'accordionIcon',
+  'menuItemIcon',
 ] as const
 
 const defaultTypography: Record<number, string> = {
@@ -46,6 +47,7 @@ const Item: FC<ItemProps> = observer((props) => {
     style,
     enableStyle,
     closeMenu,
+    uploadedIcon,
     ...rest
   } = props
 
@@ -118,6 +120,11 @@ const Item: FC<ItemProps> = observer((props) => {
         {...(enableStyle && { style: stylesItem })}
       >
         {iconPosition === 'left' && iconComponent}
+        {uploadedIcon && level < 3 && (
+          <>
+            <img className={handles.menuItemIcon} src={uploadedIcon} alt="" />
+          </>
+        )}
         {children}
         {iconPosition === 'right' && iconComponent}
       </div>
@@ -177,6 +184,7 @@ export interface ItemProps {
   className?: string
   style?: string
   enableStyle?: boolean
+  uploadedIcon?: string
   onClick?: () => void
   closeMenu?: (open: boolean) => void
 }

@@ -12,6 +12,7 @@ export interface Menu {
   slugRelative?: string
   mobile?: boolean
   desktop?: boolean
+  uploadedIcon?: string
 }
 
 export interface Settings {
