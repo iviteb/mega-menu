@@ -10,6 +10,7 @@ import { useDataMenu, messagesFirstLevel } from '../shared'
 import NewButtonComponent from './Components/NewButtonComponent'
 import SearchComponent from './Components/SearchComponent'
 import TableComponent from './Components/TableComponent'
+import GetCategoriesCSVBtn from './Components/GetCategoriesCSVBtn'
 
 const messages = messagesFirstLevel
 
@@ -37,7 +38,7 @@ const FirsLevelContainer: FC<InjectedIntlProps> = ({ intl }) => {
       <div>
         <Card>
           <div className="containerTableCat">
-            <div className="flex">
+            <div className="flex items-center">
               <div className="w-60 mr12">
                 <SearchComponent
                   placeholder={placeholderTitle}
@@ -49,6 +50,9 @@ const FirsLevelContainer: FC<InjectedIntlProps> = ({ intl }) => {
                 <NewButtonComponent
                   obj={{ level: 'firstLevel', namebutton: titleBtnNew }}
                 />
+              </div>
+              <div className="w-40 ml4">
+                <GetCategoriesCSVBtn />
               </div>
             </div>
             <div>

@@ -1,0 +1,17 @@
+query getCategories {
+  categories(treeLevel: 3) @context(provider: "vtex.store-graphql") {
+    id
+    name
+    slug
+    children {
+      id
+      name
+      slug
+      children {
+        id
+        name
+        slug
+      }
+    }
+  }
+}

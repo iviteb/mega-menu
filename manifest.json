@@ -24,7 +24,8 @@
     "vtex.device-detector": "0.x",
     "vtex.native-types": "0.x",
     "vtex.store-drawer": "0.x",
-    "vtex.file-manager-graphql": "0.x"
+    "vtex.file-manager-graphql": "0.x",
+    "vtex.store-graphql": "2.x"
   },
   "billingOptions": {
     "type": "free",
