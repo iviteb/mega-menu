@@ -94,9 +94,10 @@ const TableComponent: FC<TableComponentProps> = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [menuDelete, setMenuDelete] = useState<MenuItem>(defaultcontent)
 
-  const [deleteMenu, { data: dataDelete }] = useMutation(DELETE, {
-    fetchPolicy: 'no-cache',
-  })
+  const [deleteMenu, { data: dataDelete, loading: deleteMenuLoading }] =
+    useMutation(DELETE, {
+      fetchPolicy: 'no-cache',
+    })
 
   const { navigate } = useRuntime()
   const [menuInput, { data: dataEdit }] = useMutation(EDIT, {
@@ -341,6 +342,7 @@ const TableComponent: FC<TableComponentProps> = (props) => {
         </div>
         <div className="pt5 pb5">
           <ButtonWithIcon
+            isLoading={deleteMenuLoading}
             icon={<IconDelete />}
             variation="danger"
             onClick={() => {

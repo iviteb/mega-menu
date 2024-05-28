@@ -88,13 +88,17 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
   const responseForm = JSON.parse(decodeURIComponent(props.params.menu))
   const [uploadFile] = useMutation<UploadMutationData>(UPLOAD_FILE)
 
-  const [createNewMenu, { data: dataSave }] = useMutation(CREATE, {
-    fetchPolicy: 'no-cache',
-  })
+  const [createNewMenu, { data: dataSave, loading: createMenuLoading }] =
+    useMutation(CREATE, {
+      fetchPolicy: 'no-cache',
+    })
 
-  const [menuInput, { data: dataEdit }] = useMutation(EDIT, {
-    fetchPolicy: 'no-cache',
-  })
+  const [menuInput, { data: dataEdit, loading: editMenuLoading }] = useMutation(
+    EDIT,
+    {
+      fetchPolicy: 'no-cache',
+    }
+  )
 
   const { loading, data: dataMenu } = useQuery(GETMENU, {
     variables: {
@@ -602,10 +606,11 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     slugRelativePath: string | undefined
   ) => {
     let rootRelative = ['']
+    const startsWithSlash = slugPath.startsWith('/')
 
     if (slugPath && !slugRootPath && !slugRelativePath) {
       rootRelative = slugPath.split('/')
-      rootRelative.shift()
+      startsWithSlash && rootRelative.shift()
     }
 
     return rootRelative
@@ -1242,6 +1247,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
       <FloatingActionBar
         save={{
           label: btnSave,
+          isLoading: createMenuLoading || editMenuLoading,
           onClick: () => {
             if (!name) {
               setMessageName(messageTranslate('validateName'))

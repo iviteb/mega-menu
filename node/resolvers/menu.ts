@@ -63,19 +63,23 @@ const filterDataDevice = (key: string, menuItems: Menu[]) => {
 
   dataToFilter = dataToFilter.filter(
     (item) =>
-      item[key as keyof Menu] === true || item[key as keyof Menu] === null
+      item[key as keyof Menu] === true || item[key as keyof Menu] === undefined
   )
 
   dataToFilter.forEach((subitem) => {
     subitem.menu = subitem.menu.filter(
       (sub) =>
-        sub[key as keyof Menu] === true || sub[key as keyof Menu] === null
+        sub[key as keyof Menu] === true ||
+        sub[key as keyof Menu] === null ||
+        sub[key as keyof Menu] === undefined
     )
     subitem.menu.forEach((thrditem) => {
       thrditem.menu &&
         (thrditem.menu = thrditem.menu.filter(
           (thrd) =>
-            thrd[key as keyof Menu] === true || thrd[key as keyof Menu] === null
+            thrd[key as keyof Menu] === true ||
+            thrd[key as keyof Menu] === null ||
+            thrd[key as keyof Menu] === undefined
         ))
     })
   })
