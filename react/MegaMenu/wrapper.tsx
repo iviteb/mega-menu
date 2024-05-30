@@ -13,7 +13,7 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
   const { openOnly } = props
   const { isMobile } = useDevice()
   const { data } = useQuery<MenusResponse>(GET_MENUS, {
-    fetchPolicy: 'no-cache',
+    ssr: true,
     variables: {
       isMobile,
     },
@@ -29,8 +29,7 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
 
   const currentOrientation: Orientation = isMobile ? 'vertical' : 'horizontal'
 
-  useEffect(() => {
-    // eslint-disable-next-line vtex/prefer-early-return
+  const initMenu = () => {
     if (data?.menus.length) {
       setConfig({
         ...props,
@@ -38,6 +37,12 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
       })
       setDepartments(data.menus)
     }
+  }
+
+  initMenu()
+
+  useEffect(() => {
+    initMenu()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
