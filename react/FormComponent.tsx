@@ -113,7 +113,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     intl: props.intl,
   }).toString()
 
-  const handleImageDrop = async (acceptedFiles: File[]) => {
+  const handleImageDrop = async (acceptedFiles: File[], isBanner: boolean) => {
     if (acceptedFiles?.[0]) {
       try {
         setIsLoading(true)
@@ -122,7 +122,11 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
         })
 
         if (data?.uploadFile?.fileUrl) {
-          setBanner(data?.uploadFile?.fileUrl)
+          if (isBanner) {
+            setBanner(data?.uploadFile?.fileUrl)
+          } else {
+            setUploadedIcon(data?.uploadFile?.fileUrl)
+          }
 
           setIsLoading(false)
         }
@@ -132,36 +136,13 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
     }
   }
 
-  const handleIconDrop = async (acceptedFiles: File[]) => {
-    if (acceptedFiles?.[0]) {
-      try {
-        setIsLoading(true)
-        const { data } = await uploadFile({
-          variables: { file: acceptedFiles[0] },
-        })
-
-        if (data?.uploadFile?.fileUrl) {
-          setUploadedIcon(data?.uploadFile?.fileUrl)
-
-          setIsLoading(false)
-        }
-      } catch (error) {
-        console.error(error)
+  const handleImageReset = async (isBanner: boolean) => {
+    try {
+      if (isBanner) {
+        setBanner('')
+      } else {
+        setUploadedIcon('')
       }
-    }
-  }
-
-  const handleImageReset = async () => {
-    try {
-      setBanner('')
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const handleIconReset = async () => {
-    try {
-      setUploadedIcon('')
     } catch (error) {
       console.error(error)
     }
@@ -1134,8 +1115,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                       </div>
 
                       <Dropzone
-                        onDropAccepted={handleIconDrop}
-                        onFileReset={handleIconReset}
+                        onDropAccepted={(files: File[]) =>
+                          handleImageDrop(files, false)
+                        }
+                        onFileReset={() => handleImageReset(false)}
                         isLoading={isLoading}
                       />
 
@@ -1143,7 +1126,7 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                         <UploadedBanner
                           textlabel="Uploaded Icon"
                           banner={uploadedIcon}
-                          onHandleImageReset={handleIconReset}
+                          onHandleImageReset={() => handleImageReset(false)}
                         />
                       )}
 
@@ -1155,8 +1138,10 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                             </div>
 
                             <Dropzone
-                              onDropAccepted={handleImageDrop}
-                              onFileReset={handleImageReset}
+                              onDropAccepted={(files: File[]) =>
+                                handleImageDrop(files, true)
+                              }
+                              onFileReset={() => handleImageReset(true)}
                               isLoading={isLoading}
                             />
 
@@ -1164,7 +1149,9 @@ const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
                               <UploadedBanner
                                 banner={banner}
                                 textlabel="Uploaded banner"
-                                onHandleImageReset={handleImageReset}
+                                onHandleImageReset={() =>
+                                  handleImageReset(true)
+                                }
                               />
                             )}
                           </div>

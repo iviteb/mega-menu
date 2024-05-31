@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Alert, ButtonWithIcon } from 'vtex.styleguide'
 import { useLazyQuery } from 'react-apollo'
 import { defineMessages, useIntl } from 'react-intl'
@@ -62,15 +62,14 @@ const calculateSubMenu = (cats: Category[], trailingSlug: string) => {
   return subMenus
 }
 
-export default function GetCategoriesCSVBtn() {
+export default function ExportCategories() {
   const { formatMessage } = useIntl()
-  const [getCategories, { data, loading, error }] = useLazyQuery(GET_CATEGORIES)
   const [csvError, setCsvError] = useState(false)
 
-  const handleSaveCSV = useCallback(() => {
+  const handleSaveCSV = (data: { categories: Category[] } | undefined) => {
     const menuItems: string[][] = []
 
-    data.categories.forEach((cat: Category, idx: number) => {
+    data?.categories.forEach((cat: Category, idx: number) => {
       const subMenu = calculateSubMenu(cat?.children ?? [], cat.slug)
 
       menuItems.push([
@@ -93,15 +92,20 @@ export default function GetCategoriesCSVBtn() {
     } catch (e) {
       setCsvError(true)
     }
-  }, [data, formatMessage])
+  }
 
-  useEffect(() => {
-    if (!data?.categories?.length) {
-      return
+  const [getCategories, { data, loading, error }] = useLazyQuery(
+    GET_CATEGORIES,
+    {
+      onCompleted: () => {
+        if (!data?.categories?.length) {
+          return
+        }
+
+        handleSaveCSV(data)
+      },
     }
-
-    handleSaveCSV()
-  }, [data, formatMessage, handleSaveCSV])
+  )
 
   if (error) {
     return <Alert type="error">{formatMessage(messages.getCatsError)}</Alert>
@@ -116,7 +120,7 @@ export default function GetCategoriesCSVBtn() {
       <ButtonWithIcon
         icon={<IconDownload />}
         variation="secondary"
-        onClick={() => (data ? handleSaveCSV() : getCategories())}
+        onClick={() => (data ? handleSaveCSV(data) : getCategories())}
         isLoading={loading}
         block
       >

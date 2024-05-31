@@ -10,7 +10,7 @@ import { useDataMenu, messagesFirstLevel } from '../shared'
 import NewButtonComponent from './Components/NewButtonComponent'
 import SearchComponent from './Components/SearchComponent'
 import TableComponent from './Components/TableComponent'
-import GetCategoriesCSVBtn from './Components/GetCategoriesCSVBtn'
+import ExportCategories from './Components/ExportCategories'
 
 const messages = messagesFirstLevel
 
@@ -52,7 +52,7 @@ const FirsLevelContainer: FC<InjectedIntlProps> = ({ intl }) => {
                 />
               </div>
               <div className="w-40 ml4">
-                <GetCategoriesCSVBtn />
+                <ExportCategories />
               </div>
             </div>
             <div>
