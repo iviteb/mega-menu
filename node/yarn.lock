@@ -152,10 +152,10 @@
     "@types/mime" "^1"
     "@types/node" "*"
 
-"@vtex/api@6.46.0":
-  version "6.46.0"
-  resolved "https://registry.yarnpkg.com/@vtex/api/-/api-6.46.0.tgz#208d14b96cbc8fd5eb6bd18fbd0c8424886e6154"
-  integrity sha512-XAvJlD1FG1GynhPXiMcayunahFCL2r3ilO5MHAWKxYvB/ljyxi4+U+rVpweeaQGpxHfhKHdfPe7qNEEh2oa2lw==
+"@vtex/api@6.47.0":
+  version "6.47.0"
+  resolved "https://registry.yarnpkg.com/@vtex/api/-/api-6.47.0.tgz#6910455d593d8bb76f1f4f2b7660023853fda35e"
+  integrity sha512-t9gt7Q89EMbSj3rLhho+49Fv+/lQgiy8EPVRgtmmXFp1J4v8hIAZF7GPjCPie111KVs4eG0gfZFpmhA5dafKNA==
   dependencies:
     "@types/koa" "^2.11.0"
     "@types/koa-compose" "^3.2.3"
@@ -1124,6 +1124,10 @@ minimist@^1.1.0, minimist@^1.2.5:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
 
+"miniprix.mega-menu@http://miniprix.vtexassets.com/_v/public/typings/v1/miniprix.mega-menu@0.0.3/public/@types/miniprix.mega-menu":
+  version "0.0.3"
+  resolved "http://miniprix.vtexassets.com/_v/public/typings/v1/miniprix.mega-menu@0.0.3/public/@types/miniprix.mega-menu#cbed553b1a40cae337cd57ed3b9e526eb7a5e967"
+
 mkdirp-classic@^0.5.2:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/mkdirp-classic/-/mkdirp-classic-0.5.3.tgz#fa10c9115cc6d8865be221ba47ee9bed78601113"
@@ -1370,7 +1374,7 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
-stats-lite@vtex/node-stats-lite#dist:
+"stats-lite@github:vtex/node-stats-lite#dist":
   version "2.2.0"
   resolved "https://codeload.github.com/vtex/node-stats-lite/tar.gz/1b0d39cc41ef7aaecfd541191f877887a2044797"
   dependencies:
@@ -1580,9 +1584,9 @@ vary@^1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-"vtex.css-handles@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.css-handles@1.0.0/public/@types/vtex.css-handles":
-  version "1.0.0"
-  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.css-handles@1.0.0/public/@types/vtex.css-handles#336b23ef3a9bcb2b809529ba736783acd405d081"
+"vtex.css-handles@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.css-handles@1.0.1/public/@types/vtex.css-handles":
+  version "1.0.1"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.css-handles@1.0.1/public/@types/vtex.css-handles#9444e64afad49e3ace3461f170b7d28f29b78d07"
 
 "vtex.device-detector@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.device-detector@0.2.6/public/@types/vtex.device-detector":
   version "0.2.6"
@@ -1612,17 +1616,17 @@ vary@^1.1.2:
   version "1.0.2"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.session-client@1.0.2/public/@types/vtex.session-client#239ac9935a59699e62e1509f844de81544ed0877"
 
-"vtex.store-graphql@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-graphql@2.170.1/public/@types/vtex.store-graphql":
-  version "2.170.1"
-  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-graphql@2.170.1/public/@types/vtex.store-graphql#7e087ac00c2abf0a2e06ef5551110d0de5b7fe58"
+"vtex.store-graphql@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-graphql@2.170.3/public/@types/vtex.store-graphql":
+  version "2.170.3"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-graphql@2.170.3/public/@types/vtex.store-graphql#611713e5056f3db60f096b05833fbcb101f36645"
 
 "vtex.store-icons@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-icons@0.18.0/public/@types/vtex.store-icons":
   version "0.18.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-icons@0.18.0/public/@types/vtex.store-icons#0ee94d549aa283ce3a13ab987c13eac4fdfd1bba"
 
-"vtex.store@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store@2.132.0/public/@types/vtex.store":
-  version "2.132.0"
-  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store@2.132.0/public/@types/vtex.store#f230c2340528267fbbed36c365f898184d05c872"
+"vtex.store@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store@2.136.0/public/@types/vtex.store":
+  version "2.136.0"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store@2.136.0/public/@types/vtex.store#ca37894cda57c42eb577be935dff645dc3b320e0"
 
 "vtex.styleguide@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.9/public/@types/vtex.styleguide":
   version "9.146.9"

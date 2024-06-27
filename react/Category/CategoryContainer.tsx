@@ -1,7 +1,7 @@
 /* eslint-disable vtex/prefer-early-return */
 import type { FC } from 'react'
 import React, { useState, useEffect } from 'react'
-import type { InjectedIntlProps } from 'react-intl'
+import type { WrappedComponentProps } from 'react-intl'
 import { useQuery, useMutation } from 'react-apollo'
 import { injectIntl } from 'react-intl'
 import { ButtonWithIcon } from 'vtex.styleguide'
@@ -31,7 +31,9 @@ interface PropsCategory {
   }
 }
 
-const CategoryContainer: FC<InjectedIntlProps & PropsCategory> = (props) => {
+const CategoryContainer: FC<WrappedComponentProps & PropsCategory> = (
+  props
+) => {
   const options = {
     fieldSeparator: ',',
     quoteStrings: '"',

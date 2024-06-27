@@ -31,6 +31,8 @@
   "admin/mega-menu.items.input3Form": "Symbole",
   "admin/mega-menu.items.input3Form.placeholder": "Auswählen...",
   "admin/mega-menu.items.input4Form": "Formatvorlagen",
+  "admin/mega-menu.items.inputSellerIDs": "Seller IDs, these are the IDs of the sellers that do NOT have this category, separated with comma",
+  "admin/mega-menu.items.inputSellerIDsPlaceholder": "for ex: rouauchantitan01, rouauchanlocatie02",
   "admin/mega-menu.items.titleSubBlock": "Erscheinungsbild",
   "admin/mega-menu.items.check1Block": "Anzeigen",
   "admin/mega-menu.items.subCheck1Block": "Elemente im Menü anzeigen",
@@ -64,5 +66,6 @@
   "admin/mega-menu.settings.close": "Schließen",
   "admin/mega-menu.settings.confirm": "Bestätigen",
   "admin/mega-menu.items.emptyTitle": "Keine Artikel zum Anzeigen.",
-  "admin/mega-menu.items.empty": "Fügen Sie einen neuen Artikel hinzu, um Ihr Mega-Menü zu erstellen und für die Anzeige im Shop."
+  "admin/mega-menu.items.empty": "Fügen Sie einen neuen Artikel hinzu, um Ihr Mega-Menü zu erstellen und für die Anzeige im Shop.",
+  "store/mega-menu.trigger-button-label": "Produkte"
 }

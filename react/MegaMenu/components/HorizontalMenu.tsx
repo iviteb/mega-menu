@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import { observer } from 'mobx-react-lite'
 import type { FC } from 'react'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import type { InjectedIntlProps } from 'react-intl'
+import type { WrappedComponentProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import Skeleton from 'react-loading-skeleton'
 import { useCssHandles } from 'vtex.css-handles'
@@ -23,7 +23,7 @@ const CSS_HANDLES = [
   'departmentActive',
 ] as const
 
-const HorizontalMenu: FC<InjectedIntlProps> = observer(({ intl }) => {
+const HorizontalMenu: FC<WrappedComponentProps> = observer(({ intl }) => {
   const { handles } = useCssHandles(CSS_HANDLES)
   const {
     isOpenMenu,

@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import { observer } from 'mobx-react-lite'
 import type { FC } from 'react'
 import React from 'react'
-import type { InjectedIntlProps } from 'react-intl'
+import type { WrappedComponentProps } from 'react-intl'
 import { defineMessages, injectIntl } from 'react-intl'
 import { useCssHandles } from 'vtex.css-handles'
 import { formatIOMessage } from 'vtex.native-types'
@@ -24,7 +24,7 @@ const CSS_HANDLES = [
   'goBackButtonText',
 ] as const
 
-const GoBackButton: FC<InjectedIntlProps> = observer(({ intl }) => {
+const GoBackButton: FC<WrappedComponentProps> = observer(({ intl }) => {
   const { handles } = useCssHandles(CSS_HANDLES)
   const {
     departmentActive,

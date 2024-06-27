@@ -3,7 +3,7 @@ import type { FC } from 'react'
 import React, { useState, useMemo, useCallback, useEffect } from 'react'
 import { Tabs, Tab, Layout, PageHeader, Alert } from 'vtex.styleguide'
 import { useQuery } from 'react-apollo'
-import type { InjectedIntlProps } from 'react-intl'
+import type { WrappedComponentProps } from 'react-intl'
 import { defineMessages, injectIntl } from 'react-intl'
 import { formatIOMessage } from 'vtex.native-types'
 
@@ -39,7 +39,7 @@ const messages = defineMessages({
   },
 })
 
-const ConfigMenuContainer: FC<InjectedIntlProps> = ({ intl }) => {
+const ConfigMenuContainer: FC<WrappedComponentProps> = ({ intl }) => {
   const [currentTab, setCurrentTab] = useState(1)
   const { loading, data } = useQuery(GET_MENUS, {
     fetchPolicy: 'no-cache',
