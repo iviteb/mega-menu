@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { observer } from 'mobx-react-lite'
 import type { FC } from 'react'
 import React, { useMemo, useState } from 'react'
-import type { InjectedIntlProps } from 'react-intl'
+import type { WrappedComponentProps } from 'react-intl'
 import { defineMessages, injectIntl } from 'react-intl'
 import { applyModifiers, useCssHandles } from 'vtex.css-handles'
 import { formatIOMessage } from 'vtex.native-types'
@@ -41,7 +41,7 @@ const messages = defineMessages({
   },
 })
 
-export type ItemProps = InjectedIntlProps & {
+export type ItemProps = WrappedComponentProps & {
   closeMenu?: (open: boolean) => void
 }
 

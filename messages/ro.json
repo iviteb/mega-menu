@@ -1,7 +1,7 @@
 {
   "admin/mega-menu.navigation.label-group": "Mega Menu",
-  "store/mega-menu.submenu.seeAllButton.title": "See all",
-  "store/mega-menu.goBackButton.title": "Go back",
+  "store/mega-menu.submenu.seeAllButton.title": "Vezi toate",
+  "store/mega-menu.goBackButton.title": "Înapoi",
   "admin/mega-menu.tabs.first": "First Level",
   "admin/mega-menu.tabs.second": "Second Level",
   "admin/mega-menu.tabs.third": "Third Level",
@@ -67,5 +67,5 @@
   "admin/mega-menu.settings.confirm": "Confirm",
   "admin/mega-menu.items.emptyTitle": "No items to show",
   "admin/mega-menu.items.empty": "Add a new item to create your mega menu and view it on the store",
-  "store/mega-menu.trigger-button-label": "Products"
+  "store/mega-menu.trigger-button-label": "Produse"
 }

@@ -1,5 +1,11 @@
 # Changelog
 
+### Changed
+
+- Added `aria-label` for Mega Menu Trigger for Accessibility
+- Fixed Translations
+- Fixed `react-intl` imported types
+
 ## [Unreleased]
 
 ## [0.0.3] - 2023-11-13 - miniprix

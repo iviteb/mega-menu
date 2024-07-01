@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
 import { Card, Dropdown } from 'vtex.styleguide'
-import type { InjectedIntlProps } from 'react-intl'
+import type { WrappedComponentProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import { formatIOMessage } from 'vtex.native-types'
 
@@ -26,7 +26,7 @@ interface TypeLevel {
 
 const messages = messageThirdLevel
 
-const ThirdLevelContainer: FC<InjectedIntlProps> = ({ intl }) => {
+const ThirdLevelContainer: FC<WrappedComponentProps> = ({ intl }) => {
   const { dataMenu, showAlert, updateData, loading } = useDataMenu()
 
   const [level1, setLevel1] = useState('')

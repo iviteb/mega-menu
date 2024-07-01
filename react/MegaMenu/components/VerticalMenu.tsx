@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import { observer } from 'mobx-react-lite'
 import type { FC } from 'react'
 import React, { useMemo } from 'react'
-import type { InjectedIntlProps } from 'react-intl'
+import type { WrappedComponentProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import Skeleton from 'react-loading-skeleton'
 import { useCssHandles } from 'vtex.css-handles'
@@ -116,6 +116,6 @@ const VerticalMenu: FC<VerticalMenuProps> = observer(({ intl }) => {
   ) : null
 })
 
-type VerticalMenuProps = InjectedIntlProps
+type VerticalMenuProps = WrappedComponentProps
 
 export default injectIntl(VerticalMenu)

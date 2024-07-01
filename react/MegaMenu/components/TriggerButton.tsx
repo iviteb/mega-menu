@@ -5,10 +5,15 @@ import type { FC } from 'react'
 import React from 'react'
 import { applyModifiers, useCssHandles } from 'vtex.css-handles'
 import { Icon } from 'vtex.store-icons'
+import { defineMessages, useIntl } from 'react-intl'
 
 import type { IconProps } from '../../shared'
 import { megaMenuState } from '../State'
 import styles from '../styles.css'
+
+const messages = defineMessages({
+  triggerButtonLabel: { id: 'store/mega-menu.trigger-button-label' },
+})
 
 const CSS_HANDLES = ['triggerContainer', 'triggerButtonIcon'] as const
 
@@ -30,6 +35,8 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
     isActive ? 'active' : 'muted'
   )
 
+  const { formatMessage } = useIntl()
+
   const openMenuOnTrigger = () => {
     if (!departmentActive) {
       const defaultDepartment = departments.find(
@@ -50,6 +57,7 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
     <button
       data-id={BUTTON_ID}
       className={classNames(styles.triggerContainer, 'pointer')}
+      aria-label={formatMessage(messages.triggerButtonLabel)}
       onClick={() => openMenuOnTrigger()}
     >
       <Icon
