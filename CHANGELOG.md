@@ -1,5 +1,7 @@
 # Changelog
 
+## [0.0.4] - 2024-07-01 - miniprix
+
 ### Changed
 
 - Added `aria-label` for Mega Menu Trigger for Accessibility
