@@ -12,6 +12,9 @@ export type MenuItem = {
   slugRelative?: string
   mobile?: boolean
   desktop?: boolean
+  banner?: string
+  linkBanner?: string
+  uploadedIcon?: string
 }
 
 export type MenuItemSave = {
@@ -28,6 +31,9 @@ export type MenuItemSave = {
   slugRelative?: string
   mobile?: boolean
   desktop?: boolean
+  banner?: string
+  linkBanner?: string
+  uploadedIcon?: string
 }
 
 export type MenusResponse = {

@@ -58,6 +58,7 @@ const VerticalMenu: FC<VerticalMenuProps> = observer((props) => {
           onClick: openDepartment,
           style: d.styles,
           enableStyle: d.enableSty,
+          uploadedIcon: d.uploadedIcon,
           ...(!hasCategories && { to: d.slug }),
         }
 
@@ -82,42 +83,55 @@ const VerticalMenu: FC<VerticalMenuProps> = observer((props) => {
     [departments]
   )
 
-  return (isOpenMenu && openOnly === orientation) || isMobile ? (
-    <nav className={classNames(handles.menuContainerNavVertical, 'w-100')}>
-      <div
-        className={classNames(handles.departmentsContainer, {
-          dn: !!departmentActive,
-        })}
-      >
-        <h3
-          className={classNames(
-            handles.departmentsTitle,
-            'f4 fw7 c-on-base mv5 lh-copy ph5'
-          )}
+  return departmentItems?.length > 0 ? (
+    <div
+      style={{
+        display:
+          (isOpenMenu && openOnly === orientation) || isMobile
+            ? 'block'
+            : 'none',
+      }}
+    >
+      <nav className={classNames(handles.menuContainerNavVertical, 'w-100')}>
+        <div
+          className={classNames(handles.departmentsContainer, {
+            dn: !!departmentActive,
+          })}
         >
-          {formatIOMessage({ id: title, intl })}
-        </h3>
-        <ul className={classNames(handles.menuContainerVertical, 'list pa0')}>
-          {departments.length ? (
-            departmentItems
-          ) : (
-            <div className="flex flex-column justify-center ph5 lh-copy">
-              <Skeleton count={4} height={40} />
-            </div>
-          )}
-        </ul>
-      </div>
-      {departmentActive && departmentActiveHasCategories && (
+          <h3
+            className={classNames(
+              handles.departmentsTitle,
+              'f4 fw7 c-on-base mv5 lh-copy ph5'
+            )}
+          >
+            {formatIOMessage({ id: title, intl })}
+          </h3>
+          <ul className={classNames(handles.menuContainerVertical, 'list pa0')}>
+            {departments.length ? (
+              departmentItems
+            ) : (
+              <div className="flex flex-column justify-center ph5 lh-copy">
+                <Skeleton count={4} height={40} />
+              </div>
+            )}
+          </ul>
+        </div>
         <div
           className={classNames(
             handles.submenuContainerVertical,
             'bg-base w-100'
           )}
+          style={{
+            display:
+              departmentActive && departmentActiveHasCategories
+                ? 'block'
+                : 'none',
+          }}
         >
           <Submenu openOnly={openOnly} />
         </div>
-      )}
-    </nav>
+      </nav>
+    </div>
   ) : null
 })
 

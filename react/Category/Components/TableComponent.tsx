@@ -83,6 +83,9 @@ const defaultcontent = {
   display: false,
   enableSty: false,
   order: 0,
+  banner: '',
+  linkBanner: '',
+  uploadedIcon: '',
 }
 
 const TableComponent: FC<TableComponentProps> = (props) => {
@@ -91,9 +94,10 @@ const TableComponent: FC<TableComponentProps> = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [menuDelete, setMenuDelete] = useState<MenuItem>(defaultcontent)
 
-  const [deleteMenu, { data: dataDelete }] = useMutation(DELETE, {
-    fetchPolicy: 'no-cache',
-  })
+  const [deleteMenu, { data: dataDelete, loading: deleteMenuLoading }] =
+    useMutation(DELETE, {
+      fetchPolicy: 'no-cache',
+    })
 
   const { navigate } = useRuntime()
   const [menuInput, { data: dataEdit }] = useMutation(EDIT, {
@@ -117,6 +121,9 @@ const TableComponent: FC<TableComponentProps> = (props) => {
               order: dataChangeItem.order,
               mobile: dataChangeItem.mobile ?? true,
               desktop: dataChangeItem.desktop ?? true,
+              linkBanner: dataChangeItem.linkBanner,
+              uploadedIcon: dataChangeItem.uploadedIcon,
+              banner: dataChangeItem.banner,
             },
           },
         })
@@ -288,6 +295,9 @@ const TableComponent: FC<TableComponentProps> = (props) => {
           order: dataNew.order,
           mobile: dataNew.mobile ?? true,
           desktop: dataNew.desktop ?? true,
+          linkBanner: dataTempEdit.linkBanner,
+          uploadedIcon: dataTempEdit.uploadedIcon,
+          banner: dataTempEdit.banner,
         },
       },
     })
@@ -332,6 +342,7 @@ const TableComponent: FC<TableComponentProps> = (props) => {
         </div>
         <div className="pt5 pb5">
           <ButtonWithIcon
+            isLoading={deleteMenuLoading}
             icon={<IconDelete />}
             variation="danger"
             onClick={() => {
@@ -361,6 +372,7 @@ const TableComponent: FC<TableComponentProps> = (props) => {
       visibility: {
         title: props.titleColumn.visibility,
         width: 200,
+        // eslint-disable-next-line react/display-name
         cellRenderer: (e: TableItem) => {
           return (
             <div className="flex" style={{ gap: '10px' }}>
@@ -424,9 +436,7 @@ const TableComponent: FC<TableComponentProps> = (props) => {
       ) : (
         <div className="mt9">
           <EmptyState title={props.titleColumn.emptyTitle}>
-            <p>
-            {props.titleColumn.empty}
-            </p>
+            <p>{props.titleColumn.empty}</p>
           </EmptyState>
         </div>
       )}

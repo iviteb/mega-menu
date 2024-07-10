@@ -14,7 +14,8 @@
     "react-csv-reader": "^3.4.0",
     "react-icons": "^4.4.0",
     "react-intl": "^5.20.6",
-    "react-loading-skeleton": "^2.2.0"
+    "react-loading-skeleton": "^2.2.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/node": "^11.12.1",

@@ -10,6 +10,9 @@ query getMenus($isMobile: Boolean) {
     order
     slugRoot
     slugRelative
+    banner
+    linkBanner
+    uploadedIcon
     menu {
       id
       name
@@ -23,6 +26,7 @@ query getMenus($isMobile: Boolean) {
       slugRelative
       mobile
       desktop
+      uploadedIcon
       menu {
         id
         name

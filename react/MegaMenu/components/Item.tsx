@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import type { FC } from 'react'
 import { useCssHandles } from 'vtex.css-handles'
-import { useRuntime } from 'vtex.render-runtime'
 import { Icon, IconCaret } from 'vtex.store-icons'
 
 import type { IconProps } from '../../shared'
@@ -17,6 +16,7 @@ const CSS_HANDLES = [
   'styledLinkText',
   'accordionIconContainer',
   'accordionIcon',
+  'menuItemIcon',
 ] as const
 
 const defaultTypography: Record<number, string> = {
@@ -39,21 +39,17 @@ const Item: FC<ItemProps> = observer((props) => {
     iconProps,
     iconPosition,
     typography = defaultTypography[level],
-    tabIndex,
     className,
     onClick,
     children,
     style,
     enableStyle,
-    closeMenu,
-    ...rest
+    uploadedIcon,
   } = props
 
   // Only for level 1
   const isOpen = departmentActive?.id === id
   const hasLink = to && to !== '#'
-
-  const { rootPath } = useRuntime()
 
   const linkClassNames = classNames(
     handles.styledLink,
@@ -118,6 +114,11 @@ const Item: FC<ItemProps> = observer((props) => {
         {...(enableStyle && { style: stylesItem })}
       >
         {iconPosition === 'left' && iconComponent}
+        {uploadedIcon && level < 3 && (
+          <>
+            <img className={handles.menuItemIcon} src={uploadedIcon} alt="" />
+          </>
+        )}
         {children}
         {iconPosition === 'right' && iconComponent}
       </div>
@@ -134,9 +135,6 @@ const Item: FC<ItemProps> = observer((props) => {
     </div>
   )
 
-  console.info(rootPath)
-  console.info({ ...rest })
-
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
@@ -150,7 +148,10 @@ const Item: FC<ItemProps> = observer((props) => {
           <span className={linkClassNames}>{content}</span>
         )
       ) : (
-        <a className={linkClassNames} href={`${window.location.origin}/${to}`}>
+        <a
+          className={linkClassNames}
+          href={`${window?.location?.origin ?? ''}/${to}`}
+        >
           {content}
         </a>
       )}
@@ -177,6 +178,7 @@ export interface ItemProps {
   className?: string
   style?: string
   enableStyle?: boolean
+  uploadedIcon?: string
   onClick?: () => void
   closeMenu?: (open: boolean) => void
 }

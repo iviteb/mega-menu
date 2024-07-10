@@ -167,6 +167,7 @@ const CategoryContainer: FC<InjectedIntlProps & PropsCategory> = (props) => {
                   }
                 }
               })
+
               if (allowSave) {
                 uploadData({
                   variables: {

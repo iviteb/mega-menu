@@ -16,4 +16,8 @@ declare global {
     schema?: object
     getSchema?(props: P): object
   }
+
+  interface UploadMutationData {
+    uploadFile: { fileUrl: string }
+  }
 }

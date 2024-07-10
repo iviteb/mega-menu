@@ -43,7 +43,7 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
     }
   }, [data])
 
-  return orientationMenu === 'vertical' || isMobile ? (
+  return Drawer && (orientationMenu === 'vertical' || isMobile) ? (
     // eslint-disable-next-line jsx-a11y/interactive-supports-focus
     <div
       onClick={() => {

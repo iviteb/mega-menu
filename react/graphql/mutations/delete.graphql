@@ -11,6 +11,7 @@ mutation delete($id: String, $idSecond: String, $idThird: String) {
     slugRoot
     slugRelative
     mobile
+    uploadedIcon
     menu {
       id
       name
