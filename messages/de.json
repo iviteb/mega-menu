@@ -64,5 +64,8 @@
   "admin/mega-menu.settings.close": "Schließen",
   "admin/mega-menu.settings.confirm": "Bestätigen",
   "admin/mega-menu.items.emptyTitle": "Keine Artikel zum Anzeigen.",
-  "admin/mega-menu.items.empty": "Fügen Sie einen neuen Artikel hinzu, um Ihr Mega-Menü zu erstellen und für die Anzeige im Shop."
+  "admin/mega-menu.items.empty": "Fügen Sie einen neuen Artikel hinzu, um Ihr Mega-Menü zu erstellen und für die Anzeige im Shop.",
+  "admin/mega-menu.getCatsError": "Error: could not get categories.",
+  "admin/mega-menu.exportCats": "Download Categories CSV",
+  "admin/mega-menu.saveCsvError": "Error: could not save categories to CSV."
 }

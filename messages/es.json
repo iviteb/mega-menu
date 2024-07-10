@@ -62,5 +62,10 @@
   "admin/mega-menu.settings.horizontal": "Horizontal",
   "admin/mega-menu.settings.vertical": "Vertical",
   "admin/mega-menu.settings.close": "Cerrar",
-  "admin/mega-menu.settings.confirm": "Confirmar"
+  "admin/mega-menu.settings.confirm": "Confirmar",
+  "admin/mega-menu.items.emptyTitle": "No items to show",
+  "admin/mega-menu.items.empty": "Add a new item to create your mega menu and view it on the store",
+  "admin/mega-menu.getCatsError": "Error: could not get categories.",
+  "admin/mega-menu.exportCats": "Download Categories CSV",
+  "admin/mega-menu.saveCsvError": "Error: could not save categories to CSV."
 }
