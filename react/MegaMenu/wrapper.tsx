@@ -23,13 +23,13 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
     fetchPolicy: 'no-cache',
   })
 
-  const [orientationMenu, setOrientationMenu] = useState('')
+  const [orientationMenu, setOrientationMenu] = useState('horizontal')
 
   const { setDepartments, setConfig } = megaMenuState
 
   const currentOrientation: Orientation = isMobile ? 'vertical' : 'horizontal'
 
-  const initMenu = () => {
+  useEffect(() => {
     if (data?.menus.length) {
       setConfig({
         ...props,
@@ -37,14 +37,7 @@ const Wrapper: StorefrontFunctionComponent<MegaMenuProps> = (props) => {
       })
       setDepartments(data.menus)
     }
-  }
-
-  initMenu()
-
-  useEffect(() => {
-    initMenu()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+  }, [data, currentOrientation])
 
   useEffect(() => {
     if (dataSettings) {
