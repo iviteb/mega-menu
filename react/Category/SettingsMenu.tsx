@@ -1,4 +1,4 @@
-import type { InjectedIntlProps } from 'react-intl'
+import type { WrappedComponentProps } from 'react-intl'
 import type { FC } from 'react'
 import React, { useState, useEffect } from 'react'
 import { injectIntl } from 'react-intl'
@@ -18,7 +18,7 @@ interface SettingsMenuProps {
 
 const messages = messageSettings
 
-const SettingsMenu: FC<SettingsMenuProps & InjectedIntlProps> = (props) => {
+const SettingsMenu: FC<SettingsMenuProps & WrappedComponentProps> = (props) => {
   const [orientation, setOrientation] = useState(true)
   const { loading, data } = useQuery(GET_SETTINGS, {
     fetchPolicy: 'no-cache',

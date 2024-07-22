@@ -18,7 +18,7 @@ import {
 } from 'vtex.styleguide'
 import { useRuntime } from 'vtex.render-runtime'
 import { useQuery, useMutation } from 'react-apollo'
-import type { InjectedIntlProps } from 'react-intl'
+import type { WrappedComponentProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import { formatIOMessage } from 'vtex.native-types'
 
@@ -43,7 +43,9 @@ interface FormComponentProps {
 
 const messages = messagesForm
 
-const FormComponent: FC<FormComponentProps & InjectedIntlProps> = (props) => {
+const FormComponent: FC<FormComponentProps & WrappedComponentProps> = (
+  props
+) => {
   const dataMenuTypeArray: DataMenu[] = []
   const dataMenuType: DataMenu = {
     icon: '',

@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import React, { useState } from 'react'
 import { Card } from 'vtex.styleguide'
-import type { InjectedIntlProps } from 'react-intl'
+import type { WrappedComponentProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import { formatIOMessage } from 'vtex.native-types'
 
@@ -14,7 +14,7 @@ import ExportCategories from './Components/ExportCategories'
 
 const messages = messagesFirstLevel
 
-const FirsLevelContainer: FC<InjectedIntlProps> = ({ intl }) => {
+const FirsLevelContainer: FC<WrappedComponentProps> = ({ intl }) => {
   const { dataMenu, showAlert, updateData, loading } = useDataMenu()
   const [dataMenuFilter, setDataMenuFilter] = useState<DataMenu[]>(dataMenu)
 

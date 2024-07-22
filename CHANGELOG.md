@@ -1,5 +1,13 @@
 # Changelog
 
+### Changed
+
+- Added Label for Mega Menu Trigger for Accessibility
+- Fixed Translations
+- Fixed react-intl imported types
+- Fixed structure for styling
+- Changed client to `macromex`
+
 ## [Unreleased]
 
 ## [2.9.0] - 2023-03-31

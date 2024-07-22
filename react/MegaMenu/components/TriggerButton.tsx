@@ -7,13 +7,22 @@ import React, { useState, useEffect } from 'react'
 import { applyModifiers, useCssHandles } from 'vtex.css-handles'
 import { Icon } from 'vtex.store-icons'
 import { useDevice } from 'vtex.device-detector'
+import { defineMessages, useIntl } from 'react-intl'
 
 import GET_SETTINGS from '../../graphql/queries/getSettings.graphql'
 import type { IconProps } from '../../shared'
 import { megaMenuState } from '../State'
 import styles from '../styles.css'
 
-const CSS_HANDLES = ['triggerContainer', 'triggerButtonIcon'] as const
+const messages = defineMessages({
+  triggerButtonLabel: { id: 'store/mega-menu.trigger-button-label' },
+})
+
+const CSS_HANDLES = [
+  'triggerContainer',
+  'triggerButtonIcon',
+  'triggerButtonLabel',
+] as const
 
 export const BUTTON_ID = 'mega-menu-trigger-button'
 
@@ -32,6 +41,8 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
     handles.triggerButtonIcon,
     isActive ? 'active' : 'muted'
   )
+
+  const { formatMessage } = useIntl()
 
   useEffect(() => {
     if (data) {
@@ -65,6 +76,9 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
       className={classNames(styles.triggerContainer, 'pointer')}
       onClick={() => openMenu((v) => !v)}
     >
+      <span className={`${handles.triggerButtonLabel} mr2`}>
+        {formatMessage(messages.triggerButtonLabel)}
+      </span>
       <Icon
         activeClassName={classNames(iconBaseClassName, activeClassName)}
         mutedClassName={classNames(iconBaseClassName, mutedClassName)}

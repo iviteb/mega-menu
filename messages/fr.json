@@ -67,5 +67,6 @@
   "admin/mega-menu.items.empty": "Add a new item to create your mega menu and view it on the store",
   "admin/mega-menu.getCatsError": "Error: could not get categories.",
   "admin/mega-menu.exportCats": "Download Categories CSV",
-  "admin/mega-menu.saveCsvError": "Error: could not save categories to CSV."
+  "admin/mega-menu.saveCsvError": "Error: could not save categories to CSV.",
+  "store/mega-menu.trigger-button-label": "Tous les produits"
 }
