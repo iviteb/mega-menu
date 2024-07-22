@@ -1,5 +1,5 @@
 query getsettings {
-  settings @context(provider: "iviteb.mega-menu") {
+  settings @context(provider: "macromex.mega-menu") {
     idMenu
     orientation
   }

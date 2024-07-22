@@ -26,11 +26,13 @@ const CSS_HANDLES = [
   'seeAllLinkContainer',
   'seeAllLink',
   'submenuContainerTitle',
+  'submenuItemsContainer',
   'hideArrow',
   'submenuVerticalNameContainer',
   'menuItemIcon',
   'departmentBannerContainer',
   'departmentBanner',
+  'categoryLink',
 ] as const
 
 const messages = defineMessages({
@@ -48,7 +50,9 @@ export type ItemProps = InjectedIntlProps & {
 const Submenu: FC<ItemProps> = observer((props) => {
   const { intl, closeMenu, openOnly } = props
   const { handles } = useCssHandles(CSS_HANDLES)
-  const { departmentActive, config, getCategories } = megaMenuState
+  const { departmentActive, setDepartmentActive, config, getCategories } =
+    megaMenuState
+
   const { orientation } = config
 
   const [collapsibleStates, setCollapsibleStates] = useState<
@@ -164,77 +168,103 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   </Item>
 
                   {!!subcategories.length && subcategories}
-                  {subcategories.length > 1 ? (
-                    seeAllLink(category.slug, 2)
-                  ) : (
-                    <div />
-                  )}
+                  {subcategories.length > 1 && seeAllLink(category.slug, 2)}
                 </>
-              ) : (
-                <div
-                  className={
-                    category.menu?.length ? '' : classNames(handles.hideArrow)
-                  }
-                >
-                  <Collapsible
-                    header={
-                      <>
-                        <div
+              ) : subcategories.length ? (
+                <Collapsible
+                  header={
+                    <>
+                      <div
+                        className={classNames(
+                          handles.submenuVerticalNameContainer,
+                          'flex'
+                        )}
+                      >
+                        {category.uploadedIcon && (
+                          <img
+                            className={handles.menuItemIcon}
+                            src={category.uploadedIcon}
+                            alt=""
+                          />
+                        )}
+                        <p
                           className={classNames(
-                            handles.submenuVerticalNameContainer,
-                            'flex'
+                            handles.collapsibleHeaderText,
+                            collapsibleStates[category.id] && 'fw7'
                           )}
                         >
-                          {category.uploadedIcon && (
-                            <img
-                              className={handles.menuItemIcon}
-                              src={category.uploadedIcon}
-                              alt=""
-                            />
-                          )}
-                          <p
-                            className={classNames(
-                              handles.collapsibleHeaderText,
-                              collapsibleStates[category.id] && 'fw7'
-                            )}
-                          >
-                            {category.name}
-                          </p>
-                        </div>
-                      </>
-                    }
-                    align="right"
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    onClick={(e: any) => {
-                      if (subcategories.length >= 1) {
-                        setCollapsibleStates({
-                          ...collapsibleStates,
-                          [category.id]: e.target.isOpen,
-                        })
-                      } else {
-                        window.location.assign(`${category.slug}`)
-                        if (closeMenu) closeMenu(false)
-                      }
-                    }}
-                    isOpen={collapsibleStates[category.id]}
-                    caretColor={`${
-                      collapsibleStates[category.id] ? 'base' : 'muted'
-                    }`}
-                  >
-                    {!!subcategories.length && (
-                      <div className={handles.collapsibleContent}>
-                        {subcategories}
+                          {category.name}
+                        </p>
                       </div>
-                    )}
+                    </>
+                  }
+                  align="right"
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onClick={(e: any) => {
+                    if (subcategories.length >= 1) {
+                      setCollapsibleStates({
+                        ...collapsibleStates,
+                        [category.id]: e.target.isOpen,
+                      })
+                    } else {
+                      window.location.assign(`${category.slug}`)
+                      if (closeMenu) closeMenu(false)
+                    }
+                  }}
+                  isOpen={collapsibleStates[category.id]}
+                  caretColor={`${
+                    collapsibleStates[category.id] ? 'base' : 'muted'
+                  }`}
+                >
+                  {!!subcategories.length && (
+                    <div className={handles.collapsibleContent}>
+                      {subcategories}
+                    </div>
+                  )}
 
-                    {subcategories.length >= 0 ? (
-                      seeAllLink(category.slug, 2)
-                    ) : (
-                      // eslint-disable-next-line jsx-a11y/anchor-has-content
-                      <a href={category.slug} />
+                  {subcategories.length >= 0 ? (
+                    seeAllLink(category.slug, 2)
+                  ) : (
+                    // eslint-disable-next-line jsx-a11y/anchor-has-content
+                    <a href={category.slug} />
+                  )}
+                </Collapsible>
+              ) : (
+                <Link
+                  to={category.slug}
+                  className={`${handles.categoryLink} no-underline c-on-base`}
+                  onClick={() => {
+                    if (config.orientation === 'vertical') {
+                      setDepartmentActive(null)
+                    }
+
+                    if (closeMenu) closeMenu(false)
+                  }}
+                >
+                  <div
+                    className={classNames(
+                      handles.submenuVerticalNameContainer,
+                      'flex'
                     )}
-                  </Collapsible>
-                </div>
+                  >
+                    {category.uploadedIcon && (
+                      <img
+                        className={handles.menuItemIcon}
+                        src={category.uploadedIcon}
+                        alt=""
+                      />
+                    )}
+                    <p
+                      className={classNames(
+                        handles.collapsibleHeaderText,
+                        'lh-title',
+                        collapsibleStates[category.id] && 'fw7'
+                      )}
+                    >
+                      {category.name}
+                    </p>
+                  </div>
+                </Link>
               )}
             </div>
           )
@@ -246,7 +276,13 @@ const Submenu: FC<ItemProps> = observer((props) => {
 
   return (
     <>
-      <div style={{ display: departmentActive ? 'block' : 'none' }}>
+      <div
+        style={{ display: departmentActive ? 'flex' : 'none' }}
+        className={classNames(
+          handles.submenuItemsContainer,
+          'flex-column w-100'
+        )}
+      >
         <h3
           className={classNames(
             handles.submenuContainerTitle,
@@ -285,7 +321,9 @@ const Submenu: FC<ItemProps> = observer((props) => {
           ) : (
             <>
               {items}
-              {/* showBtnCat ? seeAllLink(departmentActive.slug) : <div /> */}
+              {showBtnCat &&
+                departmentActive?.slug &&
+                seeAllLink(departmentActive.slug)}
             </>
           )}
         </div>
