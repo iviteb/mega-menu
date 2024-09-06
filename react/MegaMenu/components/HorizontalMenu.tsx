@@ -13,6 +13,7 @@ import styles from '../styles.css'
 import Item from './Item'
 import Submenu from './Submenu'
 import { BUTTON_ID } from './TriggerButton'
+import type { MenuItem } from '../../shared'
 
 const CSS_HANDLES = [
   'menuWrapper',
@@ -44,6 +45,7 @@ const HorizontalMenu: FC<
 
   const departmentActiveHasCategories = !!departmentActive?.menu?.length
   const navRef = useRef<HTMLDivElement>(null)
+  const timerRef = useRef<number | null>(null)
 
   const handleClickOutside = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,8 +61,6 @@ const HorizontalMenu: FC<
       ) {
         openMenu(false)
       }
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
     [openMenu]
   )
@@ -71,9 +71,7 @@ const HorizontalMenu: FC<
     return () => {
       document.removeEventListener('mouseover', handleClickOutside, true)
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [handleClickOutside])
 
   useEffect(() => {
     const defaultDepartment = departments.find(
@@ -85,9 +83,23 @@ const HorizontalMenu: FC<
     if (defaultDepartment) {
       setDepartmentActive(defaultDepartment)
     }
+  }, [defaultDepartmentActive, departments, setDepartmentActive])
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultDepartmentActive])
+  const handleMouseEnter = (department: MenuItem | null) => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+
+    timerRef.current = window.setTimeout(() => {
+      setDepartmentActive(department)
+    }, 200)
+  }
+
+  const handleMouseLeave = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+  }
 
   const departmentItems = useMemo(
     () =>
@@ -104,9 +116,8 @@ const HorizontalMenu: FC<
                   `bg-black-05 ${handles.departmentActive}`
               )}
               key={d.id}
-              onMouseEnter={() => {
-                setDepartmentActive(d)
-              }}
+              onMouseEnter={() => handleMouseEnter(d)}
+              onMouseLeave={handleMouseLeave}
             >
               <Item
                 id={d.id}
@@ -124,8 +135,13 @@ const HorizontalMenu: FC<
             </li>
           )
         }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [departments, departmentActive]
+    [
+      departments,
+      departmentActive,
+      handles.menuItem,
+      handles.departmentActive,
+      openMenu,
+    ]
   )
 
   const loaderBlocks = useMemo(() => {
@@ -133,7 +149,7 @@ const HorizontalMenu: FC<
 
     for (let index = 1; index <= 4; index++) {
       blocks.push(
-        <div className="lh-copy">
+        <div key={index} className="lh-copy">
           <Skeleton height={20} />
           <Skeleton height={80} />
         </div>
@@ -148,10 +164,10 @@ const HorizontalMenu: FC<
       style={{
         display: isOpenMenu && openOnly === orientation ? 'block' : 'none',
       }}
-      className={`${withModifiers(
+      className={withModifiers(
         'menuWrapper',
         isOpenMenu && openOnly === orientation ? 'isOpen' : 'isClosed'
-      )}`}
+      )}
     >
       <nav
         className={classNames(
