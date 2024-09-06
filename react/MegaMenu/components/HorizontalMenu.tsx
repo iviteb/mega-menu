@@ -15,6 +15,7 @@ import Submenu from './Submenu'
 import { BUTTON_ID } from './TriggerButton'
 
 const CSS_HANDLES = [
+  'menuWrapper',
   'menuContainer',
   'menuContainerNav',
   'menuItem',
@@ -29,7 +30,7 @@ const HorizontalMenu: FC<
     orientation: string
   }
 > = observer((props) => {
-  const { handles } = useCssHandles(CSS_HANDLES)
+  const { handles, withModifiers } = useCssHandles(CSS_HANDLES)
   const {
     isOpenMenu,
     departments,
@@ -65,10 +66,10 @@ const HorizontalMenu: FC<
   )
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true)
+    document.addEventListener('mouseover', handleClickOutside, true)
 
     return () => {
-      document.removeEventListener('click', handleClickOutside, true)
+      document.removeEventListener('mouseover', handleClickOutside, true)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -147,6 +148,10 @@ const HorizontalMenu: FC<
       style={{
         display: isOpenMenu && openOnly === orientation ? 'block' : 'none',
       }}
+      className={`${withModifiers(
+        'menuWrapper',
+        isOpenMenu && openOnly === orientation ? 'isOpen' : 'isClosed'
+      )}`}
     >
       <nav
         className={classNames(

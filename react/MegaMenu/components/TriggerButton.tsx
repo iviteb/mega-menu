@@ -74,7 +74,8 @@ const TriggerButton: FC<TriggerButtonProps> = observer((props) => {
     <button
       data-id={BUTTON_ID}
       className={classNames(styles.triggerContainer, 'pointer')}
-      onClick={() => openMenu((v) => !v)}
+      onMouseOver={() => openMenu((v) => !v)}
+      onFocus={() => null}
     >
       <span className={`${handles.triggerButtonLabel} mr2`}>
         {formatMessage(messages.triggerButtonLabel)}
