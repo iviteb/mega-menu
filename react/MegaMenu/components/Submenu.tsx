@@ -216,17 +216,17 @@ const Submenu: FC<ItemProps> = observer((props) => {
                     collapsibleStates[category.id] ? 'base' : 'muted'
                   }`}
                 >
-                  {!!subcategories.length && (
-                    <div className={handles.collapsibleContent}>
-                      {subcategories}
-                    </div>
-                  )}
-
                   {subcategories.length >= 0 ? (
                     seeAllLink(category.slug, 2)
                   ) : (
                     // eslint-disable-next-line jsx-a11y/anchor-has-content
                     <a href={category.slug} />
+                  )}
+
+                  {!!subcategories.length && (
+                    <div className={handles.collapsibleContent}>
+                      {subcategories}
+                    </div>
                   )}
                 </Collapsible>
               ) : (
@@ -320,10 +320,10 @@ const Submenu: FC<ItemProps> = observer((props) => {
             </>
           ) : (
             <>
-              {items}
               {showBtnCat &&
                 departmentActive?.slug &&
                 seeAllLink(departmentActive.slug)}
+              {items}
             </>
           )}
         </div>
