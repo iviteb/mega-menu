@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.0.6-hkignore.0] - 2024-10-02
+
 ### Changed
 
 - Added Label for Mega Menu Trigger for Accessibility
