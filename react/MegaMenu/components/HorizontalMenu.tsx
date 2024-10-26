@@ -6,10 +6,9 @@ import type { WrappedComponentProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import Skeleton from 'react-loading-skeleton'
 import { useCssHandles } from 'vtex.css-handles'
-import { formatIOMessage } from 'vtex.native-types'
 
 import { megaMenuState } from '../State'
-import styles from '../styles.css'
+import '../styles.css'
 import Item from './Item'
 import Submenu from './Submenu'
 import { BUTTON_ID } from './TriggerButton'
@@ -21,8 +20,8 @@ const CSS_HANDLES = [
   'menuContainerNav',
   'menuItem',
   'submenuContainer',
-  'departmentsTitle',
   'departmentActive',
+  'submenuList',
 ] as const
 
 const HorizontalMenu: FC<
@@ -31,17 +30,16 @@ const HorizontalMenu: FC<
     orientation: string
   }
 > = observer((props) => {
-  const { handles, withModifiers } = useCssHandles(CSS_HANDLES)
+  const { handles } = useCssHandles(CSS_HANDLES)
   const {
-    isOpenMenu,
     departments,
     departmentActive,
-    config: { title, defaultDepartmentActive },
+    config: { defaultDepartmentActive },
     setDepartmentActive,
     openMenu,
   } = megaMenuState
 
-  const { openOnly, orientation, intl } = props
+  const { openOnly } = props
 
   const departmentActiveHasCategories = !!departmentActive?.menu?.length
   const navRef = useRef<HTMLDivElement>(null)
@@ -106,8 +104,6 @@ const HorizontalMenu: FC<
       departments
         .filter((j) => j.display)
         .map((d) => {
-          const hasCategories = !!d.menu?.length
-
           return (
             <li
               className={classNames(
@@ -123,8 +119,6 @@ const HorizontalMenu: FC<
                 id={d.id}
                 to={d.slug}
                 iconId={d.icon}
-                accordion={hasCategories}
-                className={classNames('pv3 mh5')}
                 style={d.styles}
                 enableStyle={d.enableSty}
                 closeMenu={openMenu}
@@ -160,47 +154,26 @@ const HorizontalMenu: FC<
   }, [])
 
   return departmentItems?.length > 0 ? (
-    <div
-      style={{
-        display: isOpenMenu && openOnly === orientation ? 'block' : 'none',
-      }}
-      className={withModifiers(
-        'menuWrapper',
-        isOpenMenu && openOnly === orientation ? 'isOpen' : 'isClosed'
-      )}
-    >
+    <div className={`${handles.menuWrapper} w-100`}>
       <nav
-        className={classNames(
-          handles.menuContainerNav,
-          'absolute left-0 bg-white bw1 bb b--muted-3 flex'
-        )}
+        className={classNames(handles.menuContainerNav, 'bg-white')}
         ref={navRef}
       >
-        <ul
-          className={classNames(
-            styles.menuContainer,
-            'list ma0 pa0 pb3 br b--muted-4'
-          )}
-        >
-          <div
-            className={classNames(
-              handles.departmentsTitle,
-              'f4 fw7 c-on-base lh-copy ma0 pv5 ph5'
-            )}
-          >
-            {formatIOMessage({ id: title, intl })}
-          </div>
+        <ul className={classNames(handles.menuContainer, 'list flex ma0 pa0')}>
           {departments.length ? (
             departmentItems
           ) : (
-            <div className="flex flex-column justify-center ph5 lh-copy">
-              <Skeleton count={3} height={30} />
+            <div className="flex justify-center lh-copy">
+              <Skeleton count={3} height={20} />
             </div>
           )}
         </ul>
         {departments.length ? (
           <div
-            className={classNames(styles.submenuContainer, 'pa5 w-100')}
+            className={classNames(
+              handles.submenuContainer,
+              'absolute left-0 w-100 bg-white'
+            )}
             style={{
               display:
                 departments.length &&
@@ -217,7 +190,7 @@ const HorizontalMenu: FC<
             <div className="w-30 mb4 ml4 mt5">
               <Skeleton height={30} />
             </div>
-            <div className={classNames(styles.submenuList, 'mh4 mb5')}>
+            <div className={classNames(handles.submenuList, 'mh4 mb5')}>
               {loaderBlocks}
             </div>
           </div>

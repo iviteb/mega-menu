@@ -1,15 +1,8 @@
-.menuContainer,
 .submenuContainer {
   overflow: auto;
   max-height: 50vh;
-}
-
-.submenuContainer {
-  display: flex;
-}
-
-.menuContainer {
-  width: 300px;
+  top: 100%;
+  padding: 0 max(1.25rem, calc(50% - 49.5rem)) 3rem;
 }
 
 .submenuList {

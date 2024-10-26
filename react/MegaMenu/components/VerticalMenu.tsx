@@ -6,7 +6,6 @@ import type { WrappedComponentProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import Skeleton from 'react-loading-skeleton'
 import { useCssHandles } from 'vtex.css-handles'
-import { formatIOMessage } from 'vtex.native-types'
 import { useDevice } from 'vtex.device-detector'
 
 import { megaMenuState } from '../State'
@@ -20,26 +19,18 @@ const CSS_HANDLES = [
   'menuContainerNavVertical',
   'menuItemVertical',
   'submenuContainerVertical',
-  'departmentsTitle',
 ] as const
 
 const VerticalMenu: FC<VerticalMenuProps> = observer((props) => {
   const { handles } = useCssHandles(CSS_HANDLES)
-  const {
-    departments,
-    departmentActive,
-    config,
-    setDepartmentActive,
-    isOpenMenu,
-  } = megaMenuState
+  const { departments, departmentActive, setDepartmentActive, isOpenMenu } =
+    megaMenuState
 
   const { isMobile } = useDevice()
 
-  const { openOnly, orientation, intl } = props
+  const { openOnly, orientation } = props
 
   const departmentActiveHasCategories = !!departmentActive?.menu?.length
-
-  const { title } = config
 
   const departmentItems = useMemo(
     () =>
@@ -63,16 +54,7 @@ const VerticalMenu: FC<VerticalMenuProps> = observer((props) => {
         }
 
         return (
-          <li
-            className={classNames(
-              handles.menuItemVertical,
-              'bb b--light-gray',
-              {
-                bt: i === 0,
-              }
-            )}
-            key={d.id}
-          >
+          <li className={handles.menuItemVertical} key={d.id}>
             <Item className={classNames('pv5 mh5')} {...itemProps}>
               {d.name}
             </Item>
@@ -98,14 +80,6 @@ const VerticalMenu: FC<VerticalMenuProps> = observer((props) => {
             dn: !!departmentActive,
           })}
         >
-          <h3
-            className={classNames(
-              handles.departmentsTitle,
-              'f4 fw7 c-on-base mv5 lh-copy ph5'
-            )}
-          >
-            {formatIOMessage({ id: title, intl })}
-          </h3>
           <ul className={classNames(handles.menuContainerVertical, 'list pa0')}>
             {departments.length ? (
               departmentItems

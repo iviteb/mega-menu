@@ -168,7 +168,6 @@ const Submenu: FC<ItemProps> = observer((props) => {
                   </Item>
 
                   {!!subcategories.length && subcategories}
-                  {subcategories.length > 1 && seeAllLink(category.slug, 2)}
                 </>
               ) : subcategories.length ? (
                 <Collapsible
@@ -283,32 +282,22 @@ const Submenu: FC<ItemProps> = observer((props) => {
           'flex-column w-100'
         )}
       >
-        <h3
-          className={classNames(
-            handles.submenuContainerTitle,
-            'f4 fw7 c-on-base lh-copy ma0 flex items-center',
-            orientation === 'horizontal' && openOnly === 'horizontal' && 'mb6',
-            (orientation === 'vertical' || openOnly === 'vertical') && 'pv5 ph5'
-          )}
-        >
-          {departmentActive?.name}
-          {orientation === 'horizontal' && (
-            <div
-              style={{
-                display:
-                  openOnly === 'horizontal' && showBtnCat ? 'block' : 'none',
-              }}
-            >
-              {seeAllLink(departmentActive?.slug ?? '', 1, 't-small ml7')}
-            </div>
-          )}
-        </h3>
+        {orientation === 'vertical' && openOnly === 'vertical' && (
+          <h3
+            className={classNames(
+              handles.submenuContainerTitle,
+              'f5 fw7 c-on-base lh-copy ma0 flex items-center h-large'
+            )}
+          >
+            {departmentActive?.name}
+          </h3>
+        )}
 
         <div
           className={classNames(
             orientation === 'horizontal' &&
               openOnly === 'horizontal' &&
-              styles.submenuList,
+              handles.submenuList,
             (orientation === 'vertical' || openOnly === 'vertical') &&
               handles.submenuListVertical
           )}
