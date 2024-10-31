@@ -1,5 +1,7 @@
 # Changelog
 
+## [0.0.1] - 2024-10-31
+
 ### Changed
 
 - Menu Structure for Meli Melo Layout
