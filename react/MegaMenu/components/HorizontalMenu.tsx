@@ -4,15 +4,12 @@ import type { FC } from 'react'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import type { WrappedComponentProps } from 'react-intl'
 import { injectIntl } from 'react-intl'
-import Skeleton from 'react-loading-skeleton'
 import { useCssHandles } from 'vtex.css-handles'
-import { formatIOMessage } from 'vtex.native-types'
 
 import { megaMenuState } from '../State'
-import styles from '../styles.css'
+import '../styles.css'
 import Item from './Item'
 import Submenu from './Submenu'
-import { BUTTON_ID } from './TriggerButton'
 import type { MenuItem } from '../../shared'
 
 const CSS_HANDLES = [
@@ -21,8 +18,9 @@ const CSS_HANDLES = [
   'menuContainerNav',
   'menuItem',
   'submenuContainer',
-  'departmentsTitle',
+  'submenuWrapper',
   'departmentActive',
+  'submenuList',
 ] as const
 
 const HorizontalMenu: FC<
@@ -33,45 +31,56 @@ const HorizontalMenu: FC<
 > = observer((props) => {
   const { handles, withModifiers } = useCssHandles(CSS_HANDLES)
   const {
-    isOpenMenu,
     departments,
     departmentActive,
-    config: { title, defaultDepartmentActive },
+    config: { defaultDepartmentActive },
     setDepartmentActive,
     openMenu,
   } = megaMenuState
 
-  const { openOnly, orientation, intl } = props
+  const { openOnly } = props
 
   const departmentActiveHasCategories = !!departmentActive?.menu?.length
-  const navRef = useRef<HTMLDivElement>(null)
+  const navRef = useRef<HTMLUListElement>(null)
+  const submenuRef = useRef<HTMLDivElement>(null)
   const timerRef = useRef<number | null>(null)
 
-  const handleClickOutside = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (event: any) => {
-      const isTriggerButton = event?.path?.find(
-        (data: HTMLElement) => data.dataset?.id === BUTTON_ID
-      )
-
-      if (
-        navRef.current &&
-        !navRef.current.contains(event.target as Node) &&
-        !isTriggerButton
-      ) {
-        openMenu(false)
+  // Updated function to handle mouse events outside of both menu and submenu
+  const handleMoveOutside = useCallback(
+    (event: MouseEvent) => {
+      // Clear any existing timeout if it exists
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
       }
+
+      // Set a new timeout to delay the outside move handling
+      timerRef.current = window.setTimeout(() => {
+        if (
+          navRef.current &&
+          submenuRef.current &&
+          !navRef.current.contains(event.target as Node) &&
+          !submenuRef.current.contains(event.target as Node)
+        ) {
+          openMenu(false)
+          setDepartmentActive(null)
+        }
+      }, 200) // Adjust delay time as desired
     },
-    [openMenu]
+    [openMenu, setDepartmentActive]
   )
 
+  // Clear timeout on unmount or if event listeners are removed
   useEffect(() => {
-    document.addEventListener('mouseover', handleClickOutside, true)
+    document.addEventListener('mouseover', handleMoveOutside, true)
 
     return () => {
-      document.removeEventListener('mouseover', handleClickOutside, true)
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+      }
+
+      document.removeEventListener('mouseover', handleMoveOutside, true)
     }
-  }, [handleClickOutside])
+  }, [handleMoveOutside])
 
   useEffect(() => {
     const defaultDepartment = departments.find(
@@ -86,55 +95,56 @@ const HorizontalMenu: FC<
   }, [defaultDepartmentActive, departments, setDepartmentActive])
 
   const handleMouseEnter = (department: MenuItem | null) => {
+    // Clear any existing timeout to prevent the menu from closing
     if (timerRef.current) {
       clearTimeout(timerRef.current)
     }
 
-    timerRef.current = window.setTimeout(() => {
-      setDepartmentActive(department)
-    }, 200)
+    // Immediately set the active department and open the menu
+    setDepartmentActive(department)
+    openMenu(true)
   }
 
   const handleMouseLeave = () => {
+    // Clear any existing timeout for handling accidental hover-outs
     if (timerRef.current) {
       clearTimeout(timerRef.current)
     }
+
+    // Delay closing the menu to allow for accidental hover-out correction
+    timerRef.current = window.setTimeout(() => {
+      openMenu(false)
+      setDepartmentActive(null)
+    }, 800) // Adjust delay as needed to provide a smooth buffer
   }
 
   const departmentItems = useMemo(
     () =>
       departments
         .filter((j) => j.display)
-        .map((d) => {
-          const hasCategories = !!d.menu?.length
-
-          return (
-            <li
-              className={classNames(
-                handles.menuItem,
-                d.id === departmentActive?.id &&
-                  `bg-black-05 ${handles.departmentActive}`
-              )}
-              key={d.id}
-              onMouseEnter={() => handleMouseEnter(d)}
-              onMouseLeave={handleMouseLeave}
+        .map((d) => (
+          <li
+            className={classNames(
+              handles.menuItem,
+              d.id === departmentActive?.id && `${handles.departmentActive}`
+            )}
+            key={d.id}
+            onMouseEnter={() => handleMouseEnter(d)}
+            onMouseLeave={handleMouseLeave}
+          >
+            <Item
+              id={d.id}
+              to={d.slug}
+              iconId={d.icon}
+              style={d.styles}
+              enableStyle={d.enableSty}
+              closeMenu={openMenu}
+              uploadedIcon={d.uploadedIcon}
             >
-              <Item
-                id={d.id}
-                to={d.slug}
-                iconId={d.icon}
-                accordion={hasCategories}
-                className={classNames('pv3 mh5')}
-                style={d.styles}
-                enableStyle={d.enableSty}
-                closeMenu={openMenu}
-                uploadedIcon={d.uploadedIcon}
-              >
-                {d.name}
-              </Item>
-            </li>
-          )
-        }),
+              {d.name}
+            </Item>
+          </li>
+        )),
     [
       departments,
       departmentActive,
@@ -144,85 +154,39 @@ const HorizontalMenu: FC<
     ]
   )
 
-  const loaderBlocks = useMemo(() => {
-    const blocks: JSX.Element[] = []
-
-    for (let index = 1; index <= 4; index++) {
-      blocks.push(
-        <div key={index} className="lh-copy">
-          <Skeleton height={20} />
-          <Skeleton height={80} />
-        </div>
-      )
-    }
-
-    return blocks
-  }, [])
-
   return departmentItems?.length > 0 ? (
-    <div
-      style={{
-        display: isOpenMenu && openOnly === orientation ? 'block' : 'none',
-      }}
-      className={withModifiers(
-        'menuWrapper',
-        isOpenMenu && openOnly === orientation ? 'isOpen' : 'isClosed'
-      )}
-    >
+    <div className={`${handles.menuWrapper} w-100 h-100 flex`}>
       <nav
         className={classNames(
           handles.menuContainerNav,
-          'absolute left-0 bg-white bw1 bb b--muted-3 flex'
+          'w-100 h-100 flex justify-center bg-white'
         )}
-        ref={navRef}
       >
         <ul
+          ref={navRef}
           className={classNames(
-            styles.menuContainer,
-            'list ma0 pa0 pb3 br b--muted-4'
+            handles.menuContainer,
+            'h-100 list flex items-center ma0 ph6'
           )}
         >
-          <div
-            className={classNames(
-              handles.departmentsTitle,
-              'f4 fw7 c-on-base lh-copy ma0 pv5 ph5'
-            )}
-          >
-            {formatIOMessage({ id: title, intl })}
-          </div>
-          {departments.length ? (
-            departmentItems
-          ) : (
-            <div className="flex flex-column justify-center ph5 lh-copy">
-              <Skeleton count={3} height={30} />
-            </div>
-          )}
+          {departments.length && departmentItems}
         </ul>
-        {departments.length ? (
-          <div
-            className={classNames(styles.submenuContainer, 'pa5 w-100')}
-            style={{
-              display:
-                departments.length &&
-                departmentActive &&
-                departmentActiveHasCategories
-                  ? 'flex'
-                  : 'none',
-            }}
-          >
-            <Submenu closeMenu={openMenu ?? 'horizontal'} openOnly={openOnly} />
-          </div>
-        ) : (
-          <div className="w-100" style={{ overflow: 'auto' }}>
-            <div className="w-30 mb4 ml4 mt5">
-              <Skeleton height={30} />
-            </div>
-            <div className={classNames(styles.submenuList, 'mh4 mb5')}>
-              {loaderBlocks}
-            </div>
-          </div>
-        )}
       </nav>
+      <div
+        className={`${withModifiers(
+          'submenuWrapper',
+          departmentActive && departmentActiveHasCategories
+            ? 'isOpen'
+            : 'isClosed'
+        )} absolute left-0 w-100 justify-center`}
+      >
+        <div
+          ref={submenuRef}
+          className={`${handles.submenuContainer} w-100 flex justify-between bg-white`}
+        >
+          <Submenu closeMenu={openMenu} openOnly={openOnly} />
+        </div>
+      </div>
     </div>
   ) : null
 })

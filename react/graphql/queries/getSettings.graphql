@@ -1,5 +1,5 @@
 query getsettings {
-  settings @context(provider: "macromex.mega-menu") {
+  settings @context(provider: "melimeloparis.mega-menu") {
     idMenu
     orientation
   }

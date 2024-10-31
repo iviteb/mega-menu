@@ -1,7 +1,7 @@
 {
   "name": "mega-menu",
-  "vendor": "macromex",
-  "version": "1.0.6-hkignore.0",
+  "vendor": "melimeloparis",
+  "version": "0.0.0",
   "title": "Mega Menu",
   "description": "Create, personalize and manage the category tree. It's can be used in the shop as main menu",
   "mustUpdateAt": "2022-08-28",
@@ -26,13 +26,6 @@
     "vtex.store-drawer": "0.x",
     "vtex.file-manager-graphql": "0.x",
     "vtex.store-graphql": "2.x"
-  },
-  "billingOptions": {
-    "type": "free",
-    "support": {
-      "url": "https://support.vtex.com/hc/requests"
-    },
-    "availableCountries": ["*"]
   },
   "policies": [
     {
