@@ -1,5 +1,9 @@
 # Changelog
 
+### Fixed
+
+- Department not hiding on mobile when display was toggled off
+
 ## [0.0.1] - 2024-10-31
 
 ### Changed
