@@ -1,7 +1,8 @@
 .submenuWrapper {
+  --pz: 0rem;
   top: 100%;
   display: none;
-  padding: 0 max(0rem, calc(50% - 54rem));
+  padding: 0 max(var(--pz), calc(50% - 54rem));
 }
 
 .submenuWrapper--isOpen {

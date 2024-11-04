@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- Changelog
+- On production when the value is `0` the css unit is removed.
+
+## [0.0.2] - 2024-11-04
+
 ### Fixed
 
 - Department not hiding on mobile when display was toggled off
@@ -19,10 +28,6 @@
 - Fixed react-intl imported types
 - Fixed structure for styling
 - Changed client to `macromex`
-
-## [Unreleased]
-
-## [0.0.2] - 2024-11-04
 
 ## [2.9.0] - 2023-03-31
 
