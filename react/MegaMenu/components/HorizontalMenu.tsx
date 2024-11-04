@@ -120,31 +120,29 @@ const HorizontalMenu: FC<
 
   const departmentItems = useMemo(
     () =>
-      departments
-        .filter((j) => j.display)
-        .map((d) => (
-          <li
-            className={classNames(
-              handles.menuItem,
-              d.id === departmentActive?.id && `${handles.departmentActive}`
-            )}
-            key={d.id}
-            onMouseEnter={() => handleMouseEnter(d)}
-            onMouseLeave={handleMouseLeave}
+      departments.map((d) => (
+        <li
+          className={classNames(
+            handles.menuItem,
+            d.id === departmentActive?.id && `${handles.departmentActive}`
+          )}
+          key={d.id}
+          onMouseEnter={() => handleMouseEnter(d)}
+          onMouseLeave={handleMouseLeave}
+        >
+          <Item
+            id={d.id}
+            to={d.slug}
+            iconId={d.icon}
+            style={d.styles}
+            enableStyle={d.enableSty}
+            closeMenu={openMenu}
+            uploadedIcon={d.uploadedIcon}
           >
-            <Item
-              id={d.id}
-              to={d.slug}
-              iconId={d.icon}
-              style={d.styles}
-              enableStyle={d.enableSty}
-              closeMenu={openMenu}
-              uploadedIcon={d.uploadedIcon}
-            >
-              {d.name}
-            </Item>
-          </li>
-        )),
+            {d.name}
+          </Item>
+        </li>
+      )),
     [
       departments,
       departmentActive,

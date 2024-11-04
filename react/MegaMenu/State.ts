@@ -19,7 +19,7 @@ class MegaMenuState {
   }
 
   public setDepartments = (departments: MenuItem[]) => {
-    this.departments = departments
+    this.departments = departments.filter((d) => d.display)
   }
 
   public setDepartmentActive = (department: MenuItem | null) => {
