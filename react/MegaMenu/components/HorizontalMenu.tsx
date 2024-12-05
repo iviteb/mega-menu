@@ -110,7 +110,9 @@ const HorizontalMenu: FC<WrappedComponentProps> = observer(({ intl }) => {
     for (let index = 1; index <= 4; index++) {
       blocks.push(
         <div className="lh-copy">
+          {/* @ts-expect-error Server Component */}
           <Skeleton height={20} />
+          {/* @ts-expect-error Server Component */}
           <Skeleton height={80} />
         </div>
       )
@@ -146,6 +148,7 @@ const HorizontalMenu: FC<WrappedComponentProps> = observer(({ intl }) => {
             departmentItems
           ) : (
             <div className="flex flex-column justify-center ph5 lh-copy">
+              {/* @ts-expect-error Server Component */}
               <Skeleton count={3} height={30} />
             </div>
           )}
@@ -167,6 +170,7 @@ const HorizontalMenu: FC<WrappedComponentProps> = observer(({ intl }) => {
         ) : (
           <div className="w-100" style={{ overflow: 'auto' }}>
             <div className="w-30 mb4 ml4 mt5">
+              {/* @ts-expect-error Server Component */}
               <Skeleton height={30} />
             </div>
             <div className={classNames(styles.submenuList, 'mh4 mb5')}>

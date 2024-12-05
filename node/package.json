@@ -9,13 +9,12 @@
     "lint": "tsc --noEmit && tslint -c tslint.json './**/*.ts'"
   },
   "devDependencies": {
-    "@types/node": "^12.0.0",
+    "@types/node": "^20.0.0",
     "@types/ramda": "types/npm-ramda#dist",
-    "@vtex/api": "6.47.0",
-    "miniprix.mega-menu": "http://miniprix.vtexassets.com/_v/public/typings/v1/miniprix.mega-menu@0.0.3/public/@types/miniprix.mega-menu",
+    "@vtex/api": "6.48.0",
     "tslint": "^5.12.0",
     "tslint-config-vtex": "^2.1.0",
-    "typescript": "3.9.7",
+    "typescript": "5.5.3",
     "vtex.css-handles": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.css-handles@1.0.1/public/@types/vtex.css-handles",
     "vtex.device-detector": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.device-detector@0.2.6/public/@types/vtex.device-detector",
     "vtex.file-manager": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.file-manager@0.11.0/public/_types/react",
@@ -28,6 +27,5 @@
     "vtex.store-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-graphql@2.170.3/public/@types/vtex.store-graphql",
     "vtex.store-icons": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.store-icons@0.18.0/public/@types/vtex.store-icons",
     "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.9/public/@types/vtex.styleguide"
-  },
-  "version": "0.0.0"
+  }
 }

@@ -25,7 +25,6 @@
     "@vtex/tsconfig": "^0.5.6",
     "apollo-client": "^2.4.7",
     "graphql": "^15.5.0",
-    "miniprix.mega-menu": "http://miniprix.vtexassets.com/_v/public/typings/v1/miniprix.mega-menu@0.0.3/public/@types/miniprix.mega-menu",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "typescript": "3.9.7",
