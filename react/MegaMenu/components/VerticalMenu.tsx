@@ -93,6 +93,7 @@ const VerticalMenu: FC<VerticalMenuProps> = observer(({ intl }) => {
             departmentItems
           ) : (
             <div className="flex flex-column justify-center ph5 lh-copy">
+              {/* @ts-expect-error Server Component */}
               <Skeleton count={4} height={40} />
             </div>
           )}
